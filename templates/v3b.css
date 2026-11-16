@@ -157,7 +157,7 @@
 .P.has-risk .src { bottom: 170px; }
 .P.sum .risk { color: rgba(255, 255, 255, .72); }
 .P .ui { color: var(--navy); }
-.P.dark .ui { --mute: #6b7684; --c: #2455f5; --soft: #eaf0ff; --sub: #333d4b; }
+.P.dark .ui { --mute: #6b7684; --c: #164492; --soft: #eaf0ff; --sub: #333d4b; }
 .P.dark .fill > div { background: rgba(255, 255, 255, .06); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .12); }
 .P.dark .checks { border-color: rgba(255, 255, 255, .2); }
 .P.dark .checks > div { border-color: rgba(255, 255, 255, .08); }

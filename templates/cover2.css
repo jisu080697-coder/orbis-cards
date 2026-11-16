@@ -2,7 +2,7 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
 * { box-sizing: border-box; margin: 0; }
 html, body { width: 1080px; height: 1350px; overflow: hidden; }
-body { font-family: 'Pretendard Variable', Pretendard, sans-serif; -webkit-font-smoothing: antialiased; color: #13213b; --c: #2455f5; --paper: #f5f2ea; --ink: #13213b; --hl: #ffe14d; }
+body { font-family: 'Pretendard Variable', Pretendard, sans-serif; -webkit-font-smoothing: antialiased; color: #13213b; --c: #164492; --paper: #f5f2ea; --ink: #13213b; --hl: #ffe14d; }
 .v { position: relative; width: 1080px; height: 1350px; padding: 92px 92px 84px; display: flex; flex-direction: column; }
 .v img.logo { height: 58px; }
 .mark { background: linear-gradient(transparent 58%, var(--hl) 58%, var(--hl) 92%, transparent 92%); padding: 0 6px; margin: 0 -6px; }

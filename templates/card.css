@@ -3,8 +3,8 @@
 
 :root {
   --ink: #13213b; --ink-2: #333d4b; --faint: #8b95a1; --line: #e5e8ee;
-  --primary: #2455f5; --primary-soft: #eaf0ff;
-  --grad-text: linear-gradient(90deg, #2455f5, #7a5cff 52%, #18a0fb);
+  --primary: #164492; --primary-soft: #eaf0ff;
+  --grad-text: linear-gradient(90deg, #164492, #7a5cff 52%, #18a0fb);
   --grad-card: linear-gradient(135deg, #f7f9ff 0%, #c9d8ff 34%, #d9ccff 62%, #ffe0cc 100%);
 }
 * { box-sizing: border-box; margin: 0; }
@@ -78,5 +78,5 @@ p, .sub, .list li, .cmp td { text-wrap: pretty; }
   --cover-bg: radial-gradient(circle at 85% 10%, rgba(245, 196, 81, .28), transparent 40%), repeating-linear-gradient(0deg, rgba(255, 255, 255, .045) 0 2px, transparent 2px 135px), repeating-linear-gradient(90deg, rgba(255, 255, 255, .045) 0 2px, transparent 2px 135px), linear-gradient(165deg, #0d1a33 0%, #13254a 100%);
   --cover-ink: #fff; --cover-sub: rgba(255, 255, 255, .74); --cover-tag-bg: rgba(245, 196, 81, .16); --cover-tag-ink: #f5c451; --cover-em: linear-gradient(90deg, #f7d27a, #f5b544); --cover-pg: rgba(255, 255, 255, .5); }
 /* 베네핍 이용 안내: 브랜드 파랑 */
-.t-bene { --cover-bg: radial-gradient(circle at 90% 8%, rgba(255, 255, 255, .22), transparent 40%), linear-gradient(140deg, #2455f5 0%, #3b6bff 55%, #6a5cff 100%);
+.t-bene { --cover-bg: radial-gradient(circle at 90% 8%, rgba(255, 255, 255, .22), transparent 40%), linear-gradient(140deg, #164492 0%, #3b6bff 55%, #6a5cff 100%);
   --cover-ink: #fff; --cover-sub: rgba(255, 255, 255, .82); --cover-tag-bg: rgba(255, 255, 255, .18); --cover-tag-ink: #fff; --cover-em: linear-gradient(90deg, #ffffff, #cfe0ff); --cover-pg: rgba(255, 255, 255, .6); }
