@@ -86,12 +86,12 @@ var BPCards = (function () {
   var star = function (s) { s = String(s || ''); return s.charAt(0) === '*' ? [true, s.slice(1).trim()] : [false, s]; };
   var num = function (s) { var m = String(s || '').replace(/,/g, '').match(/-?\d+(\.\d+)?/); return m ? parseFloat(m[0]) : 0; };
   var pill = function (s) { var k = /완료|승인|가능|적립됨|연결됨/.test(s) ? 'ok' : /확인|필요|잠김|실패|불가|거절/.test(s) ? 'chk' : 'wait'; return '<span class="pill ' + k + '">' + esc(s) + '</span>'; };
-  var logo = function (white) { return '<img class="logo" src="' + (white ? 'benepip-logo-allwhite.png' : 'benepip-logo.png') + '">'; };
+  var logo = function (white) { return '<div class="logo" style="font:800 40px/54px Pretendard,sans-serif;letter-spacing:-.5px;white-space:nowrap;color:' + (white ? '#fff' : '#13213b') + '">Orbis Securities</div>'; };   // 로고 파일이 정해지면 img 로 바꿈
   var icon = function (n, o) { return typeof BP_ICON === "function" ? BP_ICON(n, o) : ''; };
 
   // ── 주제군별 표지 (시리즈처럼 일관되게) ──
-  var COVER_OF = { '경제 캘린더·이벤트': 'c-report', '플랫폼 활용': 'c-edit', '거래비용·페이백': 'c-receipt', '혜택·적용 조건': 'c-balance', '브로커 이용 가이드': 'c-num', '베네핍 이용 안내': 'c-state' };
-  var COVER_ALT = { '거래비용·페이백': ['c-issue'] };   // 문제 상황 주제일 때만 쓰는 보조 표지
+  var COVER_OF = { '경제 캘린더·이벤트': 'c-report', '플랫폼 활용': 'c-edit', '거래비용·스프레드': 'c-receipt', '혜택·적용 조건': 'c-balance', '계좌 이용 가이드': 'c-num', 'Orbis 이용 안내': 'c-state' };
+  var COVER_ALT = { '거래비용·스프레드': ['c-issue'] };   // 문제 상황 주제일 때만 쓰는 보조 표지
   var ICON_OF = { '플랫폼 활용': 'chart', '경제 캘린더·이벤트': 'calendar' };
   var DARK = { '플랫폼 활용': 1 };                      // 본문까지 남색으로 이어지는 주제군
   var BODY = [['body', '기본 (제목 + 설명)'], ['big', '한 문장 크게'], ['vs', '두 칸 비교'], ['table', '표'], ['steps', '순서'], ['flow', '예/아니오 흐름'], ['stat', '큰 숫자 + 막대'], ['calc', '계산 상자'], ['ui', '앱 화면 조각'], ['qa', '묻고 답하기'], ['warn', '주의'], ['event', '발표 상세'], ['check', '체크리스트'], ['reason', '이유 (큰 번호)'], ['route', '경로 (→)'], ['myth', '오해 vs 사실']];
@@ -134,7 +134,7 @@ var BPCards = (function () {
   // ── 표지 ──
   var plainCover = function (c, d) {
     var p = lines(String(c.b || '').replace(/\s*\|\s*/g, ' · '));
-    var art = { '혜택·적용 조건': 'gift', '거래비용·페이백': 'coin', '플랫폼 활용': 'chart', '브로커 이용 가이드': 'wallet', '베네핍 이용 안내': 'shield', '경제 캘린더·이벤트': 'calendar' }[d.group] || c.icon;
+    var art = { '혜택·적용 조건': 'gift', '거래비용·스프레드': 'coin', '플랫폼 활용': 'chart', '계좌 이용 가이드': 'wallet', 'Orbis 이용 안내': 'shield', '경제 캘린더·이벤트': 'calendar' }[d.group] || c.icon;
     return '<div class="k T1 CP">' + (art ? '<div class="art">' + icon(c.icon || art) + '</div>' : '') + logo() + (c.k ? '<div class="kicker">' + esc(c.k) + '</div>' : '') + '<h1>' + hi(c.t) + '</h1>' +
       (p.length ? '<div class="box"><div><b>' + txt(p[0]) + '</b>' + (p[1] ? '<span>' + txt(p[1]) + '</span>' : '') + '</div><i>›</i></div>' : '') + '</div>';
   };
@@ -144,7 +144,7 @@ var BPCards = (function () {
     'c-report': function (c, d) {
       var r = rowsOf(c.b), names = [];
       r.forEach(function (y) { var x = (y[1] || y[0] || '').trim(); if (x && names.indexOf(x) < 0) names.push(x); });
-      return '<div class="k T6 CR2"><div class="mast"><span class="t">BenePip Weekly</span><span class="d">한국 시간</span></div>' +
+      return '<div class="k T6 CR2"><div class="mast"><span class="t">Orbis Securities Weekly</span><span class="d">한국 시간</span></div>' +
         '<div class="kicker">' + esc(c.k || '이번 주 경제 캘린더') + '</div><h1>' + hi(c.t) + '</h1>' + (c.n ? '<div class="range">' + esc(c.n) + '</div>' : '') +
         '<div class="names">' + names.slice(0, 5).map(function (x) { return '<span>' + esc(x) + '</span>'; }).join('') + '</div>' +
         '<div class="art">' + icon(c.icon || 'calendar') + '</div><div class="note">넘겨서 지표별로 보기 →</div></div>';
@@ -165,7 +165,7 @@ var BPCards = (function () {
     'c-issue': function (c, d) {
       var r = rowsOf(c.b), p = plainOf(c.b); if (!r.length) return plainCover(c, d);
       return '<div class="k CQ">' + logo() + '<div class="kicker">' + esc(c.k || d.group || '') + '</div><h1>' + hi(c.t) + '</h1>' +
-        '<div class="uic"><div class="cap"><span>' + esc(p[0] || '베네핍 · 페이백 내역') + '</span><span>' + esc(c.n || '예시 화면') + '</span></div>' +
+        '<div class="uic"><div class="cap"><span>' + esc(p[0] || 'Orbis Securities · 입출금 내역') + '</span><span>' + esc(c.n || '예시 화면') + '</span></div>' +
         r.slice(0, 3).map(function (x) { var bad = /확인|필요|실패/.test(x[3] || ''); return '<div class="lrow' + (bad ? ' hl' : '') + '"><div><b>' + esc(x[0]) + '</b><small>' + esc(x[1] || '') + '</small></div><div class="r"><strong>' + esc(x[2] || '—') + '</strong>' + (x[3] ? pill(x[3]) : '') + '</div></div>'; }).join('') + '</div></div>';
     },
     'c-balance': function (c, d) {
@@ -183,7 +183,7 @@ var BPCards = (function () {
     'c-num': function (c, d) {
       var p = lines(c.b), m0 = String(p[0] || '').match(/^\d{1,2}/), big = m0 ? m0[0] : '';
       return '<div class="k CN">' +
-        '<div class="eyebrow">BenePip<br>Broker Guide</div>' + (c.k ? '<div class="kicker" style="margin-top:90px">' + esc(c.k) + '</div>' : '') + '<h1' + (c.k ? ' style="margin-top:22px"' : '') + '>' + hi(c.t) + '</h1>' +
+        '<div class="eyebrow">Orbis Securities<br>Guide</div>' + (c.k ? '<div class="kicker" style="margin-top:90px">' + esc(c.k) + '</div>' : '') + '<h1' + (c.k ? ' style="margin-top:22px"' : '') + '>' + hi(c.t) + '</h1>' +
         (big ? '<div class="bign">' + esc(big) + '</div><div class="tags">' + p.slice(1, 4).map(function (x) { return '<span>' + esc(x) + '</span>'; }).join('') + '</div>'
           : '<div class="art" style="position:absolute;width:520px;height:520px;left:96px;bottom:120px">' + icon(c.icon || 'wallet') + '</div>') + logo() + '</div>';
     },
@@ -322,32 +322,32 @@ var BPCards = (function () {
   var SAMPLES = {
     'c-report': { g: '경제 캘린더·이벤트', c: { t: '이번 주 밤에\n차트 볼 날은 “사흘”', b: '수 | 영국 CPI | 15:00\n목 | 미국 실업수당 | 21:30\n금 | 미국 PMI | 22:45', n: '10월 넷째 주 · 한국 시간' } },
     'c-edit': { g: '플랫폼 활용', c: { k: 'MT5 처음 켰다면', t: '0.5랏으로 20pip,\n“원화로 얼마”일까?', b: '플랫폼 활용 · 계산 3단계', icon: 'calculator' } },
-    'c-receipt': { g: '거래비용·페이백', c: { k: '페이백 계산 사례', t: '한 달 30랏 거래하면\n“페이백은 얼마?”', b: '10월 페이백 내역\n거래량 | 30랏\n랏당 페이백 | $3\n합계 | $90.00', n: '예시' } },
-    'c-issue': { g: '거래비용·페이백', c: { k: '페이백 적립 체크', t: '페이백 신청했는데\n“적립이 안 된다면?”', b: '베네핍 · 페이백 내역\n9월 넷째 주 | 스탠다드 | $12.40 | 적립 완료\n10월 첫째 주 | 로우 스프레드 | $0.00 | 확인 필요\n10월 둘째 주 | 스탠다드 | — | 집계 중' } },
+    'c-receipt': { g: '거래비용·스프레드', c: { k: '거래 비용 계산 사례', t: '한 달 30랏 거래하면\n“비용은 얼마?”', b: '한 달 거래 비용\n거래량 | 30랏\n1랏당 비용 | $12\n합계 | $360.00', n: '예시' } },
+    'c-issue': { g: '거래비용·스프레드', c: { k: '입금 확인 체크', t: '입금했는데 거래 계좌에\n“잔고가 0이라면?”', b: 'Orbis Securities · 입출금 내역\n10/1 | 지갑 입금 | $500.00 | 완료\n10/1 | 지갑 → 거래 계좌 | $0.00 | 확인 필요\n10/2 | 지갑 입금 | — | 처리 중' } },
     'c-balance': { g: '혜택·적용 조건', c: { k: '혜택·적용 조건', t: '가입 크레딧으로\n번 수익, “출금\n가능할까?”', b: '크레딧 | $100 | 출금 안 돼요\n수익 | $30 | 조건 채우면 가능' } },
-    'c-num': { g: '브로커 이용 가이드', c: { t: '해외 브로커 출금이\n“늦어지는 이유”', b: '3\n인증\n입금 수단\n증거금' } },
-    'c-state': { g: '베네핍 이용 안내', c: { k: '베네핍 이용 안내', t: '페이백 적립 전,\n“UID 연결”이\n필요한 이유', b: 'UID 연결 전 | 거래해도 적립되지 않아요 | 누구의 거래인지 알 수 없어서\nUID 연결 후 | 그날 거래부터 적립돼요 | 브로커가 회원으로 인식' } },
+    'c-num': { g: '계좌 이용 가이드', c: { t: '출금이\n“늦어지는 이유”', b: '3\n인증\n입금 수단\n증거금' } },
+    'c-state': { g: 'Orbis 이용 안내', c: { k: 'Orbis Securities 이용 안내', t: '입금 뒤 “이체”가\n필요한 이유', b: '이체 전 | 입금액은 지갑에 있습니다 | 거래 계좌 잔고는 그대로\n이체 후 | 거래 계좌에 반영됩니다 | 그때부터 주문 가능' } },
     'c-plain': { g: '', c: { k: '머리말', t: '기본 표지\n“제목”만 크게', b: '아래 상자 첫 줄\n작은 설명' } },
-    body: { k: '기본', t: '내 거래도\n“페이백 대상”일까요?', b: '적용되는 계좌 유형과 거래 상품을 확인하세요.\n최소 거래량이나 제외되는 거래 조건도 함께 살펴보세요.' },
-    big: { t: '페이백은 수익이 아니라\n“거래 비용을 줄이는”\n쪽에 가까워요', b: '거래 결과와 상관없이 거래량 기준으로 쌓여요.' },
-    vs: { k: '헷갈리는 것', t: 'UID와 계좌번호,\n“뭐가 달라요?”', b: 'UID | 회원 번호 | 계좌번호 | MT5 로그인\n뜻 | 회원 한 명당 하나 | 계좌마다 하나\n어디에 | 회원 페이지 프로필 | 계좌 목록' },
+    body: { k: '기본', t: '내 계좌도\n“프로모션 대상”일까요?', b: '적용되는 계좌 유형과 기간을 확인합니다.\n거래량 조건과 제외되는 경우도 함께 살펴봅니다.' },
+    big: { t: '스프레드는 수수료가\n없어도 내는\n“거래 비용”입니다', b: '주문이 체결될 때마다 거래량만큼 쌓입니다.' },
+    vs: { k: '헷갈리는 것', t: '지갑과 거래 계좌,\n“무엇이 다를까?”', b: '지갑 | 돈이 드나드는 곳 | 거래 계좌 | 주문에 쓰는 곳\n입금 | 지갑으로 들어옴 | 이체해야 반영\n확인 | 회원 페이지 | MT4·MT5 플랫폼' },
     table: { k: '저장용 계산표', t: '자주 쓰는 랏,\n“달러로 미리” 보기', b: 'EUR/USD | 10pip | 50pip\n0.01랏 | $1 | $5\n0.1랏 | $10 | $50\n1랏 | *$100 | *$500' },
     steps: { k: '계산 3단계', t: '랏 → 달러 → “원화”', b: '내 랏 크기 확인 | MT5 거래 탭의 볼륨\n움직인 pip 수 곱하기 | 랏 × pip × 10달러\n그날 환율 곱하기 | 원화로 바꿔 보기' },
-    flow: { k: '어디서 막혔을까', t: '위에서부터\n“순서대로” 확인', b: 'UID가 연결돼 있나요? | 연결부터 하기\n그 계좌도 대상인가요? | 대상 계좌 확인\n지급일이 지났나요? | 다음 지급일 대기\n모두 예라면 베네핍에 문의' },
+    flow: { k: '어디서 막혔을까', t: '위에서부터\n“순서대로” 확인', b: '지갑에 입금됐습니까? | 입금 내역 확인\n거래 계좌로 옮겼습니까? | 이체하기\n로그인한 계좌가 맞습니까? | 계좌 번호 확인\n모두 예라면 고객지원에 문의' },
     stat: { k: '기준 숫자', t: 'EUR/USD 1랏,\n1pip 움직이면', b: '10달러\n가격이 0.0001 움직이면 10달러가 변해요.\n0.1랏 | 1달러\n*1랏 | 10달러' },
     calc: { k: '예시로 계산', t: '0.5랏으로\n“20pip” 움직였다면', b: '랏 × pip × 10달러 | 0.5 × 20 × 10\n× 환율 (예시) | 1,380원\n원화로 | 약 138,000원' },
-    ui: { k: '어디서 찾나요', t: '회원 페이지\n“프로필”에 있어요', b: '내 프로필\n이름 | HONG GILDONG\n*회원 번호 (UID) | 8123 4567\n인증 상태 | 승인', n: '메뉴 이름은 브로커마다 달라요.' },
-    qa: { k: '자주 묻는 것', t: '연결하다가\n막히는 순간', b: 'UID를 넣었는데 확인 중이에요 | 브로커 쪽 확인이 필요해요.\n계좌를 새로 만들면 다시 연결하나요? | 같은 UID 아래 계좌면 그대로예요.' },
+    ui: { k: '어디서 찾나요', t: '회원 페이지\n“자금 관리”에 있습니다', b: '자금 관리\n입금 | 지갑으로 들어옵니다\n*이체 | 지갑 → 거래 계좌\n출금 | 지갑에서 나갑니다', n: '메뉴 이름은 화면 개편에 따라 달라질 수 있습니다.' },
+    qa: { k: '자주 묻는 것', t: '이체하다가\n막히는 순간', b: '어느 계좌로 옮겨야 합니까? | 거래할 MT4·MT5 계좌 번호를 고르면 됩니다.\n출금할 때는 어떻게 합니까? | 지갑으로 먼저 옮긴 뒤 출금합니다.' },
     warn: { k: '놓치기 쉬운 것', t: '크레딧이\n“사라지는” 경우', b: '사용 기한이 지났어요 | 지급일부터 세는 곳이 많아요\n조건 전에 출금을 신청했어요 | 크레딧이 한꺼번에 빠질 수 있어요' },
     event: { k: '수요일 · 영국', t: '영국 “소비자물가”\n(CPI) 발표', b: '10/21 수 | 15:00\n영향 통화 | GBP\n중요도 | 높음\n- 파운드 쌍 스프레드가 넓어지는지' },
     check: { k: '발표 시간대 체크', t: '큰 발표 앞뒤로\n“이 세 가지”만 점검', b: '스프레드 확대 | 발표 직후\n증거금 여유 | 급변 대비\n대기 주문 위치 | 미끄러짐' },
     reason: { t: '인증이\n“승인이 아니에요”', b: '하나라도 검토 중이면 출금이 잠겨요.\n신분증 | 승인\n주소 증명 | 검토 중' },
     route: { k: '수단별 순서', t: '어디로\n“먼저” 돌아올까', b: '카드로 입금한 금액 | 카드로 먼저 환불 | 입금액까지만\n그 위의 수익 | 해외 송금 | 본인 명의만' },
-    myth: { k: '흔한 오해', t: '페이백 받으면\n\u201c거래 비용\u201d이 늘어난다?', b: '페이백을 받으면 스프레드가 넓어진다\n스프레드·수수료는 그대로, 브로커 몫 일부를 돌려받는 구조예요\n계좌 유형별 스프레드는 브로커 페이지에서 같은 기준으로 비교할 수 있어요.' },
-    'e-checks': { k: '캡처해두고 체크', t: '문의하기 전\n여기까지 했나요?', b: 'UID 연결 날짜 확인 | 그 전 거래는 적립 안 돼요\n계좌 유형 확인 | ECN은 다를 수 있어요\n거래 내역 캡처 | 같이 보내면 빨라요' },
+    myth: { k: '흔한 오해', t: '수수료 0원이면\n\u201c비용도 0원\u201d?', b: '수수료가 없는 계좌는 거래 비용이 없다\n수수료가 없어도 스프레드에 비용이 들어 있습니다\n1랏 기준 비용으로 바꾸면 비교가 쉽습니다.' },
+    'e-checks': { k: '캡처해두고 체크', t: '문의하기 전\n여기까지 했나요?', b: '지갑 잔고 확인 | 입금이 들어왔는지\n이체 내역 확인 | 거래 계좌로 옮겼는지\n화면 캡처 | 같이 보내면 빠릅니다' },
     'e-msg': { k: '그래도 늦어진다면', t: '고객센터에\n“이렇게” 보내세요', b: 'Hello, I requested a withdrawal on [10/20] (ID [123456]). Could you tell me the current status? Thank you.', n: '밑줄 친 곳만 내 정보로 바꿔요.' },
-    'e-timeline': { k: '예시로 보면', t: '언제 연결했는지가\n“적립 시작일”이에요', b: '10/1 | 가입\n10/5 | 첫 거래\n*10/8 | UID 연결\n10/9 | 거래\n전: 10/5 거래는 적립 안 됨\n후: 10/9 거래부터 적립' },
-    'e-fill': { k: '내 숫자로', t: '캡처해두고\n“빈칸”만 채워 보세요', b: '한 달 거래량 (랏)\n× 랏당 페이백 ($)\n= 한 달 페이백' },
+    'e-timeline': { k: '예시로 보면', t: '입금부터 첫 주문까지\n“세 단계”입니다', b: '1 | 지갑으로 입금\n*2 | 지갑 → 거래 계좌 이체\n3 | 플랫폼에서 주문\n전: 지갑에만 있으면 주문 불가\n후: 이체가 끝나면 주문 가능' },
+    'e-fill': { k: '내 숫자로', t: '캡처해두고\n“빈칸”만 채워 보세요', b: '한 달 거래량 (랏)\n× 1랏당 비용 ($)\n= 한 달 거래 비용' },
     'e-sum': { k: '한 장 요약', t: '이번 주\n“표시해 둘 시간”', b: '수 15:00 | 영국 CPI\n목 21:30 | 미국 실업수당\n금 22:45 | 미국 PMI' }
   };
   // 예시 카드 한 장 (where: 'cover' | 'body' | 'end')
