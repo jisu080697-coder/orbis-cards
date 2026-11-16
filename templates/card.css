@@ -1,0 +1,82 @@
+/* BenePip 카드뉴스 템플릿 · 1080×1350 (인스타 세로형) 기준 */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+
+:root {
+  --ink: #13213b; --ink-2: #333d4b; --faint: #8b95a1; --line: #e5e8ee;
+  --primary: #2455f5; --primary-soft: #eaf0ff;
+  --grad-text: linear-gradient(90deg, #2455f5, #7a5cff 52%, #18a0fb);
+  --grad-card: linear-gradient(135deg, #f7f9ff 0%, #c9d8ff 34%, #d9ccff 62%, #ffe0cc 100%);
+}
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 1080px; height: 1350px; overflow: hidden; }
+body { font-family: 'Pretendard Variable', Pretendard, sans-serif; -webkit-font-smoothing: antialiased; color: var(--ink); }
+
+.card { position: relative; width: 1080px; height: 1350px; padding: 96px 92px 84px; display: flex; flex-direction: column; background: #fff; }
+.hd { display: flex; justify-content: space-between; align-items: center; }
+.hd img { height: 64px; }
+.tag { font-size: 40px; font-weight: 700; color: var(--primary); background: var(--primary-soft); border-radius: 999px; padding: 12px 34px; letter-spacing: -.02em; }
+.pg { position: absolute; right: 84px; bottom: 70px; font-size: 40px; font-weight: 600; color: var(--faint); }
+em { font-style: normal; background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* 표지 */
+.cover { background: var(--grad-card); }
+.cover .tag { background: rgba(255, 255, 255, .72); }
+.cover h1 { margin-top: 220px; font-size: 112px; line-height: 1.24; font-weight: 800; letter-spacing: -.045em; word-break: keep-all; }
+.cover .sub { margin-top: 56px; font-size: 54px; font-weight: 500; color: var(--ink-2); letter-spacing: -.03em; word-break: keep-all; }
+.cover .swipe { margin-top: auto; font-size: 44px; font-weight: 600; color: var(--ink); opacity: .55; }
+
+/* 본문 */
+.body .bar { width: 104px; height: 18px; border-radius: 9px; background: var(--primary); margin: 150px 0 52px; }
+.body h2 { font-size: 84px; line-height: 1.3; font-weight: 800; letter-spacing: -.045em; word-break: keep-all; }
+.body p { margin-top: 52px; font-size: 52px; line-height: 1.6; color: var(--ink-2); font-weight: 500; letter-spacing: -.03em; white-space: pre-line; word-break: keep-all; }
+
+/* 마지막 CTA */
+.last .cta { margin-top: auto; align-self: flex-start; background: var(--primary); color: #fff; font-size: 46px; font-weight: 700; border-radius: 999px; padding: 34px 58px; letter-spacing: -.02em; }
+.last .risk { margin-top: 40px; font-size: 34px; line-height: 1.5; color: var(--faint); padding-right: 140px; word-break: keep-all; }
+
+/* ── 추가 템플릿 (가운데 장) ── */
+/* 큰 숫자 */
+.stat h2 { font-size: 64px; }
+.stat .num { margin-top: 70px; font-size: 200px; line-height: 1.05; font-weight: 800; letter-spacing: -.05em; background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; word-break: keep-all; }
+.stat p { margin-top: 48px; }
+/* 체크리스트 · 단계별 */
+.list { list-style: none; padding: 0; margin-top: 64px; display: flex; flex-direction: column; gap: 30px; }
+.list li { display: flex; gap: 30px; align-items: flex-start; font-size: 50px; line-height: 1.45; font-weight: 600; color: var(--ink); letter-spacing: -.03em; word-break: keep-all; background: #f5f7fb; border-radius: 32px; padding: 30px 38px; }
+.list .ic { flex-shrink: 0; width: 68px; height: 68px; border-radius: 50%; display: grid; place-items: center; font-size: 40px; font-weight: 800; color: #fff; background: var(--primary); margin-top: -1px; }
+.check .ic { background: var(--primary); }
+.steps .ic { background: var(--ink); }
+/* 비교표 */
+.cmp { width: 100%; margin-top: 64px; border-collapse: separate; border-spacing: 0; font-size: 44px; letter-spacing: -.03em; }
+.cmp th { font-size: 42px; font-weight: 800; color: var(--primary); text-align: left; padding: 0 24px 26px; }
+.cmp td { padding: 30px 24px; border-top: 3px solid var(--line); line-height: 1.4; font-weight: 600; color: var(--ink); word-break: keep-all; vertical-align: top; }
+.cmp td:first-child { color: var(--faint); font-weight: 600; width: 30%; padding-left: 0; }
+.cmp th:first-child { padding-left: 0; }
+
+/* 줄바꿈: 제목은 줄 길이를 고르게, 강조 구간과 붙은 조사는 한 덩어리로 */
+h1, h2 { text-wrap: balance; }
+p, .sub, .list li, .cmp td { text-wrap: pretty; }
+.nw { white-space: nowrap; }
+
+/* ── 주제군별 디자인 (body 에 t-주제군 클래스) ── 표지 배경·글자색·강조색만 바꾸고 구조는 같음 */
+.cover { background: var(--cover-bg, var(--grad-card)); color: var(--cover-ink, var(--ink)); }
+.cover .sub { color: var(--cover-sub, var(--ink-2)); }
+.cover .swipe { color: var(--cover-ink, var(--ink)); }
+.cover .tag { background: var(--cover-tag-bg, rgba(255, 255, 255, .72)); color: var(--cover-tag-ink, var(--primary)); }
+.cover em { background: var(--cover-em, var(--grad-text)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.cover .pg { color: var(--cover-pg, var(--faint)); }
+
+/* 혜택·적용 조건: 민트 */
+.t-benefit { --primary: #0e9f8e; --primary-soft: #e2f6f2; --grad-text: linear-gradient(90deg, #0e9f8e, #1fb5c9 55%, #2f7fe8); --grad-card: linear-gradient(135deg, #f3fffb 0%, #c6f0e4 38%, #cde6ff 74%, #eafff5 100%); }
+/* 브로커 이용 가이드: 살구 */
+.t-guide { --primary: #e8641c; --primary-soft: #fff0e5; --grad-text: linear-gradient(90deg, #e8641c, #f39a0b 55%, #e5508a); --grad-card: linear-gradient(135deg, #fff9f2 0%, #ffdfc6 40%, #ffd2d9 76%, #fff3df 100%); }
+/* 플랫폼 활용(MT4·MT5): 어두운 트레이딩 화면 */
+.t-platform { --primary: #12a150; --primary-soft: #e5f6ec; --grad-text: linear-gradient(90deg, #12a150, #0ea5a4 60%, #2563eb);
+  --cover-bg: radial-gradient(circle at 88% 12%, rgba(34, 197, 94, .30), transparent 42%), radial-gradient(circle at 8% 92%, rgba(37, 99, 235, .38), transparent 48%), linear-gradient(160deg, #0b1322 0%, #111d33 100%);
+  --cover-ink: #fff; --cover-sub: rgba(255, 255, 255, .72); --cover-tag-bg: rgba(255, 255, 255, .12); --cover-tag-ink: #b7f5cf; --cover-em: linear-gradient(90deg, #4ade80, #a3e635); --cover-pg: rgba(255, 255, 255, .5); }
+/* 경제 캘린더·이벤트: 짙은 남색 + 금색 (리포트 느낌) */
+.t-cal { --primary: #b7811a; --primary-soft: #fbf2df; --grad-text: linear-gradient(90deg, #b7811a, #d99b1f 60%, #8a5a0b);
+  --cover-bg: radial-gradient(circle at 85% 10%, rgba(245, 196, 81, .28), transparent 40%), repeating-linear-gradient(0deg, rgba(255, 255, 255, .045) 0 2px, transparent 2px 135px), repeating-linear-gradient(90deg, rgba(255, 255, 255, .045) 0 2px, transparent 2px 135px), linear-gradient(165deg, #0d1a33 0%, #13254a 100%);
+  --cover-ink: #fff; --cover-sub: rgba(255, 255, 255, .74); --cover-tag-bg: rgba(245, 196, 81, .16); --cover-tag-ink: #f5c451; --cover-em: linear-gradient(90deg, #f7d27a, #f5b544); --cover-pg: rgba(255, 255, 255, .5); }
+/* 베네핍 이용 안내: 브랜드 파랑 */
+.t-bene { --cover-bg: radial-gradient(circle at 90% 8%, rgba(255, 255, 255, .22), transparent 40%), linear-gradient(140deg, #2455f5 0%, #3b6bff 55%, #6a5cff 100%);
+  --cover-ink: #fff; --cover-sub: rgba(255, 255, 255, .82); --cover-tag-bg: rgba(255, 255, 255, .18); --cover-tag-ink: #fff; --cover-em: linear-gradient(90deg, #ffffff, #cfe0ff); --cover-pg: rgba(255, 255, 255, .6); }

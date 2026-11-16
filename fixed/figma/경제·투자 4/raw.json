@@ -1,0 +1,301 @@
+{
+ "name": "경제·투자 4",
+ "w": 1080,
+ "h": 1350,
+ "slots": [
+  {
+   "id": "t1",
+   "layer": "BenePip",
+   "text": "BenePip",
+   "x": 879,
+   "y": 64,
+   "w": 117,
+   "h": 34,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "BenePip",
+     "size": 28,
+     "weight": 900,
+     "color": "rgba(42,79,224,1)",
+     "lh": 33.6,
+     "ls": -0.28
+    }
+   ]
+  },
+  {
+   "id": "t2",
+   "layer": "발표 직후, 이렇게 움직여요",
+   "text": "발표 직후,\n이렇게 움직여요",
+   "x": 88,
+   "y": 150,
+   "w": 595,
+   "h": 220,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "발표 직후,\n",
+     "size": 92,
+     "weight": 900,
+     "color": "rgba(255,255,255,1)",
+     "lh": 110.4,
+     "ls": -2.76
+    },
+    {
+     "t": "이렇게",
+     "size": 92,
+     "weight": 900,
+     "color": "rgba(255,225,77,1)",
+     "lh": 110.4,
+     "ls": -2.76
+    },
+    {
+     "t": " 움직여요",
+     "size": 92,
+     "weight": 900,
+     "color": "rgba(255,255,255,1)",
+     "lh": 110.4,
+     "ls": -2.76
+    }
+   ]
+  },
+  {
+   "id": "t3",
+   "layer": "발표 나면 뭐가 달라져요?",
+   "text": "발표 나면 뭐가 달라져요?",
+   "x": 124,
+   "y": 474,
+   "w": 406,
+   "h": 54,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "발표 나면 뭐가 달라져요?",
+     "size": 40,
+     "weight": 700,
+     "color": "rgba(20,32,74,1)",
+     "lh": 54,
+     "ls": -0.8
+    }
+   ]
+  },
+  {
+   "id": "t4",
+   "layer": "스프레드가 확 넓어져요",
+   "text": "스프레드가 확 넓어져요",
+   "x": 578,
+   "y": 612,
+   "w": 378,
+   "h": 54,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "스프레드가 확 넓어져요",
+     "size": 40,
+     "weight": 700,
+     "color": "rgba(20,32,74,1)",
+     "lh": 54,
+     "ls": -0.8
+    }
+   ]
+  },
+  {
+   "id": "t5",
+   "layer": "가격도 크게 튀나요?",
+   "text": "가격도 크게 튀나요?",
+   "x": 124,
+   "y": 750,
+   "w": 326,
+   "h": 54,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "가격도 크게 튀나요?",
+     "size": 40,
+     "weight": 700,
+     "color": "rgba(20,32,74,1)",
+     "lh": 54,
+     "ls": -0.8
+    }
+   ]
+  },
+  {
+   "id": "t6",
+   "layer": "몇 초 만에 크게 움직이고 주문이 밀릴 수 있어요",
+   "text": "몇 초 만에 크게 움직이고\n주문이 밀릴 수 있어요",
+   "x": 562,
+   "y": 888,
+   "w": 394,
+   "h": 108,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "몇 초 만에 크게 움직이고\n주문이 밀릴 수 있어요",
+     "size": 40,
+     "weight": 700,
+     "color": "rgba(20,32,74,1)",
+     "lh": 54,
+     "ls": -0.8
+    }
+   ]
+  },
+  {
+   "id": "t7",
+   "layer": "발표 직후 몇 분은 지켜보기가 가장 안전해요",
+   "text": "발표 직후 몇 분은\n지켜보기가 가장 안전해요",
+   "x": 88,
+   "y": 1078,
+   "w": 904,
+   "h": 114,
+   "rot": 0,
+   "align": "CENTER",
+   "valign": "TOP",
+   "autoResize": "HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "발표 직후 몇 분은\n",
+     "size": 42,
+     "weight": 700,
+     "color": "rgba(255,255,255,1)",
+     "lh": 56.7,
+     "ls": -0.84
+    },
+    {
+     "t": "지켜보기",
+     "size": 42,
+     "weight": 900,
+     "color": "rgba(255,225,77,1)",
+     "lh": 56.7,
+     "ls": -0.84
+    },
+    {
+     "t": "가 가장 안전해요",
+     "size": 42,
+     "weight": 700,
+     "color": "rgba(255,255,255,1)",
+     "lh": 56.7,
+     "ls": -0.84
+    }
+   ]
+  }
+ ],
+ "shapes": [
+  {
+   "kind": "pill",
+   "slot": "t3",
+   "x": 88,
+   "y": 450,
+   "w": 478,
+   "h": 102,
+   "rad": 36,
+   "fill": "rgba(255,255,255,1)",
+   "padL": 36,
+   "padR": 36
+  },
+  {
+   "kind": "pill",
+   "slot": "t4",
+   "x": 542,
+   "y": 588,
+   "w": 450,
+   "h": 102,
+   "rad": 36,
+   "fill": "rgba(255,225,77,1)",
+   "padL": 36,
+   "padR": 36
+  },
+  {
+   "kind": "pill",
+   "slot": "t5",
+   "x": 88,
+   "y": 726,
+   "w": 398,
+   "h": 102,
+   "rad": 36,
+   "fill": "rgba(255,255,255,1)",
+   "padL": 36,
+   "padR": 36
+  },
+  {
+   "kind": "pill",
+   "slot": "t6",
+   "x": 526,
+   "y": 864,
+   "w": 466,
+   "h": 156,
+   "rad": 36,
+   "fill": "rgba(255,225,77,1)",
+   "padL": 36,
+   "padR": 36
+  }
+ ],
+ "rects": [
+  {
+   "fill": "rgba(255,255,255,1)",
+   "x": 88,
+   "y": 450,
+   "w": 478,
+   "h": 102
+  },
+  {
+   "fill": "rgba(255,225,77,1)",
+   "x": 542,
+   "y": 588,
+   "w": 450,
+   "h": 102
+  },
+  {
+   "fill": "rgba(255,255,255,1)",
+   "x": 88,
+   "y": 726,
+   "w": 398,
+   "h": 102
+  },
+  {
+   "fill": "rgba(255,225,77,1)",
+   "x": 526,
+   "y": 864,
+   "w": 466,
+   "h": 156
+  },
+  {
+   "fill": "rgba(15,31,107,1)",
+   "x": 88,
+   "y": 1050,
+   "w": 904,
+   "h": 170
+  }
+ ]
+}

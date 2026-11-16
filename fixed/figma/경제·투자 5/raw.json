@@ -1,0 +1,321 @@
+{
+ "name": "경제·투자 5",
+ "w": 1080,
+ "h": 1350,
+ "slots": [
+  {
+   "id": "t1",
+   "layer": "BenePip",
+   "text": "BenePip",
+   "x": 879,
+   "y": 64,
+   "w": 117,
+   "h": 34,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "BenePip",
+     "size": 28,
+     "weight": 900,
+     "color": "rgba(42,79,224,1)",
+     "lh": 33.6,
+     "ls": -0.28
+    }
+   ]
+  },
+  {
+   "id": "t2",
+   "layer": "자산별 영향 한눈에 보는 TIP",
+   "text": "자산별 영향\n한눈에 보는 TIP",
+   "x": 88,
+   "y": 150,
+   "w": 595,
+   "h": 220,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "자산별 영향\n한눈에 보는 ",
+     "size": 92,
+     "weight": 900,
+     "color": "rgba(255,255,255,1)",
+     "lh": 110.4,
+     "ls": -2.76
+    },
+    {
+     "t": "TIP",
+     "size": 92,
+     "weight": 900,
+     "color": "rgba(255,225,77,1)",
+     "lh": 110.4,
+     "ls": -2.76
+    }
+   ]
+  },
+  {
+   "id": "t3",
+   "layer": "달러",
+   "text": "달러",
+   "x": 173.5,
+   "y": 493.5,
+   "w": 63,
+   "h": 43,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "달러",
+     "size": 34,
+     "weight": 900,
+     "color": "rgba(255,255,255,1)",
+     "lh": 42.5,
+     "ls": -0.51
+    }
+   ]
+  },
+  {
+   "id": "t4",
+   "layer": "금리 인상 → 달러 강세 경향",
+   "text": "금리 인상 → 달러 강세 경향",
+   "x": 320,
+   "y": 487,
+   "w": 442,
+   "h": 54,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "금리 인상 → 달러 강세 경향",
+     "size": 40,
+     "weight": 700,
+     "color": "rgba(255,255,255,1)",
+     "lh": 54,
+     "ls": -0.8
+    }
+   ]
+  },
+  {
+   "id": "t5",
+   "layer": "지수",
+   "text": "지수",
+   "x": 173.5,
+   "y": 665.5,
+   "w": 63,
+   "h": 43,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "지수",
+     "size": 34,
+     "weight": 900,
+     "color": "rgba(255,255,255,1)",
+     "lh": 42.5,
+     "ls": -0.51
+    }
+   ]
+  },
+  {
+   "id": "t6",
+   "layer": "금리 인상 → 주가 지수에 부담",
+   "text": "금리 인상 → 주가 지수에 부담",
+   "x": 320,
+   "y": 659,
+   "w": 478,
+   "h": 54,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "금리 인상 → 주가 지수에 부담",
+     "size": 40,
+     "weight": 700,
+     "color": "rgba(255,255,255,1)",
+     "lh": 54,
+     "ls": -0.8
+    }
+   ]
+  },
+  {
+   "id": "t7",
+   "layer": "금",
+   "text": "금",
+   "x": 189,
+   "y": 837.5,
+   "w": 32,
+   "h": 43,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "금",
+     "size": 34,
+     "weight": 900,
+     "color": "rgba(255,255,255,1)",
+     "lh": 42.5,
+     "ls": -0.51
+    }
+   ]
+  },
+  {
+   "id": "t8",
+   "layer": "금리 인상 → 금 가격에 부담",
+   "text": "금리 인상 → 금 가격에 부담",
+   "x": 320,
+   "y": 831,
+   "w": 442,
+   "h": 54,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "금리 인상 → 금 가격에 부담",
+     "size": 40,
+     "weight": 700,
+     "color": "rgba(255,255,255,1)",
+     "lh": 54,
+     "ls": -0.8
+    }
+   ]
+  },
+  {
+   "id": "t9",
+   "layer": "원유",
+   "text": "원유",
+   "x": 173.5,
+   "y": 1009.5,
+   "w": 63,
+   "h": 43,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "원유",
+     "size": 34,
+     "weight": 900,
+     "color": "rgba(255,255,255,1)",
+     "lh": 42.5,
+     "ls": -0.51
+    }
+   ]
+  },
+  {
+   "id": "t10",
+   "layer": "경기 전망에 따라 방향이 달라요",
+   "text": "경기 전망에 따라 방향이 달라요",
+   "x": 320,
+   "y": 1003,
+   "w": 502,
+   "h": 54,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "경기 전망에 따라 방향이 달라요",
+     "size": 40,
+     "weight": 700,
+     "color": "rgba(255,255,255,1)",
+     "lh": 54,
+     "ls": -0.8
+    }
+   ]
+  },
+  {
+   "id": "t11",
+   "layer": "* 일반적인 경향이며, 실제 움직임은 시장 상황에 따라 달라요.",
+   "text": "* 일반적인 경향이며, 실제 움직임은 시장 상황에 따라 달라요.",
+   "x": 88,
+   "y": 1150,
+   "w": 904,
+   "h": 36,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "HEIGHT",
+   "opacity": 0.75,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "* 일반적인 경향이며, 실제 움직임은 시장 상황에 따라 달라요.",
+     "size": 28,
+     "weight": 400,
+     "color": "rgba(255,255,255,1)",
+     "lh": 36.4,
+     "ls": -0.56
+    }
+   ]
+  }
+ ],
+ "shapes": [],
+ "rects": [
+  {
+   "fill": "rgba(255,255,255,0.14)",
+   "x": 88,
+   "y": 440,
+   "w": 904,
+   "h": 150
+  },
+  {
+   "fill": "rgba(255,255,255,0.14)",
+   "x": 88,
+   "y": 612,
+   "w": 904,
+   "h": 150
+  },
+  {
+   "fill": "rgba(255,255,255,0.14)",
+   "x": 88,
+   "y": 784,
+   "w": 904,
+   "h": 150
+  },
+  {
+   "fill": "rgba(255,255,255,0.14)",
+   "x": 88,
+   "y": 956,
+   "w": 904,
+   "h": 150
+  }
+ ]
+}

@@ -1,0 +1,125 @@
+{
+ "name": "경제·투자 1",
+ "w": 1080,
+ "h": 1350,
+ "slots": [
+  {
+   "id": "t1",
+   "layer": "BenePip",
+   "text": "BenePip",
+   "x": 879,
+   "y": 64,
+   "w": 117,
+   "h": 34,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "BenePip",
+     "size": 28,
+     "weight": 900,
+     "color": "rgba(42,79,224,1)",
+     "lh": 33.6,
+     "ls": -0.28
+    }
+   ]
+  },
+  {
+   "id": "t2",
+   "layer": "BenePip과 알아보는",
+   "text": "BenePip과 알아보는",
+   "x": 129,
+   "y": 210.5,
+   "w": 298,
+   "h": 43,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "BenePip과 알아보는",
+     "size": 34,
+     "weight": 700,
+     "color": "rgba(42,79,224,1)",
+     "lh": 42.5,
+     "ls": -0.51
+    }
+   ]
+  },
+  {
+   "id": "t3",
+   "layer": "금리 발표 날 계좌 점검 이렇게 해요",
+   "text": "금리 발표 날\n계좌 점검\n이렇게 해요",
+   "x": 80,
+   "y": 296,
+   "w": 723,
+   "h": 513,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "금리 발표 날\n",
+     "size": 150,
+     "weight": 900,
+     "color": "rgba(255,255,255,1)",
+     "lh": 171,
+     "ls": -6
+    },
+    {
+     "t": "계좌 점검\n",
+     "size": 150,
+     "weight": 900,
+     "color": "rgba(255,225,77,1)",
+     "lh": 171,
+     "ls": -6
+    },
+    {
+     "t": "이렇게 해요",
+     "size": 150,
+     "weight": 900,
+     "color": "rgba(255,255,255,1)",
+     "lh": 171,
+     "ls": -6
+    }
+   ]
+  },
+  {
+   "id": "t4",
+   "layer": "FOMC 전후로 꼭 볼 3가지",
+   "text": "FOMC 전후로 꼭 볼 3가지",
+   "x": 88,
+   "y": 837,
+   "w": 520,
+   "h": 65,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 0.9,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "FOMC 전후로 꼭 볼 3가지",
+     "size": 50,
+     "weight": 500,
+     "color": "rgba(255,255,255,1)",
+     "lh": 65,
+     "ls": -1
+    }
+   ]
+  }
+ ],
+ "shapes": [],
+ "rects": []
+}

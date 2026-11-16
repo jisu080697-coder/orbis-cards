@@ -1,0 +1,352 @@
+{
+ "name": "경제·투자 3",
+ "w": 1080,
+ "h": 1350,
+ "slots": [
+  {
+   "id": "t1",
+   "layer": "BenePip",
+   "text": "BenePip",
+   "x": 879,
+   "y": 64,
+   "w": 117,
+   "h": 34,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "BenePip",
+     "size": 28,
+     "weight": 900,
+     "color": "rgba(42,79,224,1)",
+     "lh": 33.6,
+     "ls": -0.28
+    }
+   ]
+  },
+  {
+   "id": "t2",
+   "layer": "발표 전 이것부터 점검",
+   "text": "발표 전\n이것부터 점검",
+   "x": 88,
+   "y": 150,
+   "w": 513,
+   "h": 220,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "발표 전\n",
+     "size": 92,
+     "weight": 900,
+     "color": "rgba(255,255,255,1)",
+     "lh": 110.4,
+     "ls": -2.76
+    },
+    {
+     "t": "이것",
+     "size": 92,
+     "weight": 900,
+     "color": "rgba(255,225,77,1)",
+     "lh": 110.4,
+     "ls": -2.76
+    },
+    {
+     "t": "부터 점검",
+     "size": 92,
+     "weight": 900,
+     "color": "rgba(255,255,255,1)",
+     "lh": 110.4,
+     "ls": -2.76
+    }
+   ]
+  },
+  {
+   "id": "t3",
+   "layer": "1",
+   "text": "1",
+   "x": 114,
+   "y": 466,
+   "w": 72,
+   "h": 72,
+   "rot": 0,
+   "align": "CENTER",
+   "valign": "CENTER",
+   "autoResize": "NONE",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "1",
+     "size": 34,
+     "weight": 900,
+     "color": "rgba(255,255,255,1)",
+     "lh": 34,
+     "ls": 0
+    }
+   ]
+  },
+  {
+   "id": "t4",
+   "layer": "발표 날짜와 한국 시간 확인",
+   "text": "발표 날짜와 한국 시간 확인",
+   "x": 214,
+   "y": 476,
+   "w": 452,
+   "h": 53,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "발표 날짜와 한국 시간 확인",
+     "size": 42,
+     "weight": 700,
+     "color": "rgba(20,32,74,1)",
+     "lh": 52.5,
+     "ls": -0.84
+    }
+   ]
+  },
+  {
+   "id": "t5",
+   "layer": "2",
+   "text": "2",
+   "x": 114,
+   "y": 614,
+   "w": 72,
+   "h": 72,
+   "rot": 0,
+   "align": "CENTER",
+   "valign": "CENTER",
+   "autoResize": "NONE",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "2",
+     "size": 34,
+     "weight": 900,
+     "color": "rgba(255,255,255,1)",
+     "lh": 34,
+     "ls": 0
+    }
+   ]
+  },
+  {
+   "id": "t6",
+   "layer": "증거금 여유 확인",
+   "text": "증거금 여유 확인",
+   "x": 214,
+   "y": 624,
+   "w": 283,
+   "h": 53,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "증거금 여유 확인",
+     "size": 42,
+     "weight": 700,
+     "color": "rgba(20,32,74,1)",
+     "lh": 52.5,
+     "ls": -0.84
+    }
+   ]
+  },
+  {
+   "id": "t7",
+   "layer": "3",
+   "text": "3",
+   "x": 114,
+   "y": 762,
+   "w": 72,
+   "h": 72,
+   "rot": 0,
+   "align": "CENTER",
+   "valign": "CENTER",
+   "autoResize": "NONE",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "3",
+     "size": 34,
+     "weight": 900,
+     "color": "rgba(255,255,255,1)",
+     "lh": 34,
+     "ls": 0
+    }
+   ]
+  },
+  {
+   "id": "t8",
+   "layer": "미체결 주문 정리",
+   "text": "미체결 주문 정리",
+   "x": 214,
+   "y": 772,
+   "w": 283,
+   "h": 53,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "미체결 주문 정리",
+     "size": 42,
+     "weight": 700,
+     "color": "rgba(20,32,74,1)",
+     "lh": 52.5,
+     "ls": -0.84
+    }
+   ]
+  },
+  {
+   "id": "t9",
+   "layer": "4",
+   "text": "4",
+   "x": 114,
+   "y": 910,
+   "w": 72,
+   "h": 72,
+   "rot": 0,
+   "align": "CENTER",
+   "valign": "CENTER",
+   "autoResize": "NONE",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "4",
+     "size": 34,
+     "weight": 900,
+     "color": "rgba(255,255,255,1)",
+     "lh": 34,
+     "ls": 0
+    }
+   ]
+  },
+  {
+   "id": "t10",
+   "layer": "손절 주문 다시 보기",
+   "text": "손절 주문 다시 보기",
+   "x": 214,
+   "y": 920,
+   "w": 330,
+   "h": 53,
+   "rot": 0,
+   "align": "LEFT",
+   "valign": "TOP",
+   "autoResize": "WIDTH_AND_HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "손절 주문 다시 보기",
+     "size": 42,
+     "weight": 700,
+     "color": "rgba(20,32,74,1)",
+     "lh": 52.5,
+     "ls": -0.84
+    }
+   ]
+  },
+  {
+   "id": "t11",
+   "layer": "무리한 진입보다 계좌 안전이 먼저예요",
+   "text": "무리한 진입보다\n계좌 안전이 먼저예요",
+   "x": 88,
+   "y": 1078,
+   "w": 904,
+   "h": 114,
+   "rot": 0,
+   "align": "CENTER",
+   "valign": "TOP",
+   "autoResize": "HEIGHT",
+   "opacity": 1,
+   "blur": 0,
+   "segs": [
+    {
+     "t": "무리한 진입보다\n",
+     "size": 42,
+     "weight": 700,
+     "color": "rgba(255,255,255,1)",
+     "lh": 56.7,
+     "ls": -0.84
+    },
+    {
+     "t": "계좌 안전",
+     "size": 42,
+     "weight": 900,
+     "color": "rgba(255,225,77,1)",
+     "lh": 56.7,
+     "ls": -0.84
+    },
+    {
+     "t": "이 먼저예요",
+     "size": 42,
+     "weight": 700,
+     "color": "rgba(255,255,255,1)",
+     "lh": 56.7,
+     "ls": -0.84
+    }
+   ]
+  }
+ ],
+ "shapes": [],
+ "rects": [
+  {
+   "fill": "rgba(255,255,255,1)",
+   "x": 88,
+   "y": 440,
+   "w": 904,
+   "h": 124
+  },
+  {
+   "fill": "rgba(255,255,255,1)",
+   "x": 88,
+   "y": 588,
+   "w": 904,
+   "h": 124
+  },
+  {
+   "fill": "rgba(255,255,255,1)",
+   "x": 88,
+   "y": 736,
+   "w": 904,
+   "h": 124
+  },
+  {
+   "fill": "rgba(255,255,255,1)",
+   "x": 88,
+   "y": 884,
+   "w": 904,
+   "h": 124
+  },
+  {
+   "fill": "rgba(15,31,107,1)",
+   "x": 88,
+   "y": 1050,
+   "w": 904,
+   "h": 170
+  }
+ ]
+}

@@ -1,0 +1,306 @@
+/* BenePip 카드 본문 구성 변형 · 디자인은 기존 틀(v3·v4) 그대로, 레퍼런스의 "배치"만 참고
+   cmp-center: 가운데 정렬 (큰 숫자 · 오해 vs 사실 · 한 문장 일부)
+   cmp-right : 오른쪽 정렬 글 + 왼쪽 아래 큰 사물 (짧은 기본 장)
+   cmp-bottom: 위에 화면 조각, 아래에 제목 (앱 화면 · 계산 상자)
+   cmp-grid  : 2칸 타일 (항목 3~4개 체크리스트) */
+.P::before, .P::after { display: none !important; }
+
+/* 가운데 */
+.P.cmp-center { align-items: center; text-align: center; }
+.P.cmp-center .logo { align-self: flex-start; }
+.P.cmp-center .head { justify-content: center; width: 100%; }
+.P.cmp-center h2, .P.cmp-center .stat-cap, .P.cmp-center .stmt, .P.cmp-center .stmt-sub, .P.cmp-center .myth-sub { text-align: center; width: 100%; }
+.P.cmp-center .stat { justify-content: center; margin-top: 90px; }
+.P.cmp-center .stat .n { font-size: 260px; }
+.P.cmp-center .bars, .P.cmp-center .myth { width: 100%; text-align: left; }
+.P.big.cmp-center .stmt { margin-top: auto; }
+.P.big.cmp-center .stmt-sub { margin-bottom: auto; }
+
+/* 오른쪽 정렬 + 왼쪽 아래 사물 */
+.P.cmp-right { align-items: flex-end; text-align: right; }
+.P.cmp-right .logo { align-self: flex-start; }
+.P.cmp-right .head { justify-content: flex-end; width: 100%; }
+.P.cmp-right h2 { text-align: right; }
+.P.cmp-right .lead, .P.cmp-right .pts, .P.cmp-right .desc { max-width: 640px; text-align: right; }
+.P.cmp-right .pts div { padding: 30px 40px 30px 0; }
+.P.cmp-right .pts div::before { left: auto; right: 0; }
+.P.cmp-right .obj { display: block; position: absolute; left: -70px; bottom: 90px; width: 480px; height: 480px; transform: rotate(-8deg); pointer-events: none; }
+.P.cmp-right .obj .gi { width: 100%; height: 100%; }
+.P .obj { display: none; }
+
+/* 위에 화면, 아래에 제목 */
+.P.cmp-bottom .ui, .P.cmp-bottom .calc { order: 1; margin-top: 70px; }
+.P.cmp-bottom .head { order: 2; margin-top: auto; }
+.P.cmp-bottom h2 { order: 3; }
+.P.cmp-bottom .head + h2 { margin-top: 24px; }
+.P.cmp-bottom .logo + h2 { margin-top: auto; }
+.P.cmp-bottom .ui-tip { order: 4; margin-top: 24px; margin-bottom: 60px; }
+.P.cmp-bottom.L-calc h2 { margin-bottom: 70px; }
+
+/* 2칸 타일 */
+.P.cmp-grid .list, .P.cmp-grid .checks { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; border-top: none; margin-top: 64px; }
+.P.cmp-grid .list > div, .P.cmp-grid .checks > div { flex-direction: column; align-items: flex-start; gap: 18px; background: var(--gray-100); border-radius: 32px; padding: 40px 36px; border: none; min-height: 270px; }
+.P.cmp-grid.soft .list > div, .P.cmp-grid.soft .checks > div { background: #fff; }
+.P.cmp-grid.dark .list > div, .P.cmp-grid.dark .checks > div { background: rgba(255, 255, 255, .06); }
+.P.cmp-grid .list em { padding-left: 0; flex-basis: auto; }
+.P.cmp-grid .checks b { font-size: 42px; }
+
+/* 오해 vs 사실 (기존 틀 색·상자) */
+.P .myth { margin-top: 70px; display: grid; gap: 24px; }
+.P .myth > div { border-radius: 36px; padding: 40px 46px; background: var(--gray-100); }
+.P.soft .myth > div:first-child { background: #fff; }
+.P .myth > div.fact { background: var(--blue); color: #fff; }
+.P .myth .lb { display: flex; align-items: center; gap: 18px; font-size: 38px; font-weight: 800; }
+.P .myth .tg { width: 92px; height: 50px; border-radius: 25px; background: #d5dae2; position: relative; flex-shrink: 0; }
+.P .myth .tg::after { content: ''; position: absolute; left: 6px; top: 6px; width: 38px; height: 38px; border-radius: 50%; background: #fff; }
+.P .myth .fact .tg { background: #fff; }
+.P .myth .fact .tg::after { left: auto; right: 6px; background: var(--blue); }
+.P .myth p { margin-top: 18px; font-size: 44px; line-height: 1.45; font-weight: 700; letter-spacing: -.035em; word-break: keep-all; color: inherit; }
+.P .myth > div:first-child p { color: var(--gray-500); text-decoration: line-through; text-decoration-color: rgba(240, 68, 82, .7); text-decoration-thickness: 4px; }
+.P .myth .fact p { color: #fff; }
+.P .myth-sub { margin-top: 40px; font-size: 38px; line-height: 1.5; color: var(--sub); font-weight: 500; word-break: keep-all; }
+.P.dark .myth > div:first-child { background: rgba(255, 255, 255, .08); }
+
+/* ── 줄바꿈: 단어 중간에서 끊지 않고, 줄 길이를 고르게 ── */
+.k, .k * { word-break: keep-all; overflow-wrap: break-word; }
+.k h1, .k h2, .k .lead, .k .stmt, .k .stat-cap, .k .kicker { text-wrap: balance; }
+.k p, .k .desc, .k .pts div, .k .list div, .k .steps span, .k .warn div, .k .warn em, .k .myth-sub, .k .stmt-sub, .k .ui-tip, .k .msg-ko, .k .look p, .k em { text-wrap: pretty; }
+.P .vs p { color: inherit; }
+.P.dark .vs p em { color: rgba(255, 255, 255, .55); }
+
+/* ── 작은 그림 (기본·주의·묻고답하기·순서 장 오른쪽 위) ── */
+.P .spot { position: absolute; right: 80px; top: 120px; width: 230px; height: 230px; pointer-events: none; }
+.P .spot .gi { width: 100%; height: 100%; }
+.P.has-spot h2 { max-width: 660px; }
+.P.has-spot .head { max-width: 640px; }
+
+/* ── 경제 캘린더 표지: 요일 칸은 표시만, 발표는 줄 목록, 그림은 오른쪽 아래 ── */
+.CR .week { margin-top: 56px; }
+.CR .week div { min-height: 150px; padding: 26px 22px; }
+.CR .week span { font-size: 30px; margin-top: 14px; }
+.CR .evs { margin-top: 30px; border-top: 4px solid var(--navy); max-width: 620px; }
+.CR .evs div { display: grid; grid-template-columns: 70px 140px 1fr; align-items: center; padding: 26px 0; border-bottom: 2px solid #e5e8eb; font-size: 38px; font-weight: 700; letter-spacing: -.03em; }
+.CR .evs b { color: var(--blue); font-weight: 800; }
+.CR .evs span { color: var(--gray-700); font-weight: 800; }
+.CR .evs em { font-style: normal; }
+.CR .art { width: 380px !important; height: 380px !important; right: 30px !important; top: auto !important; bottom: 120px; transform: rotate(8deg); }
+
+.P .ev .when b { white-space: nowrap; font-size: 88px; }
+.CR .evs { max-width: 560px; } .CR .art { width: 330px !important; height: 330px !important; right: 24px !important; bottom: 130px; }
+
+/* ── 사진 (Pexels) · 제목 아래 사진, 그 아래 글 (HP·7린지 구성) ── */
+.P .photo { margin-top: 48px; height: 500px; border-radius: 36px; background: #e9eef8 center / cover no-repeat; flex-shrink: 0; }
+.P.big .photo { margin-top: 70px; height: 560px; }
+.P.has-photo .lead { margin-top: 44px; }
+.P.has-photo .stmt { margin-top: 56px; }
+.P.has-photo .pts, .P.has-photo .list, .P.has-photo .warn, .P.has-photo .qa, .P.has-photo .myth { margin-top: 40px; }
+
+/* 기본 표지: 오른쪽 아래 그림 · 발표 장 값 칸 줄바꿈 없이 */
+.CP .art { width: 520px; height: 520px; right: 60px; top: auto; bottom: 230px; }
+.P .ev .what div { gap: 16px; align-items: baseline; }
+.P .ev .what div span { white-space: nowrap; }
+.P .ev .what div { font-size: 32px; }
+
+/* 발표 장 두 번째 모양: 시각 칸을 오른쪽으로 (같은 모양이 이어지지 않게) */
+.P.cmp-ev2 .ev { grid-template-columns: 1fr 320px; }
+.P.cmp-ev2 .ev .when { order: 2; background: var(--navy); }
+.P.cmp-ev2 .ev .what { order: 1; }
+.P.cmp-ev2.dark .ev .when { background: var(--blue); }
+/* 요약 장: 보조 글을 항목 아래 큰 글씨로 */
+.P.sum .recap div { flex-wrap: wrap; row-gap: 6px; }
+.P.sum .recap em { flex-basis: 100%; margin-left: 0; padding-left: 94px; font-size: 34px; opacity: .8; white-space: normal; }
+
+/* 경제 캘린더 표지 v2: 제목 + 날짜 범위 + 지표 이름 칩 */
+.CR2 .kicker { margin-top: 90px; }
+.CR2 h1 { margin-top: 24px; font-size: 96px; }
+.CR2 .range { margin-top: 30px; font-size: 44px; font-weight: 700; color: var(--gray-700); letter-spacing: -.03em; }
+.CR2 .names { margin-top: 56px; display: flex; flex-wrap: wrap; gap: 16px; max-width: 760px; }
+.CR2 .names span { background: var(--blue-soft); color: var(--blue); border-radius: 999px; padding: 16px 30px; font-size: 38px; font-weight: 800; letter-spacing: -.03em; }
+.CR2 .art { width: 400px !important; height: 400px !important; right: 30px !important; top: auto !important; bottom: 110px; transform: rotate(8deg); }
+/* 발표 장 그림: 이전 → 예상 막대 */
+.P .cmpbar { margin-top: 40px; display: grid; gap: 22px; }
+.P .cmpbar div { display: grid; grid-template-columns: 110px 1fr 190px; align-items: center; gap: 22px; font-size: 38px; font-weight: 800; }
+.P .cmpbar span { color: var(--mute); font-size: 34px; }
+.P .cmpbar s { display: block; height: 56px; border-radius: 16px; background: var(--gray-300); }
+.P .cmpbar .on s { background: var(--c); }
+.P .cmpbar b { text-align: right; } .P .cmpbar .on b { color: var(--c); }
+/* 발표 장 그림: 기준선 게이지 (PMI 등) */
+.P .gauge { margin-top: 44px; }
+.P .gauge .bar { position: relative; height: 28px; border-radius: 14px; background: linear-gradient(90deg, #ffd9dc, var(--blue-soft) 50%, #cfdcff); margin: 60px 10px 0; }
+.P .gauge i { position: absolute; top: 50%; width: 44px; height: 44px; margin-left: -22px; margin-top: -22px; border-radius: 50%; box-shadow: 0 6px 16px rgba(19, 33, 59, .2); }
+.P .gauge i.pv { background: var(--gray-300); border: 6px solid #fff; }
+.P .gauge i.fc { background: var(--blue); border: 6px solid #fff; }
+.P .gauge i.base { width: 6px; height: 80px; margin-left: -3px; margin-top: -40px; border-radius: 3px; background: var(--navy); box-shadow: none; }
+.P .gauge i.base em { position: absolute; top: -50px; left: 50%; transform: translateX(-50%); font-style: normal; font-size: 32px; font-weight: 800; }
+.P .gauge .leg { margin-top: 34px; display: flex; gap: 26px; flex-wrap: wrap; font-size: 32px; font-weight: 700; color: var(--mute); }
+.P .gauge .leg .fc { color: var(--blue); } .P .gauge .leg .pv { color: var(--gray-700); }
+/* 볼 것: 최대 2줄 · 큰 글씨 */
+.P .look p { font-size: 40px; }
+
+/* 정보가 한 줄뿐이면 크게 가운데 */
+.P .ev .what.one { display: flex; flex-direction: column; justify-content: center; }
+.P .ev .what.one div { flex-direction: column; align-items: flex-start; gap: 10px; font-size: 54px; font-weight: 800; letter-spacing: -.04em; }
+.P .ev .what.one div span { font-size: 32px; font-weight: 700; }
+
+/* ── 하네스 1차 (AI 심사 21세트 평균 5.6 · 1순위 지적 "휴대폰에서 보조 글씨가 작다") → 글씨 크기 기본값 올림 ── */
+.P .desc, .P .stat-cap, .P .stmt-sub, .P .myth-sub, .P .ui-tip, .P .msg-ko { font-size: 42px; }
+.P .lead { font-size: 54px; }
+.P .pts div { font-size: 42px; }
+.P .src, .P .risk { font-size: 30px; }
+.P .list div { font-size: 46px; } .P .list em { font-size: 38px; }
+.P .steps b { font-size: 50px; } .P .steps span { font-size: 40px; }
+.P .tbl span { font-size: 40px; padding: 30px 18px 30px 0; } .P .tbl div:first-child span { font-size: 34px; }
+.P .vs h3 { font-size: 50px; } .P .vs h3 small { font-size: 34px; } .P .vs p { font-size: 42px; } .P .vs p em { font-size: 34px; }
+.P .warn div { font-size: 44px; } .P .warn em { font-size: 38px; }
+.P .checks b { font-size: 46px; } .P .checks span { font-size: 38px; }
+.P .qa p { font-size: 42px; }
+.P .ui .row { font-size: 40px; } .P .ui .bar { font-size: 34px; }
+.P .calc div { font-size: 42px; } .P .calc .eq { font-size: 54px; }
+.P .look p { font-size: 42px; } .P .look h4 { font-size: 36px; }
+.P .ev .what:not(.one) div { font-size: 38px; } .P .ev .what:not(.one) div span { font-size: 34px; }
+.P .flow .fq { font-size: 42px; } .P .flow .fa { font-size: 36px; } .P .flow .fa small { font-size: 32px; }
+.P .bars div { font-size: 38px; } .P .cmpbar div { font-size: 42px; } .P .gauge .leg { font-size: 36px; }
+.P .route span { font-size: 40px; } .P .route small { font-size: 34px; }
+.P .tl b { font-size: 44px; } .P .tl span { font-size: 36px; } .P .tl-span div { font-size: 38px; }
+.P .fill > div { font-size: 46px; }
+.P.sum .recap div { font-size: 46px; } .P.sum .recap em { font-size: 38px; }
+.P .myth p { font-size: 46px; }
+.P .chip { font-size: 36px; }
+/* 표지 보조 글씨 */
+.uic .cap { font-size: 34px; } .lrow b { font-size: 42px; } .lrow small { font-size: 34px; }
+.rcpt .ln { font-size: 42px; } .rcpt .d { font-size: 34px; }
+.bal .leg div { font-size: 38px; } .bal .leg div span { font-size: 34px; }
+.CD .st span { font-size: 38px; }
+.CN .tags span { font-size: 46px; }
+.box b { font-size: 44px; } .box span { font-size: 36px; }
+
+/* ── 하네스 2차 (시안 점검) · 표·단계·체크의 회색 보조 글씨, 하단 메모 ── */
+.P .steps span { font-size: 42px; } .P .tbl div:first-child span { font-size: 36px; }
+.P .checks span, .P .warn em, .P .list em, .P .recap em { font-size: 40px; }
+.P .route small, .P .vs p em, .P .vs h3 small { font-size: 36px; }
+.P > .src { font-size: 32px; }
+.P .look p:only-of-type { font-size: 50px; font-weight: 800; line-height: 1.4; }
+.P .ev .what.one div { font-size: 54px; } .P .ev .what.one div span { font-size: 34px; }
+/* ── 디테일 다듬기 (시안 점검) ── */
+/* 짧은 칸에서 마지막 단어만 다음 줄로 떨어지는 것 막기 */
+.k .route span, .k .tl-span div, .k .uic .lrow b, .k .what div, .k .look p, .k .stmt-sub, .k .desc { text-wrap: balance; }
+/* 이유 장: 흐린 큰 번호가 예시 상자 뒤에 가려지면 오른쪽 위로 */
+.P.rs:has(.uic) .rn { top: 150px; bottom: auto; font-size: 340px; }
+/* 게이지 범례: 기준 설명은 한 줄 따로 */
+.P .gauge .leg span:last-child { flex-basis: 100%; }
+/* 상자가 카드 오른쪽 밖으로 삐져나가지 않게 (좌우 여백 같게) */
+.P .ui, .P.rs .uic, .P .calc { margin-right: 0; padding-right: 48px; }
+.P .calc { border-radius: 40px; padding-right: 52px; }
+.P .gauge { margin-top: 24px; } .P .gauge .bar { margin-top: 52px; } .P .gauge .leg { margin-top: 22px; row-gap: 6px; }
+/* 본문 상자는 기울이지 않고 정면으로 (표지 카드·그림 아이콘의 기울임은 유지) */
+.P .ui, .P.rs .uic { transform: none; }
+
+/* 외부 피드백: 하단 안내 문구·메모 글씨 키움 (휴대폰 가독성) */
+.P > .src, .P .src { font-size: 36px; line-height: 1.4; }
+.P .risk { font-size: 32px; line-height: 1.45; }
+
+/* ══ 글씨 크기 체계 (모든 장 공통 · 들쭉날쭉 방지) ══
+   표지 제목 96 · 장 제목 80 · 본문 44 · 보조 설명 36 · 메모 34 · 위험 고지 30 · 쪽 번호 32 */
+.k:not(.P) h1 { font-size: 96px !important; }
+.P h2 { font-size: 80px !important; }
+/* 본문 44: 설명 문단과 항목의 주 문장 */
+.P .desc, .P .stmt-sub, .P .myth-sub, .P .ui-tip, .P .lead, .P .pts div,
+.P .list div, .P .steps b, .P .checks b, .P .warn div, .P .route span, .P.sum .recap div, .P .fill > div,
+.P .tbl div:not(:first-child) span, .P .vs p, .P .qa p, .P .calc div, .P .look p, .P .bars div, .P .cmpbar div,
+.P .myth p, .P .tl b, .P .flow .fq, .P .ui .row, .P .msg-ko, .P .lrow b, .P .ev .what div { font-size: 44px !important; }
+/* 보조 36: 항목 아래 작은 설명 · 표 머리글 · 범례 */
+.P .list em, .P .steps span, .P .checks span, .P .warn em, .P .route small, .P.sum .recap em, .P .vs h3 small, .P .vs p em,
+.P .tbl div:first-child span, .P .look h4, .P .tl span, .P .tl-span div, .P .flow .fa, .P .flow .fa small, .P .gauge .leg,
+.P .ev .what div span, .P .ui .bar, .P .chip, .P .stat-cap { font-size: 36px !important; }
+/* 메모·고지·쪽 번호 */
+.P > .src, .P .src { font-size: 34px !important; }
+.P .risk { font-size: 30px !important; }
+.P .pg { font-size: 32px !important; }
+.P .ev .what.one div { font-size: 54px !important; }
+/* 강조 숫자 (단계 번호 등)도 한 크기로 */
+.P .steps i { font-size: 60px !important; }
+.P .msg { font-size: 40px !important; }
+/* 기준선 게이지가 있는 발표 장: 위아래 여백만 줄여 글씨 크기는 그대로 */
+.P .ev + .gauge { margin-top: 16px; } .P .gauge + .look { margin-top: 18px; padding-top: 22px; }
+/* 예시 화면(앱 화면 흉내) 안 글씨는 보조 크기 · 위험 고지가 붙는 마지막 단계 장은 줄 간격만 좁힘 */
+.P .ui .row { font-size: 36px !important; }
+.P.has-risk .steps > div { padding-top: 22px !important; padding-bottom: 22px !important; }
+/* 큰 숫자 표지: 숫자가 아래로 잘리지 않게 카드 안에 다 보이도록 */
+.CN .bign { font-size: 600px !important; line-height: .78 !important; bottom: 80px !important; left: 70px !important; padding-top: 40px; }
+
+/* 2칸 타일: 항목이 홀수면 마지막 칸을 가로로 꽉 채움 (빈 칸 안 남게) */
+.P.cmp-grid .list > div:last-child:nth-child(odd), .P.cmp-grid .checks > div:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+/* 빨간 네모 수정: 영수증 값 한 줄 · 발표 장 같은 값 · 게이지 범례 한 줄씩 */
+.rcpt .ln .v { font: inherit; white-space: nowrap; }
+.P .same { margin-top: 40px; font-size: 44px; font-weight: 700; color: var(--sub); }
+.P .same b { color: var(--c); margin-left: 12px; }
+.P .gauge .leg { row-gap: 4px; }
+/* 마지막 요약 장(파랑): 항목마다 타일 · 왼쪽 흰 원 번호 · 오른쪽에 제목과 설명을 위아래로 정렬 */
+.P.sum .recap { gap: 18px !important; border-top: none !important; margin-top: 56px; }
+.P.sum .recap div { display: grid !important; grid-template-columns: 76px 1fr; column-gap: 30px; row-gap: 6px; align-items: center; background: rgba(255, 255, 255, .12) !important; border: none !important; border-radius: 30px !important; padding: 32px 40px !important; }
+.P.sum .recap i { grid-row: span 2; width: 76px !important; height: 76px; border-radius: 50%; background: #fff !important; color: var(--blue) !important; font-size: 38px !important; display: grid !important; place-items: center; }
+.P.sum .recap em { grid-column: 2; padding-left: 0 !important; margin: 0 !important; opacity: .82; }
+.P.sum .recap i { justify-content: center !important; align-content: center; text-align: center; line-height: 1 !important; padding: 0 !important; }
+
+/* 채우기: 주 내용은 제목 아래 넉넉히, 메모·볼 것은 맨 아래 · 큰 숫자는 더 크게 */
+.P > h2 + .ev, .P > h2 + .tbl, .P > h2 + .calc, .P > h2 + .myth, .P > h2 + .recap, .P > h2 + .grid { margin-top: 64px !important; }
+.P.filled > .look, .P.filled > .myth-sub { margin-top: auto !important; margin-bottom: 30px; }
+.P.filled > .look { background: var(--tint, rgba(43,92,255,.07)); border: none !important; border-radius: 32px; padding: 36px 44px !important; }
+.P .ev .when, .P .ev .what { border-radius: 36px; }
+.P .ev .when { justify-content: center; }
+.P .gauge .bar { height: 20px; border-radius: 10px; }
+.P .gauge .bar i.pv, .P .gauge .bar i.fc { width: 40px; height: 40px; }
+.P .same { font-size: 52px !important; }
+.P .same b { font-size: 88px; display: block; margin: 8px 0 0; letter-spacing: -.03em; }
+.P .calc .eq b { font-size: 96px; letter-spacing: -.03em; }
+.P .tbl div:not(:first-child) span:first-child { font-weight: 800; color: var(--c); }
+
+/* 발표 장 v2: 큰 시각 한 덩어리 + 이전·예상 큰 숫자 두 칸 + 맨 아래 볼 것 */
+.P .ev2 { margin-top: 60px; background: var(--blue); color: #fff; border-radius: 44px; padding: 44px 52px 48px; display: flex; flex-direction: column; box-shadow: 0 24px 50px rgba(43, 92, 255, .22); }
+.P.cmp-ev2 .ev2 { background: var(--navy); box-shadow: 0 24px 50px rgba(19, 33, 59, .2); }
+.P .ev2 small { font-size: 36px; font-weight: 700; opacity: .85; }
+.P .ev2 > b { font-size: 190px; line-height: 1; font-weight: 800; letter-spacing: -.05em; margin: 18px 0 0 -6px; font-variant-numeric: tabular-nums; }
+.P .ev2 .as { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; padding-top: 30px; border-top: 2px solid rgba(255,255,255,.25); }
+.P .ev2 .as span { font-size: 40px; font-weight: 800; }
+.P .ev2 .as em { font-style: normal; font-size: 34px; font-weight: 600; opacity: .75; margin-right: 18px; }
+.P .pf { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 26px; }
+.P .pf div { background: var(--gray-50, #f3f5f9); border-radius: 36px; padding: 34px 40px 38px; display: flex; flex-direction: column; gap: 6px; }
+.P.soft .pf div { background: #fff; }
+.P .pf div span { font-size: 36px; font-weight: 700; color: var(--mute); }
+.P .pf div b { font-size: 92px; font-weight: 800; letter-spacing: -.04em; line-height: 1.1; color: var(--gray-700, #4a5468); }
+.P .pf div.on { box-shadow: inset 0 0 0 5px var(--blue); }
+.P .pf div.on span { color: var(--blue); }
+.P .pf div.on b { color: var(--blue); }
+.P .pf em { font-style: normal; font-size: 28px; background: var(--blue-soft); color: var(--blue); border-radius: 20px; padding: 4px 14px; margin-left: 8px; vertical-align: 3px; }
+.P .pf-note { margin-top: 20px; font-size: 34px; font-weight: 600; color: var(--mute); }
+.P.filled.L-event > .look { margin-top: auto !important; margin-bottom: 30px; background: var(--gray-50, #f3f5f9); border: none !important; border-radius: 32px; padding: 34px 44px !important; }
+.P.L-event.soft > .look { background: #fff; }
+.P.L-event > .look h4 { color: var(--blue); }
+
+/* 계산 장: 항목 이름 크게, 계산식은 아래 작게 */
+.P .calc span small { display: block; font-size: 32px; font-weight: 500; opacity: .6; margin-top: 6px; letter-spacing: -.02em; }
+.P .calc div:not(.eq) { font-size: 52px !important; font-weight: 800; align-items: center; }
+.P .calc div:not(.eq) span { font-size: 42px; font-weight: 700; }
+/* 표: 줄마다 둥근 칸 · 첫 칸(시각) 크게 */
+.P .tbl { border-top: none !important; }
+.P .tbl div:first-child { border: none !important; padding: 0 40px; }
+.P .tbl div:first-child span { color: var(--mute); padding-bottom: 14px; }
+.P .tbl div:not(:first-child) { background: var(--gray-50, #f3f5f9); border: none !important; border-radius: 30px; padding: 0 40px; margin-top: 16px; align-items: center; }
+.P.soft .tbl div:not(:first-child) { background: #fff; }
+.P .tbl div:not(:first-child) span:first-child { font-size: 52px !important; letter-spacing: -.03em; }
+.P .tbl div:not(:first-child) span { border: none !important; }
+.P .tbl div:not(:first-child) span:not(:first-child) { font-weight: 700; }
+/* 발표 장 v2 크기 맞춤: 시각 옆에 날짜 · 한 장 안에 들어오게 */
+.P .ev2 { margin-top: 44px; padding: 34px 46px 38px; display: grid; grid-template-columns: 1fr auto; align-items: start; }
+.P .ev2 > b { grid-column: 1; grid-row: 1; font-size: 156px; margin: 0 0 0 -4px; }
+.P .ev2 small { grid-column: 2; grid-row: 1; margin-top: 18px; text-align: right; background: rgba(255,255,255,.16); border-radius: 22px; padding: 8px 20px; font-size: 32px; }
+.P .ev2 .as { grid-column: 1 / -1; margin-top: 22px; padding-top: 24px; }
+.P .pf { margin-top: 20px; }
+.P .pf div { padding: 26px 36px 28px; }
+.P .pf div b { font-size: 84px; }
+.P .pf-note { margin-top: 14px; }
+.P.L-event .look { padding-top: 28px; }
+.P .tbl div:not(:first-child) span { padding-top: 22px !important; padding-bottom: 22px !important; } .P .tbl div:not(:first-child) { margin-top: 12px; }
+.P .ev2 { margin-top: 36px; padding: 30px 44px 32px; } .P .ev2 > b { font-size: 140px; } .P .ev2 .as { margin-top: 16px; padding-top: 20px; } .P .pf div { padding: 22px 34px 24px; gap: 2px; } .P .pf div b { font-size: 76px; } .P .pf div:only-child { grid-column: 1 / -1; }
+.P.cmp-grid .list i { width: 64px !important; height: 64px !important; border-radius: 50% !important; background: var(--blue) !important; color: #fff !important; display: grid !important; place-items: center; font-size: 34px !important; font-style: normal; margin-bottom: 18px; }
