@@ -115,12 +115,28 @@ const SITES = {
   },
 };
 
+// Orbis Securities (블로그·랜딩 트레이딩 교육): 기존 글과 같은 모양 = 글자 없는 3D 일러스트 전체 + 왼쪽 위 흰색 로고 · 1280×720 (2026-11-17)
+//   일러스트는 앱 스크립트가 Gemini 이미지로 만들어 저장소에 올림 (req.photo) · 없으면 브랜드 색 배경에 로고만
+const ORBIS_LOGO = (() => { try { return readFileSync(join(here, '..', 'templates', 'orbis-logo-white.svg'), 'utf8').replace(/<\?xml[^>]*>/, ''); } catch (e) { return ''; } })();
+const orbisArt = r => {
+  const ph = r.photo && !/^(file|https?):/.test(r.photo) ? pathToFileURL(resolve(here, '..', r.photo)).href : r.photo;
+  return `<style>
+    .f{background:linear-gradient(135deg,#0a1a4f 0%,#164492 52%,#5a43d6 100%)}
+    .ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .sh{position:absolute;left:0;top:0;width:44%;height:32%;background:radial-gradient(ellipse at 0% 0%,rgba(6,14,48,.5),rgba(6,14,48,0) 72%)}
+    .lg{position:absolute;left:30px;top:26px;width:170px;filter:drop-shadow(0 1px 6px rgba(6,14,48,.35))}.lg svg{width:100%;height:auto;display:block}
+  </style>${ph ? `<img class="ph" src="${esc(ph)}">` : ''}<div class="sh"></div><div class="lg">${ORBIS_LOGO}</div>`;
+};
+orbisArt.w = 1280; orbisArt.h = 720; orbisArt.scale = 1;
+SITES.orbisblog = orbisArt; SITES.orbisedu = orbisArt;
+
 export async function renderThumb(req, out, browser) {
   const make = (req.style === 'photo' && SITES[req.site + '_photo']) || SITES[req.site];
   if (!make) throw new Error('대표 이미지 틀이 없는 사이트: ' + req.site);
-  const html = `<!doctype html><html lang="ko"><head><meta charset="utf-8"><link rel="stylesheet" href="${FONTS}"><style>*{margin:0;padding:0;box-sizing:border-box}body{width:1200px;height:630px;-webkit-font-smoothing:antialiased}.t{text-wrap:balance}.f{position:relative;width:1200px;height:630px;overflow:hidden}</style></head><body><div class="f">${make(req)}</div></body></html>`;
+  const W = make.w || 1200, H = make.h || 630, SC = make.scale || 1.5;   // 틀마다 크기 (Orbis = 1280×720)
+  const html = `<!doctype html><html lang="ko"><head><meta charset="utf-8"><link rel="stylesheet" href="${FONTS}"><style>*{margin:0;padding:0;box-sizing:border-box}body{width:${W}px;height:${H}px;-webkit-font-smoothing:antialiased}.t{text-wrap:balance}.f{position:relative;width:${W}px;height:${H}px;overflow:hidden}</style></head><body><div class="f">${make(req)}</div></body></html>`;
   const tmp = join(here, `_tmp_${process.pid}.html`); writeFileSync(tmp, html);
-  const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1.5 });
+  const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: SC });
   await page.goto(pathToFileURL(tmp).href, { waitUntil: 'networkidle' });
   await page.evaluate(() => document.fonts.ready);
   // 제목이 정한 줄 수(data-max)를 넘으면 글씨를 조금씩 줄임 (최소 70%)
