@@ -118,13 +118,14 @@ const SITES = {
 // Orbis Securities (블로그·랜딩 트레이딩 교육): 기존 글과 같은 모양 = 글자 없는 3D 일러스트 전체 + 왼쪽 위 흰색 로고 · 1280×720 (2026-11-17)
 //   일러스트는 앱 스크립트가 Gemini 이미지로 만들어 저장소에 올림 (req.photo) · 없으면 브랜드 색 배경에 로고만
 const ORBIS_LOGO = (() => { try { return readFileSync(join(here, '..', 'templates', 'orbis-logo-white.svg'), 'utf8').replace(/<\?xml[^>]*>/, ''); } catch (e) { return ''; } })();
+// 로고 위치 (2026-11-18 사용자): 사이트 목록은 3:2로 가운데를 잘라 보여 줘서 좌우 100px씩 잘림 → 로고를 잘리는 선보다 40px 안쪽(왼쪽 140px)에
 const orbisArt = r => {
   const ph = r.photo && !/^(file|https?):/.test(r.photo) ? pathToFileURL(resolve(here, '..', r.photo)).href : r.photo;
   return `<style>
     .f{background:linear-gradient(135deg,#0a1a4f 0%,#164492 52%,#5a43d6 100%)}
     .ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-    .sh{position:absolute;left:0;top:0;width:44%;height:32%;background:radial-gradient(ellipse at 0% 0%,rgba(6,14,48,.5),rgba(6,14,48,0) 72%)}
-    .lg{position:absolute;left:30px;top:26px;width:170px;filter:drop-shadow(0 1px 6px rgba(6,14,48,.35))}.lg svg{width:100%;height:auto;display:block}
+    .sh{position:absolute;left:0;top:0;width:54%;height:38%;background:radial-gradient(ellipse at 0% 0%,rgba(6,14,48,.5),rgba(6,14,48,0) 72%)}
+    .lg{position:absolute;left:140px;top:44px;width:170px;filter:drop-shadow(0 1px 6px rgba(6,14,48,.35))}.lg svg{width:100%;height:auto;display:block}
   </style>${ph ? `<img class="ph" src="${esc(ph)}">` : ''}<div class="sh"></div><div class="lg">${ORBIS_LOGO}</div>`;
 };
 orbisArt.w = 1280; orbisArt.h = 720; orbisArt.scale = 1;
