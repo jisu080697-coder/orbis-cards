@@ -124,8 +124,8 @@ const orbisArt = r => {
   return `<style>
     .f{background:linear-gradient(135deg,#0a1a4f 0%,#164492 52%,#5a43d6 100%)}
     .ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-    .sh{position:absolute;left:0;top:0;width:54%;height:38%;background:radial-gradient(ellipse at 0% 0%,rgba(6,14,48,.5),rgba(6,14,48,0) 72%)}
-    .lg{position:absolute;left:140px;top:44px;width:170px;filter:drop-shadow(0 1px 6px rgba(6,14,48,.35))}.lg svg{width:100%;height:auto;display:block}
+    .sh{position:absolute;left:0;top:0;width:56%;height:48%;background:radial-gradient(ellipse at 0% 0%,rgba(6,14,48,.5),rgba(6,14,48,0) 72%)}
+    .lg{position:absolute;left:140px;top:96px;width:170px;filter:drop-shadow(0 1px 6px rgba(6,14,48,.35))}.lg svg{width:100%;height:auto;display:block}
   </style>${ph ? `<img class="ph" src="${esc(ph)}">` : ''}<div class="sh"></div><div class="lg">${ORBIS_LOGO}</div>`;
 };
 orbisArt.w = 1280; orbisArt.h = 720; orbisArt.scale = 1;
