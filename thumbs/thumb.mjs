@@ -119,7 +119,25 @@ const SITES = {
 //   일러스트는 앱 스크립트가 Gemini 이미지로 만들어 저장소에 올림 (req.photo) · 없으면 브랜드 색 배경에 로고만
 const ORBIS_LOGO = (() => { try { return readFileSync(join(here, '..', 'templates', 'orbis-logo-white.svg'), 'utf8').replace(/<\?xml[^>]*>/, ''); } catch (e) { return ''; } })();
 // 로고 위치 (2026-11-18 사용자): 사이트 목록은 3:2로 가운데를 잘라 보여 줘서 좌우 100px씩 잘림 → 로고를 잘리는 선보다 40px 안쪽(왼쪽 140px)에
+// 경제뉴스 실사 사진 틀 (2026-11-18 사용자 시안): 아래쪽을 어둡게 깔고 왼쪽 아래 "International Live News" + 한 줄 설명 · 오른쪽 아래 로고 · 제목 글자 없음
+// 좌우 120px 안쪽 = 사이트 목록(3:2로 좌우 100px 잘림)에서도 안 잘림
+const orbisNews = r => {
+  const ph = r.photo && !/^(file|https?):/.test(r.photo) ? pathToFileURL(resolve(here, '..', r.photo)).href : r.photo;
+  return `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=block"><style>
+    .f{background:#0b0d12}
+    .ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .dim{position:absolute;inset:0;background:rgba(5,6,10,.28)}
+    .sh{position:absolute;left:0;right:0;bottom:0;height:78%;background:linear-gradient(180deg,rgba(5,6,10,0) 0%,rgba(5,6,10,.6) 35%,rgba(5,6,10,.93) 66%,rgba(5,6,10,.99) 100%)}
+    .tx{position:absolute;left:120px;bottom:58px;width:430px;font-family:Inter,'Noto Sans KR',sans-serif;color:rgba(255,255,255,.72)}
+    .tx b{display:block;font-weight:400;font-size:27px;letter-spacing:.02em;color:rgba(255,255,255,.78);margin-bottom:18px}
+    .tx p{font-size:14.5px;line-height:1.6;letter-spacing:.01em;color:rgba(255,255,255,.55)}
+    .lg{position:absolute;right:120px;bottom:64px;width:150px}.lg svg{width:100%;height:auto;display:block}.lg svg *{fill:#fff!important}
+  </style>${ph ? `<img class="ph" src="${esc(ph)}">` : ''}<div class="dim"></div><div class="sh"></div>
+  <div class="tx"><b>International Live News</b><p>We've gathered the market news that matters right now, from central bank decisions to moves in currencies, commodities and indices.</p></div><div class="lg">${ORBIS_LOGO}</div>`;
+};
+orbisNews.w = 1280; orbisNews.h = 720; orbisNews.scale = 1;
 const orbisArt = r => {
+  if (r.cat === '경제뉴스') return orbisNews(r);   // 경제뉴스만 새 틀 (교육 글은 그대로)
   const ph = r.photo && !/^(file|https?):/.test(r.photo) ? pathToFileURL(resolve(here, '..', r.photo)).href : r.photo;
   return `<style>
     .f{background:linear-gradient(135deg,#0a1a4f 0%,#164492 52%,#5a43d6 100%)}
