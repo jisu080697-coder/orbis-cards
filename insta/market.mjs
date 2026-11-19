@@ -66,8 +66,8 @@ function detail(r) {
   <svg class="a" style="left:0;top:0" width="1080" height="1350"><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></svg>
   ${mark ? `<div class="a" style="left:${mark}px;top:590px;width:2px;height:200px;background:${DK};opacity:.25"></div><div class="a" style="left:${mark + 12}px;top:758px;font-size:22px;font-weight:700;color:${DK};opacity:.55">${esc(s.markLabel || '')}</div>` : ''}
   <div class="a" style="left:84px;top:856px;font-weight:800;font-size:48px;color:${DK}">${esc(s.whyTitle || (up ? '왜 올랐을까?' : '왜 내렸을까?'))}</div>
-  ${(s.why || []).slice(0, 3).map((t, i, A) => `<div class="a num" style="left:84px;top:${950 + i * (A.length < 3 ? 120 : 90)}px;width:48px;height:48px;border-radius:24px;background:${EB};color:#fff;font-weight:700;font-size:24px;display:flex;align-items:center;justify-content:center">${i + 1}</div>
-    <div class="a" data-max="50" data-min="26" style="left:156px;top:${952 + i * (A.length < 3 ? 120 : 90)}px;width:840px;font-weight:700;font-size:34px;line-height:1.3;color:${DK}">${esc(t)}</div>`).join('')}
+  ${(s.why || []).slice(0, 3).map((t, i, A) => { const N = (s.whyNote || [])[i], g = (s.whyNote || []).some(Boolean) ? 112 : A.length < 3 ? 120 : 90, y0 = (s.whyNote || []).some(Boolean) ? 936 : 950; return `<div class="a num" style="left:84px;top:${y0 + i * g}px;width:48px;height:48px;border-radius:24px;background:${EB};color:#fff;font-weight:700;font-size:24px;display:flex;align-items:center;justify-content:center">${i + 1}</div>
+    <div class="a" data-max="50" data-min="26" style="left:156px;top:${y0 + 2 + i * g}px;width:840px;font-weight:700;font-size:34px;line-height:1.3;color:${DK}">${esc(t)}</div>${N ? `<div class="a" data-max="40" data-min="20" style="left:156px;top:${y0 + 50 + i * g}px;width:840px;font-size:26px;font-weight:500;line-height:1.35;color:${DK};opacity:.55">${esc(N)}</div>` : ''}`; }).join('')}
   ${foot(s.src || '')}${dots(5, 1)}`);
 }
 // 3 막대 — 0 기준·눈금·길이를 값에 맞춰 자동
@@ -91,17 +91,21 @@ function summary(r) {
   return page(BG, `${head(r, '04 / 05')}${sub('TODAY IN 3 LINES')}${title('오늘 시장,\n3줄로 정리하면', '3줄로 정리하면')}
   ${(r.sum || []).slice(0, 3).map((s, i) => { const y = 540 + i * 220; return `<div class="a card" style="left:84px;top:${y}px;width:912px;height:196px"></div>
     <div class="a num" style="left:124px;top:${y + 58}px;font-weight:700;font-size:56px;color:${EB}">0${i + 1}</div>
-    <div class="a" data-max="52" data-min="28" style="left:250px;top:${y + 50}px;width:700px;font-weight:700;font-size:38px;line-height:1.25;color:${DK}">${esc(s[0])}</div>
-    <div class="a" style="left:250px;top:${y + 112}px;width:700px;font-size:28px;font-weight:500;color:${DK};opacity:.55">${esc(s[1] || '')}</div>`; }).join('')}
+    <div class="a" data-max="52" data-min="28" style="left:250px;top:${y + (s[2] ? 30 : 50)}px;width:700px;font-weight:700;font-size:38px;line-height:1.25;color:${DK}">${esc(s[0])}</div>
+    <div class="a num" style="left:250px;top:${y + (s[2] ? 86 : 112)}px;width:700px;font-size:28px;font-weight:600;color:${EB}">${esc(s[1] || '')}</div>${s[2] ? `<div class="a" data-max="36" data-min="20" style="left:250px;top:${y + 132}px;width:700px;font-size:25px;font-weight:500;color:${DK};opacity:.55">${esc(s[2])}</div>` : ''}`; }).join('')}
   ${foot((r.date || '') + ' 종가 기준')}${dots(5, 3)}`);
 }
+// 국기 + 나라 이름 (2026-11-19 사용자: 나라 코드 대신 국기) · 그림은 flagcdn.com 공개 국기 SVG
+const FLAG = { US: ['us', '미국'], FED: ['us', '미국 연준'], EU: ['eu', '유로존'], UK: ['gb', '영국'], GB: ['gb', '영국'], JP: ['jp', '일본'], CN: ['cn', '중국'], CA: ['ca', '캐나다'], AU: ['au', '호주'], NZ: ['nz', '뉴질랜드'], CH: ['ch', '스위스'], KR: ['kr', '한국'], DE: ['de', '독일'] };
+const flag = (c, x, y) => { const f = FLAG[String(c || '').toUpperCase()]; return f ? `<img class="a" src="https://flagcdn.com/${f[0]}.svg" style="left:${x}px;top:${y}px;width:66px;height:44px;object-fit:cover;border-radius:6px;border:1px solid #dde3ee"><div class="a" style="left:${x + 82}px;top:${y + 4}px;font-weight:700;font-size:28px;color:${DK}">${esc(f[1])}</div>`
+  : `<div class="a num" style="left:${x}px;top:${y}px;width:104px;height:56px;border-radius:10px;background:${NAVY};color:#fff;font-weight:700;font-size:24px;display:flex;align-items:center;justify-content:center">${esc(c)}</div>`; };
 // 5 내일 볼 것 — 2×2 일정 카드 + 남색 저장 바
 function watch(r) {
   return page(BG, `${head(r, '05 / 05')}${sub('WHAT TO WATCH')}${title(r.watchT || '다가오는\n주요 발표 일정', String(r.watchT || '다가오는\n주요 발표 일정').split('\n').pop())}
   ${(r.watch || []).slice(0, 4).map((s, i) => { const x = 84 + (i % 2) * 468, y = 540 + Math.floor(i / 2) * 300; return `<div class="a card" style="left:${x}px;top:${y}px;width:444px;height:276px"></div>
-    <div class="a num" style="left:${x + 32}px;top:${y + 32}px;width:104px;height:56px;border-radius:10px;background:${NAVY};color:#fff;font-weight:700;font-size:24px;letter-spacing:.04em;display:flex;align-items:center;justify-content:center">${esc(s[0])}</div>
-    <div class="a num" style="left:${x + 32}px;top:${y + 158}px;font-weight:700;font-size:28px;color:${EB}">${esc(s[1])}</div>
-    <div class="a" data-max="50" data-min="26" style="left:${x + 32}px;top:${y + 198}px;width:380px;font-weight:700;font-size:36px;line-height:1.3;color:${DK}">${esc(s[2])}</div>`; }).join('')}
+    ${flag(s[0], x + 32, y + 32)}
+    <div class="a num" style="left:${x + 32}px;top:${y + (s[3] ? 104 : 158)}px;font-weight:700;font-size:28px;color:${EB}">${esc(s[1])}</div>
+    <div class="a" data-max="50" data-min="26" style="left:${x + 32}px;top:${y + (s[3] ? 146 : 198)}px;width:380px;font-weight:700;font-size:34px;line-height:1.3;color:${DK}">${esc(s[2])}</div>${s[3] ? `<div class="a" data-max="64" data-min="20" style="left:${x + 32}px;top:${y + 200}px;width:380px;font-size:24px;font-weight:500;line-height:1.35;color:${DK};opacity:.55">${esc(s[3])}</div>` : ''}`; }).join('')}
   <div class="a" style="left:84px;top:1150px;width:912px;height:96px;border-radius:48px;background:#164492;display:flex;align-items:center;justify-content:space-between;padding:0 46px;color:#fff;font-weight:700;font-size:32px"><span>${esc(r.watchBar || '저장해 두고 발표 시간에 확인하세요')}</span><span class="num" style="font-size:40px">→</span></div>
   ${foot('한국 시간 기준')}${dots(5, 4)}`);
 }
