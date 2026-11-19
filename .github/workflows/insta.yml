@@ -1,0 +1,45 @@
+# 인스타 카드뉴스 렌더링 (시장·경제 이슈 5장): 앱 스크립트가 내용 JSON(req)을 보내면 실제 크롬으로 JPG 5장을 만들어 저장소에 올림
+# 호출: POST https://api.github.com/repos/{owner}/{repo}/dispatches
+#       { "event_type": "insta", "client_payload": { "req": { id, kind: 'market', date, series, tag, title, hl, sub, cover, stock, bars, sum, watch } } }
+#       req.cover = 저장소 안 그림 경로 (예: insta/im20261119/cover_v123.jpg)
+# 결과: insta/{id}/p1.jpg … p5.jpg
+name: render-insta
+on:
+  repository_dispatch:
+    types: [insta]
+permissions:
+  contents: write
+concurrency:
+  group: insta-${{ github.event.client_payload.req.id || github.run_id }}
+  cancel-in-progress: false
+jobs:
+  insta:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: 렌더러 준비
+        run: npm ci
+      - name: 요청 저장
+        env:
+          REQ: ${{ toJson(github.event.client_payload.req) }}
+        run: printf '%s' "$REQ" > req.json
+      - name: 카드 5장 렌더링
+        env:
+          CI: 'true'
+          PW_CHANNEL: chrome
+        run: |
+          ID="$(node -p "String(require('./req.json').id||'').replace(/[^A-Za-z0-9_-]/g,'')")"
+          test -n "$ID"
+          node insta/market.mjs req.json "insta/$ID"
+      - name: 이미지 올리기
+        run: |
+          git config user.name "orbis-renderer"
+          git config user.email "renderer@users.noreply.github.com"
+          git add insta
+          git commit -m "insta $(node -p "require('./req.json').id")" || echo "변경 없음"
+          for i in 1 2 3 4 5; do git pull --rebase -q && git push && break; sleep $((i * 5)); done
