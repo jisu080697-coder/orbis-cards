@@ -66,8 +66,8 @@ function detail(r) {
   <svg class="a" style="left:0;top:0" width="1080" height="1350"><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></svg>
   ${mark ? `<div class="a" style="left:${mark}px;top:590px;width:2px;height:200px;background:${DK};opacity:.25"></div><div class="a" style="left:${mark + 12}px;top:758px;font-size:22px;font-weight:700;color:${DK};opacity:.55">${esc(s.markLabel || '')}</div>` : ''}
   <div class="a" style="left:84px;top:856px;font-weight:800;font-size:48px;color:${DK}">${esc(s.whyTitle || (up ? '왜 올랐을까?' : '왜 내렸을까?'))}</div>
-  ${(s.why || []).slice(0, 3).map((t, i) => `<div class="a num" style="left:84px;top:${950 + i * 90}px;width:48px;height:48px;border-radius:24px;background:${EB};color:#fff;font-weight:700;font-size:24px;display:flex;align-items:center;justify-content:center">${i + 1}</div>
-    <div class="a" data-max="50" data-min="26" style="left:156px;top:${952 + i * 90}px;width:840px;font-weight:700;font-size:34px;line-height:1.3;color:${DK}">${esc(t)}</div>`).join('')}
+  ${(s.why || []).slice(0, 3).map((t, i, A) => `<div class="a num" style="left:84px;top:${950 + i * (A.length < 3 ? 120 : 90)}px;width:48px;height:48px;border-radius:24px;background:${EB};color:#fff;font-weight:700;font-size:24px;display:flex;align-items:center;justify-content:center">${i + 1}</div>
+    <div class="a" data-max="50" data-min="26" style="left:156px;top:${952 + i * (A.length < 3 ? 120 : 90)}px;width:840px;font-weight:700;font-size:34px;line-height:1.3;color:${DK}">${esc(t)}</div>`).join('')}
   ${foot(s.src || '')}${dots(5, 1)}`);
 }
 // 3 막대 — 0 기준·눈금·길이를 값에 맞춰 자동
@@ -97,12 +97,12 @@ function summary(r) {
 }
 // 5 내일 볼 것 — 2×2 일정 카드 + 남색 저장 바
 function watch(r) {
-  return page(BG, `${head(r, '05 / 05')}${sub('WHAT TO WATCH')}${title('내일은\n이것만 보세요', '이것만 보세요')}
+  return page(BG, `${head(r, '05 / 05')}${sub('WHAT TO WATCH')}${title(r.watchT || '다가오는\n주요 발표 일정', String(r.watchT || '다가오는\n주요 발표 일정').split('\n').pop())}
   ${(r.watch || []).slice(0, 4).map((s, i) => { const x = 84 + (i % 2) * 468, y = 540 + Math.floor(i / 2) * 300; return `<div class="a card" style="left:${x}px;top:${y}px;width:444px;height:276px"></div>
     <div class="a num" style="left:${x + 32}px;top:${y + 32}px;width:104px;height:56px;border-radius:10px;background:${NAVY};color:#fff;font-weight:700;font-size:24px;letter-spacing:.04em;display:flex;align-items:center;justify-content:center">${esc(s[0])}</div>
     <div class="a num" style="left:${x + 32}px;top:${y + 158}px;font-weight:700;font-size:28px;color:${EB}">${esc(s[1])}</div>
     <div class="a" data-max="50" data-min="26" style="left:${x + 32}px;top:${y + 198}px;width:380px;font-weight:700;font-size:36px;line-height:1.3;color:${DK}">${esc(s[2])}</div>`; }).join('')}
-  <div class="a" style="left:84px;top:1150px;width:912px;height:96px;border-radius:48px;background:#164492;display:flex;align-items:center;justify-content:space-between;padding:0 46px;color:#fff;font-weight:700;font-size:32px"><span>저장해 두고 내일 아침에 확인하세요</span><span class="num" style="font-size:40px">→</span></div>
+  <div class="a" style="left:84px;top:1150px;width:912px;height:96px;border-radius:48px;background:#164492;display:flex;align-items:center;justify-content:space-between;padding:0 46px;color:#fff;font-weight:700;font-size:32px"><span>${esc(r.watchBar || '저장해 두고 발표 시간에 확인하세요')}</span><span class="num" style="font-size:40px">→</span></div>
   ${foot('한국 시간 기준')}${dots(5, 4)}`);
 }
 export const marketPages = r => [cover(r), detail(r), bars(r), summary(r), watch(r)];
