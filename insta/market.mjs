@@ -73,8 +73,10 @@ function detail(r) {
 // 3 막대 — 0 기준·눈금·길이를 값에 맞춰 자동
 function bars(r) {
   const b = r.bars, rows = b.rows.slice(0, 6), mx = Math.max(...rows.map(x => Math.abs(x[1])), .1), neg = rows.some(x => x[1] < 0), pos = rows.some(x => x[1] > 0);
-  const zx = pos && neg ? 760 : neg ? 900 : 440, room = neg ? zx - 400 : 900 - zx, sc = room / mx, step = mx > 6 ? 2 : mx > 2.5 ? 1 : .5;
-  let grid = ''; for (let g = -Math.ceil(mx / step) * step; g <= (pos ? Math.ceil(mx / step) * step : 0) + 1e-9; g += step) { const gx = zx + g * sc; if (gx < 390 || gx > 960) continue;
+  // 막대 끝 + 값 글자(약 110px)가 카드(오른쪽 996px) 안에 들어오게: 양수 막대는 820px 까지 (2026-11-19 +12.1% 가 밖으로 나가던 것)
+  const mP = Math.max(0, ...rows.map(x => x[1])), mN = Math.max(0, ...rows.map(x => -x[1]));
+  const sc = pos && neg ? 420 / (mP + mN) : neg ? 500 / mx : 380 / mx, zx = pos && neg ? 400 + mN * sc : neg ? 900 : 440, step = [.5, 1, 2, 5, 10, 20, 50].find(t => t * sc >= 76) || 100;   // 눈금 글자끼리 겹치지 않게 (한 칸 76px 이상)
+  let grid = ''; for (let g = -Math.ceil(mx / step) * step; g <= (pos ? Math.ceil(mx / step) * step : 0) + 1e-9; g += step) { const gx = zx + g * sc; if (gx < 390 || gx > 900) continue;
     grid += `<div class="a" style="left:${gx}px;top:600px;width:${Math.abs(g) < 1e-9 ? 2 : 1}px;height:540px;background:${DK};opacity:${Math.abs(g) < 1e-9 ? .25 : .08}"></div><div class="a num" style="left:${gx - 40}px;width:80px;text-align:center;top:564px;font-size:22px;font-weight:600;color:${DK};opacity:.45">${g > 0 ? '+' : g < 0 ? '−' : ''}${+Math.abs(g).toFixed(1)}%</div>`; }
   const rowsH = rows.map(([n, v], i) => { const y = 600 + i * 92, wv = Math.abs(v) * sc, c = v >= 0 ? EB : RED, lab = (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(1) + '%';
     const inside = v < 0 && zx - wv - 14 - 110 < 330;
