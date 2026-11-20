@@ -1,0 +1,36 @@
+# 경제 캘린더 보관 (2026-11-20): 캘린더 사이트가 구글(앱 스크립트) 서버 요청을 자주 막아서, GitHub 가 3시간마다 받아 저장
+# 스튜디오(Insta.gs instaCal_)는 raw.githubusercontent.com/…/data/ff_calendar_thisweek.json 을 먼저 읽음
+# 지금 바로: repository_dispatch event_type 'calendar'
+name: calendar-cache
+on:
+  schedule:
+    - cron: '17 */3 * * *'
+  repository_dispatch:
+    types: [calendar]
+  workflow_dispatch:
+  push:
+    paths: ['.github/workflows/calendar.yml']
+permissions:
+  contents: write
+concurrency:
+  group: calendar
+  cancel-in-progress: false
+jobs:
+  calendar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: 캘린더 받기
+        run: |
+          mkdir -p data
+          curl -sfL -A "Mozilla/5.0" "https://nfs.faireconomy.media/ff_calendar_thisweek.json" -o /tmp/cal.json
+          node -e "const a=JSON.parse(require('fs').readFileSync('/tmp/cal.json','utf8'));if(!Array.isArray(a)||!a.length)process.exit(1);console.log('events',a.length)"
+          cp /tmp/cal.json data/ff_calendar_thisweek.json
+      - name: 올리기
+        run: |
+          git config user.name "orbis-renderer"
+          git config user.email "renderer@users.noreply.github.com"
+          git add data/ff_calendar_thisweek.json
+          git commit -m "calendar $(date -u +%F_%H%M)" || echo "변경 없음"
+          for i in 1 2 3 4 5; do git pull --rebase -q && git push && break; sleep $((i * 5)); done
