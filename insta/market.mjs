@@ -109,7 +109,174 @@ function watch(r) {
   <div class="a" style="left:84px;top:1150px;width:912px;height:96px;border-radius:48px;background:#164492;display:flex;align-items:center;justify-content:space-between;padding:0 46px;color:#fff;font-weight:700;font-size:32px"><span>${esc(r.watchBar || '저장해 두고 발표 시간에 확인하세요')}</span><span class="num" style="font-size:40px">→</span></div>
   ${foot('한국 시간 기준')}${dots(5, 4)}`);
 }
-export const marketPages = r => [cover(r), detail(r), bars(r), summary(r), watch(r)];
+// ── 주제별 틀 (2026-11-19 사용자: 글마다 구성 다르게 · '주제별 틀 3종') ──
+// r.layout = 'stock'(종목 주인공 · 기본) | 'macro'(지수·금리·환율 주인공) | 'data'(경제지표 발표)
+const pctTxt = v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(Number(v)).toFixed(1) + '%';
+function spark(P, x, y, w, h, col) {
+  if (!P || P.length < 2) return '';
+  const mn = Math.min(...P), mx = Math.max(...P);
+  const pts = P.map((v, i) => `${(x + i * w / (P.length - 1)).toFixed(1)},${(y + (mx - v) / ((mx - mn) || 1) * h).toFixed(1)}`).join(' ');
+  return `<svg class="a" style="left:0;top:0" width="1080" height="1350"><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></svg>`;
+}
+// macro 2장 — 주요 지수 3개: 이름·종가·등락 칩·하루 흐름 + 쉬운 설명
+function indices(r) {
+  const L = (r.idx || []).slice(0, 3);
+  return page(BG, `${head(r, '02 / 05')}${sub(r.idxSub || 'MAJOR INDICES')}${title(r.idxT || '미국 3대 지수\n한눈에 보기', r.idxHl || String(r.idxT || '미국 3대 지수\n한눈에 보기').split('\n').pop())}
+  ${L.map((s, i) => { const y = 540 + i * 232, up = s.pct >= 0, col = up ? EB : RED; return `<div class="a card" style="left:84px;top:${y}px;width:912px;height:208px"></div>
+    <div class="a" style="left:124px;top:${y + 34}px;font-weight:700;font-size:30px;color:${DK}">${esc(s.name)}</div>
+    <div class="a num" style="left:120px;top:${y + 78}px;font-weight:700;font-size:56px;letter-spacing:-.02em;color:${DK}">${esc(s.price)}</div>
+    <div class="a" style="left:124px;top:${y + 150}px"><span class="chip" style="background:${col};font-size:24px;padding:8px 18px">${pctTxt(s.pct)}</span></div>
+    ${s.note ? `<div class="a" data-max="34" data-min="20" style="left:270px;top:${y + 156}px;width:380px;font-size:24px;font-weight:500;color:${DK};opacity:.55">${esc(s.note)}</div>` : ''}
+    ${spark(s.points, 660, y + 46, 296, 116, col)}`; }).join('')}
+  ${foot(r.idxSrc || '')}${dots(5, 1)}`);
+}
+// macro 3장 — 자산별 타일 2×3: 금리·달러·유가·금·비트코인·변동성
+function tiles(r) {
+  const L = (r.tiles || []).slice(0, 6);
+  return page(BG, `${head(r, '03 / 05')}${sub(r.tilesSub || 'RATES · FX · COMMODITIES')}${title(r.tilesT || '금리·달러·원자재\n움직임', String(r.tilesT || '금리·달러·원자재\n움직임').split('\n').pop())}
+  ${L.map((s, i) => { const x = 84 + (i % 2) * 468, y = 540 + Math.floor(i / 2) * 212, col = s.up == null ? DK : s.up ? EB : RED; return `<div class="a card" style="left:${x}px;top:${y}px;width:444px;height:192px"></div>
+    <div class="a" style="left:${x + 32}px;top:${y + 28}px;font-weight:700;font-size:26px;color:${DK};opacity:.7">${esc(s.name)}</div>
+    <div class="a num" style="left:${x + 30}px;top:${y + 66}px;font-weight:700;font-size:48px;letter-spacing:-.02em;color:${DK}">${esc(s.val)}</div>
+    <div class="a num" style="right:${1080 - (x + 444 - 32)}px;top:${y + 80}px;font-weight:700;font-size:30px;color:${col}">${esc(s.chg)}</div>
+    ${s.note ? `<div class="a" data-max="34" data-min="18" style="left:${x + 32}px;top:${y + 140}px;width:380px;font-size:22px;font-weight:500;color:${DK};opacity:.55">${esc(s.note)}</div>` : ''}`; }).join('')}
+  ${foot(r.tilesSrc || '')}${dots(5, 2)}`);
+}
+// data 2장 — 경제지표: 실제값 크게 + 예상·이전 비교 막대 + 무엇을 뜻하는지
+function indicator(r) {
+  const d = r.ind || {}, vals = [['실제', d.actual, EB], ['예상', d.forecast, '#9aa8c4'], ['이전', d.previous, '#c9d2e3']].filter(x => x[1] != null && x[1] !== '');
+  const num = v => parseFloat(String(v).replace(/[^\d.\-−]/g, '').replace('−', '-')), mx = Math.max(...vals.map(x => Math.abs(num(x[1])) || 0), 1e-9);
+  return page(BG, `${head(r, '02 / 05')}
+  <div class="a" style="left:84px;top:220px"><span class="chip" style="background:${DK};font-size:28px">${esc(d.flag ? (FLAG[d.flag] || [, d.flag])[1] + ' · ' : '')}${esc(d.name || '')}</span></div>
+  <div class="a" style="left:84px;top:290px;font-size:28px;font-weight:600;color:${DK};opacity:.55">${esc(d.period || '')}</div>
+  <div class="a num" style="left:78px;top:330px;font-weight:700;font-size:128px;letter-spacing:-.03em;color:${DK}">${esc(d.actual || '')}</div>
+  ${d.verdict ? `<div class="a" style="left:84px;top:500px"><span class="chip" style="background:${d.up === false ? RED : EB}">${esc(d.verdict)}</span></div>` : ''}
+  <div class="a card" style="left:84px;top:590px;width:912px;height:250px"></div>
+  ${vals.map(([k, v, c], i) => { const y = 626 + i * 70, w = Math.max(8, Math.abs(num(v)) / mx * 560); return `<div class="a" style="left:124px;top:${y}px;font-weight:700;font-size:28px;color:${DK};opacity:${i ? .6 : 1}">${k}</div>
+    <div class="a" style="left:230px;top:${y + 6}px;width:${w}px;height:26px;border-radius:4px;background:${c}"></div>
+    <div class="a num" style="left:${244 + w}px;top:${y - 2}px;font-weight:700;font-size:30px;color:${i ? DK : EB};opacity:${i ? .6 : 1}">${esc(v)}</div>`; }).join('')}
+  <div class="a" style="left:84px;top:880px;font-weight:800;font-size:48px;color:${DK}">${esc(d.whyTitle || '무슨 뜻일까?')}</div>
+  ${(d.why || []).slice(0, 3).map((w, i) => { const y = 966 + i * 100; return `<div class="a num" style="left:84px;top:${y}px;width:48px;height:48px;border-radius:24px;background:${EB};color:#fff;font-weight:700;font-size:24px;display:flex;align-items:center;justify-content:center">${i + 1}</div>
+    <div class="a" data-max="48" data-min="24" style="left:156px;top:${y + 2}px;width:840px;font-weight:700;font-size:32px;color:${DK}">${esc(w[0])}</div>${w[1] ? `<div class="a" data-max="36" data-min="20" style="left:156px;top:${y + 48}px;width:840px;font-size:25px;font-weight:500;color:${DK};opacity:.55">${esc(w[1])}</div>` : ''}`; }).join('')}
+  ${foot(d.src || '')}${dots(5, 1)}`);
+}
+// 설명형 카드 — 그날 글에 나온 어려운 용어 하나 (2026-11-19 사용자: 설명형 카드도 있으면 좋겠음)
+// r.explain = { term, title, hl, def, how:[[라벨, 설명, up(true/false/null)] ×2], today }
+function explain(r) {
+  const e = r.explain || {}, H = (e.how || []).slice(0, 2), t = e.title || (e.term ? e.term + ',\n무슨 뜻일까?' : '');
+  return page(BG, `${head(r, '04 / 06')}${sub(e.sub || 'EASY WORDS')}${title(t, e.hl || String(t).split('\n').pop())}
+  <div class="a card" style="left:84px;top:540px;width:912px;height:236px"></div>
+  <div class="a" style="left:124px;top:578px"><span class="chip" style="background:${DK};font-size:26px">${esc(e.term || '')}</span></div>
+  <div class="a" data-max="110" data-min="26" style="left:124px;top:648px;width:832px;font-weight:700;font-size:38px;line-height:1.4;color:${DK}">${esc(e.def || '')}</div>
+  ${H.map((h, i) => { const x = 84 + i * 468, col = h[2] === false ? RED : h[2] === true ? EB : DK; return `<div class="a card" style="left:${x}px;top:800px;width:444px;height:300px"></div>
+    <div class="a" style="left:${x + 32}px;top:832px;display:flex;align-items:center;gap:14px"><span style="display:inline-flex;width:52px;height:52px;border-radius:26px;background:${col};color:#fff;font-weight:800;font-size:30px;align-items:center;justify-content:center">${h[2] === false ? '↓' : h[2] === true ? '↑' : '·'}</span><span style="font-weight:800;font-size:34px;color:${col}">${esc(h[0])}</span></div>
+    <div class="a" data-max="170" data-min="22" style="left:${x + 32}px;top:912px;width:380px;font-size:30px;font-weight:500;line-height:1.45;color:${DK};opacity:.8">${esc(h[1])}</div>`; }).join('')}
+  ${e.today ? `<div class="a" style="left:84px;top:1130px;width:912px;height:110px;border-radius:24px;background:#164492;display:flex;align-items:center;gap:22px;padding:0 40px;color:#fff"><span style="flex:none;font-weight:800;font-size:26px;background:rgba(255,255,255,.16);border-radius:999px;padding:8px 18px">오늘은?</span><span data-max="80" data-min="22" style="font-weight:700;font-size:30px;line-height:1.35">${esc(e.today)}</span></div>` : ''}
+  ${foot(e.src || '알고 보면 쉬운 금융 용어')}${dots(6, 3)}`);
+}
+// 쪽 번호·점을 실제 장 수에 맞게 다시 씀 (틀마다 05·06 이 섞이지 않게)
+function renumber(pages) {
+  const n = pages.length, nn = String(n).padStart(2, '0');
+  return pages.map((h, i) => h.replace(/>0\d \/ 0\d</, `>${String(i + 1).padStart(2, '0')} / ${nn}<`)
+    .replace(/<div class="dots">[\s\S]*?<\/div>/, dots(n, i)));
+}
+// ── 설명형 6장 세트 (layout 'story' · 2026-11-20 사용자 확정 · 피그마 플러그인 '①-4 설명형 세트'와 같은 좌표) ──
+// 표지 → 핵심 숫자 → 왜 올랐을까(사진 + 글) → 오늘의 한 단어(남색 · 3D 그림) → 함께 움직인 종목 → 정리·일정·저장 안내
+// r.k = { tagA, tagB, title, hl[], points[], up, close, ext, stat:[[이름, 큰 숫자, 작은 줄, 파랑?] ×2], src }
+// r.why = { tagA, tagB, title, hl[], photo, labels:[l1, l2], text, textHl[], points:[줄 ×2~3], src }
+// r.word = { word, en, mean, today, art }   r.peers = { tagA, tagB, title, hl[], rows:[[이름, 값, 비교?]], src }
+// r.end = { sum:[[굵게, 숫자]] ×3, watch:[[나라, 시각, 이름]] ×3 }
+const hiM = (t, words, col) => { let h = esc(t); (words || []).filter(Boolean).forEach(w => { const e = esc(w); h = h.split(e).join(`\u0001${e}\u0002`); }); return h.replace(/\u0001/g, `<span style="color:${col || EB}">`).replace(/\u0002/g, '</span>').replace(/\n/g, '<br>'); };
+const tagPair = (a, b, dark) => `<div class="a" style="left:0;width:1080px;top:196px;display:flex;gap:10px;justify-content:center"><span style="border-radius:999px;padding:10px 22px;font-weight:700;font-size:26px;background:${EB};color:#fff">${esc(a)}</span>${b ? `<span style="border-radius:999px;padding:8px 20px;font-weight:700;font-size:26px;background:${dark ? '#16234a' : '#fff'};color:${dark ? '#fff' : DK};border:2px solid ${dark ? '#2a3a66' : '#dde3ee'}">${esc(b)}</span>` : ''}</div>`;
+const cTitle = (t, hl, top, size, maxH) => `<div class="a" data-max="${maxH || 160}" data-min="40" style="left:84px;top:${top}px;width:912px;text-align:center;font-weight:800;font-size:${size}px;line-height:1.28;letter-spacing:-.03em;color:${DK}">${hiM(t, hl)}</div>`;
+const headD = (r, page) => `<div class="a lg w" style="left:84px;top:72px;width:150px">${LOGO}</div>
+  <div class="a num" style="left:260px;top:90px;font-weight:600;font-size:24px;letter-spacing:.04em;color:#fff;opacity:.45">${esc(r.series)}</div>
+  <div class="a num" style="right:84px;top:88px;font-weight:600;font-size:26px;color:#fff;opacity:.55">${page}</div>
+  <div class="a" style="left:84px;top:150px;width:912px;height:2px;background:#fff;opacity:.1"></div>`;
+const dots6 = (cur, dark) => `<div class="dots">${Array.from({ length: 6 }, (_, i) => `<i class="${i === cur ? 'on' : ''}" ${dark && i !== cur ? 'style="background:#fff;opacity:.25"' : ''}></i>`).join('')}</div>`;
+const lab = (t, bg) => `<span style="display:inline-block;border-radius:10px;padding:10px 18px;background:${bg};color:#fff;font-weight:700;font-size:24px;white-space:nowrap">${esc(t)}</span>`;
+
+// 2 핵심 숫자
+function sKey(r) {
+  const k = r.k || {}, P = k.points || [], col = k.up === false ? RED : EB, W = 780, H = 300, X = 150, Y = 560;
+  const mn = P.length ? Math.min(...P) : 0, mx = P.length ? Math.max(...P) : 1, px = i => X + i * W / Math.max(P.length - 1, 1), py = v => Y + (mx - v) / ((mx - mn) || 1) * H;
+  const ei = k.up === false ? P.indexOf(mx) : P.indexOf(mn);   // 오른 날은 저점, 내린 날은 고점 표시
+  return page(BG, `${head(r, '02 / 06')}${tagPair(k.tagA || '핵심 숫자', k.tagB || '하루 주가 흐름')}${cTitle(k.title, k.hl, 280, 60)}
+  <div class="a card" style="left:84px;top:470px;width:912px;height:470px"></div>
+  ${[0, 1, 2].map(g => `<div class="a" style="left:${X}px;top:${Y + g * H / 2}px;width:${W}px;height:1px;background:${DK};opacity:.08"></div>`).join('')}
+  ${P.length > 1 ? `<svg class="a" style="left:0;top:0" width="1080" height="1350"><polyline points="${P.map((v, i) => px(i).toFixed(1) + ',' + py(v).toFixed(1)).join(' ')}" fill="none" stroke="${col}" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${px(ei)}" cy="${py(P[ei])}" r="9" fill="${k.up === false ? EB : RED}"/><circle cx="${px(P.length - 1)}" cy="${py(P[P.length - 1])}" r="9" fill="${col}"/></svg>
+    ${k.ext ? `<div class="a" style="left:${Math.min(Math.max(px(ei) - 20, 100), 760)}px;top:${k.up === false ? py(P[ei]) - 66 : py(P[ei]) + 18}px">${lab(k.ext, k.up === false ? EB : RED)}</div>` : ''}
+    ${k.close ? `<div class="a" style="right:${1080 - (X + W + 10)}px;top:${k.up === false ? py(P[P.length - 1]) + 18 : py(P[P.length - 1]) - 66}px">${lab(k.close, col)}</div>` : ''}` : ''}
+  ${(k.stat || []).slice(0, 2).map((s, i) => { const x = 84 + i * 468, c = s[3] === 'red' ? RED : s[3] ? EB : DK; return `<div class="a card" style="left:${x}px;top:970px;width:444px;height:200px;border-radius:28px"></div>
+    <div class="a" style="left:${x}px;top:996px;width:444px;text-align:center;font-weight:700;font-size:26px;color:${DK};opacity:.55">${esc(s[0])}</div>
+    <div class="a num" style="left:${x}px;top:1032px;width:444px;text-align:center;font-weight:700;font-size:56px;color:${c}">${esc(s[1])}</div>
+    <div class="a" style="left:${x}px;top:1116px;width:444px;text-align:center;font-weight:500;font-size:24px;color:${DK};opacity:.6">${esc(s[2] || '')}</div>`; }).join('')}
+  ${foot(k.src || '')}${dots6(1)}`);
+}
+// 3 왜 올랐을까 — 사진 + 사진 위 라벨 2개 + 강조 섞인 문단 + 요점 줄
+function sWhy(r) {
+  const w = r.why || {}, L = w.labels || [];
+  return page(BG, `${head(r, '03 / 06')}${tagPair(w.tagA || '이유', w.tagB)}${cTitle(w.title, w.hl, 270, 54, 150)}
+  <div class="a" style="left:84px;top:440px;width:912px;height:420px;border-radius:28px;overflow:hidden;background:#1b2a52">${w.photo ? `<img src="${esc(src(w.photo))}" style="width:100%;height:100%;object-fit:cover">` : ''}
+    <div class="a" style="left:0;bottom:0;width:100%;height:160px;background:linear-gradient(180deg,rgba(5,10,26,0),rgba(5,10,26,.55))"></div></div>
+  ${L[0] ? `<div class="a" style="left:112px;top:792px">${lab(L[0], NAVY)}</div>` : ''}${L[1] ? `<div class="a" style="right:112px;top:792px">${lab(L[1], EB)}</div>` : ''}
+  <div class="a" data-max="160" data-min="24" style="left:84px;top:900px;width:912px;text-align:center;font-weight:500;font-size:32px;line-height:1.52;color:${DK}">${hiM(w.text, w.textHl).replace(/<span style="color:([^"]+)">/g, '<span style="color:$1;font-weight:700">')}</div>
+  <div class="a" data-max="140" data-min="20" style="left:84px;top:1076px;width:912px;text-align:center;font-weight:500;font-size:28px;line-height:1.55;color:${DK};opacity:.8">${(w.points || []).slice(0, 3).map(p => '- ' + esc(p)).join('<br>')}</div>
+  ${foot(w.src || '')}${dots6(2)}`);
+}
+// 4 오늘의 한 단어 — 남색 · 큰 영문 단어 흐리게 · 3D 그림 오른쪽 · 단어 · 뜻 한 줄 · 오늘 칩
+function sWord(r) {
+  const d = r.word || {}, en = String(d.en || '').toUpperCase().replace(/[^A-Z0-9 &]/g, ''), cut = Math.ceil(en.replace(/\s+/g, '').length / 2), enT = en.indexOf(' ') > 0 ? en.split(/\s+/).slice(0, 2).join('<br>') : en.slice(0, cut) + '<br>' + en.slice(cut);
+  return page(NAVY, `${headD(r, '04 / 06')}
+  <div class="a num" style="left:60px;top:170px;font-weight:800;font-size:${en.length > 12 ? 170 : 250}px;letter-spacing:-.06em;line-height:.9;color:#fff;opacity:.06">${enT}</div>
+  ${d.art ? `<img class="a" src="${esc(src(d.art))}" style="left:430px;top:300px;width:600px;height:600px;object-fit:contain">` : ''}
+  <div class="a" style="left:84px;top:236px;font-weight:700;font-size:26px;color:${HL}">오늘의 한 단어</div>
+  <div class="a" data-max="130" data-min="64" style="left:84px;top:896px;width:912px;font-weight:800;font-size:116px;letter-spacing:-.04em;line-height:1.05;color:#fff">${esc(d.word || '')}</div>
+  <div class="a" style="left:84px;top:1036px;width:912px;font-weight:500;font-size:36px;color:#fff;opacity:.75">${esc(d.mean || '')}</div>
+  ${d.today ? `<div class="a" style="left:84px;top:1110px"><span class="chip" style="font-size:30px;padding:14px 30px">${esc(d.today)}</span></div>` : ''}
+  ${dots6(3, true)}`);
+}
+// 5 함께 움직인 종목 — 막대 카드 (마지막 줄은 비교용 회색)
+function sPeers(r) {
+  const p = r.peers || {}, rows = (p.rows || []).slice(0, 6), mx = Math.max(...rows.map(x => Math.abs(x[1])), .1), neg = rows.some(x => x[1] < 0 && !x[2]), pos = rows.some(x => x[1] > 0 && !x[2]);
+  const mP = Math.max(0, ...rows.map(x => x[1])), mN = Math.max(0, ...rows.map(x => -x[1]));
+  const sc = mP > 0 && mN > 0 ? 400 / (mP + mN) : mN > 0 ? 440 / mx : 380 / mx, zx = mP > 0 && mN > 0 ? 440 + mN * sc : mN > 0 ? 900 : 460;
+  const step = [.5, 1, 2, 5, 10, 20].find(t => t * sc >= 76) || 50; let grid = '';
+  for (let g = -Math.ceil(mN / step) * step; g <= Math.ceil(mP / step) * step + 1e-9; g += step) { const gx = zx + g * sc; if (gx < 420 || gx > 920) continue;
+    grid += `<div class="a" style="left:${gx}px;top:540px;width:${Math.abs(g) < 1e-9 ? 2 : 1}px;height:550px;background:${DK};opacity:${Math.abs(g) < 1e-9 ? .25 : .08}"></div><div class="a num" style="left:${gx - 40}px;width:80px;text-align:center;top:504px;font-size:22px;font-weight:600;color:${DK};opacity:.45">${g > 0 ? '+' : g < 0 ? '−' : ''}${+Math.abs(g).toFixed(1)}%</div>`; }
+  const rowsH = rows.map(([n, v, cmp], i) => { const y = 562 + i * 100, wv = Math.abs(v) * sc, c = cmp ? '#9aa8c4' : v >= 0 ? EB : RED, lab2 = (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(1) + '%', inside = v < 0 && zx - wv - 14 - 110 < 400;
+    return `<div class="a" style="left:124px;top:${y + 4}px;width:300px;font-weight:700;font-size:28px;color:${DK};opacity:${cmp ? .55 : 1};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(n)}</div>
+      <div class="a" style="left:${v >= 0 ? zx + 2 : zx - wv}px;top:${y + 10}px;width:${Math.max(wv, 4)}px;height:24px;border-radius:4px;background:${c}"></div>
+      <div class="a num" style="${v >= 0 ? `left:${zx + 16 + wv}px` : inside ? `left:${zx - wv + 12}px` : `right:${1080 - (zx - wv - 14)}px`};top:${y + 4}px;font-weight:700;font-size:26px;color:${inside ? '#fff' : cmp ? DK : c};opacity:${cmp && !inside ? .55 : 1}">${lab2}</div>`; }).join('');
+  return page(BG, `${head(r, '05 / 06')}${tagPair(p.tagA || '같이 움직인 종목', p.tagB)}${cTitle(p.title, p.hl, 280, 56)}
+  <div class="a card" style="left:84px;top:480px;width:912px;height:640px"></div>${grid}${rowsH}${foot(p.src || '')}${dots6(4)}`);
+}
+// 6 정리와 일정 — 번호 3줄 · 구분선 · 국기 일정 · 저장 안내 띠 · 위험 고지
+function sEnd(r) {
+  const e = r.end || {};
+  return page(BG, `${head(r, '06 / 06')}${cTitle('오늘 시장,\n한 장으로 정리하면', ['한 장으로 정리하면'], 196, 64)}
+  ${(e.sum || []).slice(0, 3).map((s, i) => { const y = 400 + i * 120; return `<div class="a num" style="left:124px;top:${y + 6}px;font-weight:700;font-size:44px;color:${EB}">0${i + 1}</div>
+    <div class="a" data-max="48" data-min="26" style="left:230px;top:${y}px;width:760px;font-weight:800;font-size:36px;color:${DK}">${esc(s[0])}</div>
+    <div class="a" style="left:230px;top:${y + 54}px;width:760px;font-weight:500;font-size:26px;color:${DK};opacity:.6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(s[1] || '')}</div>`; }).join('')}
+  <div class="a" style="left:84px;top:770px;width:912px;height:2px;background:${DK};opacity:.1"></div>
+  <div class="a" style="left:84px;top:792px;font-weight:700;font-size:28px;color:${DK};opacity:.7">다음 일정 (한국 시간)</div>
+  ${(e.watch || []).slice(0, 3).map((w, i) => { const y = 844 + i * 86, f = FLAG[String(w[0] || '').toUpperCase()]; return `<div class="a card" style="left:84px;top:${y}px;width:912px;height:72px;border-radius:18px"></div>
+    ${f ? `<img class="a" src="https://flagcdn.com/${f[0]}.svg" style="left:112px;top:${y + 18}px;width:54px;height:36px;object-fit:cover;border-radius:5px;border:1px solid #dde3ee">` : `<div class="a num" style="left:112px;top:${y + 22}px;font-weight:700;font-size:22px">${esc(w[0])}</div>`}
+    <div class="a num" style="left:190px;top:${y + 20}px;font-weight:700;font-size:26px;color:${EB}">${esc(w[1])}</div>
+    <div class="a" style="left:400px;top:${y + 18}px;width:570px;font-weight:700;font-size:28px;color:${DK};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(w[2])}</div>`; }).join('')}
+  <div class="a" style="left:84px;top:1120px;width:912px;height:96px;border-radius:48px;background:#164492;display:flex;align-items:center;justify-content:space-between;padding:0 46px;color:#fff;font-weight:700;font-size:32px"><span>저장해 두고 발표 시간에 확인하세요</span><span class="num" style="font-size:40px">→</span></div>
+  <div class="a" style="left:84px;top:1232px;width:912px;font-size:20px;color:${DK};opacity:.45">CFD는 레버리지 상품으로 원금 손실 위험이 있습니다. 투자 권유가 아닙니다.</div>
+  ${dots6(5)}`);
+}
+
+export const marketPages = r => {
+  if (r.layout === 'story') return [cover(r), sKey(r), sWhy(r), sWord(r), sPeers(r), sEnd(r)];   // 설명형 6장 (2026-11-20 확정)
+  const L = r.layout === 'macro' ? [cover(r), indices(r), tiles(r), summary(r), watch(r)]
+    : r.layout === 'data' ? [cover(r), indicator(r), bars(r), summary(r), watch(r)]
+    : [cover(r), detail(r), bars(r), summary(r), watch(r)];
+  if (r.explain && r.explain.term) L.splice(3, 0, explain(r));   // 설명형 카드는 3장 뒤 (전체 6장)
+  return renumber(L);
+};
 
 // 명령줄: node insta/market.mjs req.json outDir
 if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) {
