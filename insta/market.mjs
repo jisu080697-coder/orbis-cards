@@ -50,7 +50,7 @@ function cover(r) {
   <div class="a" style="left:84px;top:790px"><span class="chip">${esc(r.tag)} · ${esc(r.date)}</span></div>
   <div class="a" data-max="250" data-min="64" style="left:84px;top:880px;width:912px;font-weight:800;font-size:100px;line-height:1.18;letter-spacing:-.045em;color:#fff">${hi(r.title, r.hl, r.hlColor || HL)}</div>
   <div class="a" style="left:84px;top:1150px;width:912px;font-size:34px;font-weight:500;color:#fff;opacity:.75">${esc(r.sub || '')}</div>
-  <div class="a" style="left:84px;top:1250px;width:912px;font-size:24px;color:#fff;opacity:.45">CFD는 레버리지 상품으로 원금 손실 위험이 있습니다. 투자 권유가 아닙니다.</div>`);
+  <div class="a" style="left:84px;top:1250px;width:912px;font-size:24px;color:#fff;opacity:.45">*거래에는 손실 위험이 있습니다. 이용약관이 적용됩니다.</div>`);
 }
 // 2 종목·지수 상세 — 큰 값 + 등락 칩 + 하루 흐름 차트(눈금·축) + 이유 3개
 function detail(r) {
@@ -266,7 +266,7 @@ function sEnd(r) {
     <div class="a num" style="left:190px;top:${y + 20}px;font-weight:700;font-size:26px;color:${EB}">${esc(w[1])}</div>
     <div class="a" style="left:400px;top:${y + 18}px;width:570px;font-weight:700;font-size:28px;color:${DK};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(w[2])}</div>`; }).join('')}
   <div class="a" style="left:84px;top:1120px;width:912px;height:96px;border-radius:48px;background:#164492;display:flex;align-items:center;justify-content:space-between;padding:0 46px;color:#fff;font-weight:700;font-size:32px"><span>저장해 두고 발표 시간에 확인하세요</span><span class="num" style="font-size:40px">→</span></div>
-  <div class="a" style="left:84px;top:1232px;width:912px;font-size:20px;color:${DK};opacity:.45">CFD는 레버리지 상품으로 원금 손실 위험이 있습니다. 투자 권유가 아닙니다.</div>
+  <div class="a" style="left:84px;top:1232px;width:912px;font-size:20px;color:${DK};opacity:.45">*거래에는 손실 위험이 있습니다. 이용약관이 적용됩니다.</div>
   ${dots6(5)}`);
 }
 
@@ -286,7 +286,7 @@ const para5 = (t, hl, top, size, color, maxH) => `<div class="a" data-max="${max
 const box5 = (t, size, bg, fg) => `<span style="display:inline-block;background:${bg};color:${fg};font-weight:800;font-size:${size}px;letter-spacing:-.03em;line-height:1.18;padding:${Math.round(size * .06)}px ${Math.round(size * .22)}px ${Math.round(size * .1)}px">${esc(t)}</span>`;
 const pg5 = (s, dark) => `<div class="a num" style="right:84px;top:1270px;font-weight:600;font-size:24px;color:${dark ? '#fff' : DK};opacity:.5">${s}</div>`;
 const lab5 = (t, bg) => `<span style="display:inline-block;border-radius:10px;padding:10px 18px;background:${bg};color:#fff;font-weight:700;font-size:24px;white-space:nowrap">${esc(t)}</span>`;
-const risk5 = (top, dark) => `<div class="a" style="left:84px;top:${top}px;width:912px;font-size:20px;color:${dark ? '#fff' : DK};opacity:.5">CFD는 레버리지 상품으로 원금 손실 위험이 있습니다. 투자 권유가 아닙니다.</div>`;
+const risk5 = (top, dark) => `<div class="a" style="left:84px;top:${top}px;width:912px;font-size:20px;color:${dark ? '#fff' : DK};opacity:.5">*거래에는 손실 위험이 있습니다. 이용약관이 적용됩니다.</div>`;
 
 function v5Cover(r) {
   return page('#050a1a', `${r.cover ? `<img class="a" src="${esc(src(r.cover))}" style="inset:0;width:1080px;height:1350px;object-fit:cover">` : ''}
@@ -381,7 +381,7 @@ function calPage(r) {
     <div class="a" style="left:330px;top:${y + 38}px;width:470px;font-weight:${key ? 800 : 700};font-size:34px;color:${key ? MC : DK};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(e[4])}</div>
     <div class="a num" style="right:${1080 - 956}px;top:${y + 42}px;font-weight:700;font-size:30px;color:${hol ? DK : MC};opacity:${hol ? .45 : 1}">${esc(e[3])}</div>`; }).join('')}
   <div class="a" style="left:84px;top:1215px;width:912px;text-align:center;font-weight:500;font-size:24px;color:${DK};opacity:.5">${esc(r.note || '한국 시간 기준 · 일정은 발표 기관 사정에 따라 바뀔 수 있음')}</div>
-  <div class="a" style="left:84px;top:1258px;width:912px;text-align:center;font-size:20px;color:${DK};opacity:.45">CFD는 레버리지 상품으로 원금 손실 위험이 있습니다. 투자 권유가 아닙니다.</div>`);
+  <div class="a" style="left:84px;top:1258px;width:912px;text-align:center;font-size:20px;color:${DK};opacity:.45">*거래에는 손실 위험이 있습니다. 이용약관이 적용됩니다.</div>`);
 }
 
 
@@ -396,7 +396,7 @@ const eHead = (r, p, n) => `<div class="a lg w" style="left:84px;top:72px;width:
   <div class="a" style="left:84px;top:150px;width:912px;height:2px;background:#fff;opacity:.14"></div>`;
 const eDots = (cur, n) => `<div class="a" style="left:84px;top:1272px;display:flex;gap:10px">${Array.from({ length: n }, (_, i) => `<i style="display:block;height:12px;width:${i === cur ? 40 : 12}px;border-radius:6px;background:${i === cur ? ELB : '#fff'};opacity:${i === cur ? 1 : .2}"></i>`).join('')}</div>`;
 const eTitle = (t, w, y) => `<div class="a" data-max="200" data-min="56" style="left:84px;top:${y || 230}px;width:912px;font-weight:800;font-size:76px;line-height:1.2;letter-spacing:-.04em;color:#fff">${eHi(t, w)}</div>`;
-const eRisk = `<div class="a" style="left:84px;top:1250px;width:912px;font-size:24px;color:#fff;opacity:.45">CFD는 레버리지 상품으로 원금 손실 위험이 있습니다. 투자 권유가 아닙니다.</div>`;
+const eRisk = `<div class="a" style="left:84px;top:1250px;width:912px;font-size:24px;color:#fff;opacity:.45">*거래에는 손실 위험이 있습니다. 이용약관이 적용됩니다.</div>`;
 const eIcon = k => src('insta/assets/icons/' + (/^[a-z_]+$/.test(String(k || '')) ? k : 'chartup') + '.png');
 const br = t => esc(t).replace(/\n/g, '<br>');
 
@@ -480,7 +480,7 @@ function eduPages(r) {
 const nChip = (t, bg, fg, size) => `<span style="display:inline-block;border-radius:999px;padding:12px 26px;font-weight:700;font-size:${size}px;background:${bg};color:${fg};white-space:nowrap">${esc(t)}</span>`;
 const nHead = p => `<div class="a lg" style="left:84px;top:84px;width:200px">${LOGO_C}</div>
   <div class="a num" style="right:84px;top:100px;font-weight:600;font-size:26px;color:${DK};opacity:.5">${p}/2</div>`;
-const nRisk = `<div class="a" style="left:84px;top:1260px;width:912px;text-align:center;font-size:24px;color:${DK};opacity:.45">CFD는 레버리지 상품으로 원금 손실 위험이 있습니다. 투자 권유가 아닙니다.</div>`;
+const nRisk = `<div class="a" style="left:84px;top:1260px;width:912px;text-align:center;font-size:24px;color:${DK};opacity:.45">*거래에는 손실 위험이 있습니다. 이용약관이 적용됩니다.</div>`;
 const nIcon = k => src('insta/assets/icons/' + (/^[a-z_]+$/.test(String(k || '')) ? k : 'megaphone') + '.png');
 function newsCover(r) {
   return page('#f5f7fb', `${nHead(1)}
