@@ -473,7 +473,38 @@ function eduPages(r) {
   return [eduCover(r, n)].concat(L.map((f, i) => f(r, i + 2, n)));
 }
 
+
+// ── 회사·서비스 소식 2장 (2026-11-23 사용자 확정 · 피그마 '확정 디자인' 회사 소식 v3 · 표지 + 내용 1장 · 밝은 바탕 · 메인 컬러만) ──
+// r = { layout:'news', chip:'서비스 소식 · 11.23', title:'원유·천연가스,\nMT5 거래 추가', hl:'MT5 거래 추가', icon:'megaphone',
+//       body:{ chip:'무엇이 바뀌나', title:'원자재 3종목,\nMT5에서 거래', hl:'MT5에서 거래', icon:'oil', rows:[[항목, 내용]×3], note } }
+const nChip = (t, bg, fg, size) => `<span style="display:inline-block;border-radius:999px;padding:12px 26px;font-weight:700;font-size:${size}px;background:${bg};color:${fg};white-space:nowrap">${esc(t)}</span>`;
+const nHead = p => `<div class="a lg" style="left:84px;top:84px;width:200px">${LOGO_C}</div>
+  <div class="a num" style="right:84px;top:100px;font-weight:600;font-size:26px;color:${DK};opacity:.5">${p}/2</div>`;
+const nRisk = `<div class="a" style="left:84px;top:1260px;width:912px;text-align:center;font-size:24px;color:${DK};opacity:.45">CFD는 레버리지 상품으로 원금 손실 위험이 있습니다. 투자 권유가 아닙니다.</div>`;
+const nIcon = k => src('insta/assets/icons/' + (/^[a-z_]+$/.test(String(k || '')) ? k : 'megaphone') + '.png');
+function newsCover(r) {
+  return page('#f5f7fb', `${nHead(1)}
+  <img class="a" src="${esc(nIcon(r.icon || 'megaphone'))}" style="left:250px;top:190px;width:580px;height:580px;object-fit:contain">
+  <div class="a" style="left:0;top:800px;width:1080px;text-align:center">${nChip(r.chip || '', MC, '#fff', 30)}</div>
+  <div class="a" data-fitw="56" style="left:84px;top:890px;width:912px;text-align:center;font-weight:800;font-size:92px;line-height:1.2;letter-spacing:-.04em;color:${DK};white-space:pre">${hi(r.title || '', r.hl, MC).replace(/<br>/g, '\n')}</div>
+  ${nRisk}`);
+}
+function newsBody(r) {
+  const b = r.body || {}, rows = (b.rows || []).slice(0, 3);
+  return page('#f5f7fb', `${nHead(2)}
+  <img class="a" src="${esc(nIcon(b.icon || r.icon || 'megaphone'))}" style="left:760px;top:170px;width:236px;height:236px;object-fit:contain">
+  <div class="a" style="left:84px;top:236px">${nChip(b.chip || '무엇이 바뀌나', MC, '#fff', 28)}</div>
+  <div class="a" data-fitw="50" style="left:84px;top:320px;width:660px;font-weight:800;font-size:84px;line-height:1.22;letter-spacing:-.04em;color:${DK};white-space:pre">${hi(b.title || '', b.hl, MC).replace(/<br>/g, '\n')}</div>
+  <div class="a" style="left:84px;top:580px;width:912px;height:${rows.length * 150 + 30}px;border-radius:36px;background:#fff;border:2px solid #dde3ee"></div>
+  ${rows.map((q, i) => { const y = 610 + i * 150; return `${i ? `<div class="a" style="left:124px;top:${y - 8}px;width:832px;height:2px;background:${DK};opacity:.08"></div>` : ''}
+    <div class="a" style="left:124px;top:${y + 40}px">${nChip(q[0], '#e4eaf4', MC, 28)}</div>
+    <div class="a" data-fitw="26" style="left:300px;top:${y + 44}px;width:656px;font-weight:700;font-size:38px;color:${DK};white-space:nowrap">${esc(q[1])}</div>`; }).join('')}
+  ${b.note ? `<div class="a" data-fitw="20" style="left:84px;top:${610 + rows.length * 150 + 40}px;width:912px;text-align:center;font-weight:500;font-size:26px;color:${DK};opacity:.5;white-space:nowrap">${esc(b.note)}</div>` : ''}
+  ${nRisk}`);
+}
+
 export const marketPages = r => {
+  if (r.layout === 'news') return [newsCover(r), newsBody(r)];   // 회사·서비스 소식 2장 (2026-11-23 확정)
   if (r.layout === 'edu') return eduPages(r);   // 트레이딩 교육 6~7장 (2026-11-23 확정)
   if (r.layout === 'cal') return [calPage(r)];   // 경제 캘린더 한 장 (2026-11-23 확정)
   if (r.layout === 'v5') return [v5Cover(r), v5Key(r), v5Why(r), v5Concept(r), v5Peers(r), v5End(r)];   // 시장·경제 이슈 v5 6장 (2026-11-23 사용자 확정)
