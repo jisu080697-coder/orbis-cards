@@ -362,7 +362,29 @@ function v5End(r) {
   ${risk5(1230, true)}${pg5('6/6', true)}`);
 }
 
+
+// ── 경제 캘린더 한 장 (2026-11-23 사용자 확정 · 피그마 '확정 디자인' · 캘린더 밝은형) ──
+// r = { layout:'cal', label:'11월 넷째 주 · 11.23 ~ 11.27', title1:'이번 주 주요', title2:'경제 일정 5', rows:[[요일, 날짜, 나라, 시각, 이름, 핵심?, 휴장?]], note }
+function calPage(r) {
+  const rows = (r.rows || []).slice(0, 5);
+  return page('#f5f7fb', `<div class="a lg" style="left:84px;top:84px;width:200px">${LOGO_C}</div>
+  <img class="a" src="${esc(src('insta/assets/icons/hero_calendar.png'))}" style="left:760px;top:40px;width:270px;height:270px;object-fit:contain">
+  <div class="a" style="left:84px;top:236px;font-weight:700;font-size:32px;color:${MC}">${esc(r.label || '')}</div>
+  <div class="a" style="left:84px;top:300px;font-weight:800;font-size:80px;letter-spacing:-.04em;line-height:1.2;color:${DK}">${esc(r.title1 || '이번 주 주요')}</div>
+  <div class="a" style="left:68px;top:400px">${box5(r.title2 || '', 80, MC, '#fff')}</div>
+  <div class="a" style="left:84px;top:560px;width:912px;height:640px;border-radius:36px;background:#fff;border:2px solid #dde3ee"></div>
+  ${rows.map((e, i) => { const y = 580 + i * 120, key = !!e[5], hol = !!e[6], f = FLAG[String(e[2] || '').toUpperCase()];
+    return `${key ? `<div class="a" style="left:100px;top:${y + 4}px;width:880px;height:112px;border-radius:20px;background:${MT1}"></div>` : i ? `<div class="a" style="left:124px;top:${y - 2}px;width:832px;height:2px;background:${DK};opacity:.08"></div>` : ''}
+    <div class="a" style="left:124px;top:${y + 32}px"><span style="display:inline-block;border-radius:999px;padding:9px 22px;font-weight:700;font-size:26px;background:${hol ? MT1 : MC};color:${hol ? MC : '#fff'};white-space:nowrap">${esc(e[0])} ${esc(e[1])}</span></div>
+    ${f ? `<img class="a" src="https://flagcdn.com/${f[0]}.svg" style="left:270px;top:${y + 46}px;width:42px;height:28px;object-fit:cover;border-radius:4px;border:1px solid #dde3ee">` : ''}
+    <div class="a" style="left:330px;top:${y + 38}px;width:470px;font-weight:${key ? 800 : 700};font-size:34px;color:${key ? MC : DK};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(e[4])}</div>
+    <div class="a num" style="right:${1080 - 956}px;top:${y + 42}px;font-weight:700;font-size:30px;color:${hol ? DK : MC};opacity:${hol ? .45 : 1}">${esc(e[3])}</div>`; }).join('')}
+  <div class="a" style="left:84px;top:1215px;width:912px;text-align:center;font-weight:500;font-size:24px;color:${DK};opacity:.5">${esc(r.note || '한국 시간 기준 · 일정은 발표 기관 사정에 따라 바뀔 수 있음')}</div>
+  <div class="a" style="left:84px;top:1258px;width:912px;text-align:center;font-size:20px;color:${DK};opacity:.45">CFD는 레버리지 상품으로 원금 손실 위험이 있습니다. 투자 권유가 아닙니다.</div>`);
+}
+
 export const marketPages = r => {
+  if (r.layout === 'cal') return [calPage(r)];   // 경제 캘린더 한 장 (2026-11-23 확정)
   if (r.layout === 'v5') return [v5Cover(r), v5Key(r), v5Why(r), v5Concept(r), v5Peers(r), v5End(r)];   // 시장·경제 이슈 v5 6장 (2026-11-23 사용자 확정)
   if (r.layout === 'story') return [cover(r), sKey(r), sWhy(r), sWord(r), sPeers(r), sEnd(r)];   // 설명형 6장 (2026-11-20 확정)
   const L = r.layout === 'macro' ? [cover(r), indices(r), tiles(r), summary(r), watch(r)]
