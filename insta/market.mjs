@@ -388,8 +388,8 @@ function v6Key(r) {
 function v6Why(r) {
   const w = r.why || {}, R = (w.reasons || []).slice(0, 3);
   return page('#ffffff', `${pills5(w.tagA || '이유', w.tagB)}${cT5(w.title, w.hl, 200, 60, DK, 160)}
-  <div class="a" style="left:84px;top:390px;width:912px;height:250px;border-radius:28px;overflow:hidden;background:#1b2a52">${w.photo ? `<img src="${esc(src(w.photo))}" style="width:100%;height:100%;object-fit:cover;${posCss(w.photoPos)}">` : ''}</div>
-  ${R.map((x, i) => { const y = 680 + i * 178; return `${i ? `<div class="a" style="left:84px;top:${y - 22}px;width:912px;height:2px;background:${DK};opacity:.08"></div>` : ''}
+  <div class="a" style="left:84px;top:380px;width:912px;height:360px;border-radius:28px;overflow:hidden;background:#1b2a52">${w.photo ? `<img src="${esc(src(w.photo))}" style="width:100%;height:100%;object-fit:cover;${posCss(w.photoPos)}">` : ''}</div>
+  ${R.map((x, i) => { const y = 780 + i * 160; return `${i ? `<div class="a" style="left:84px;top:${y - 18}px;width:912px;height:2px;background:${DK};opacity:.08"></div>` : ''}
     <div class="a num" style="left:84px;top:${y + 2}px;width:56px;height:56px;border-radius:50%;background:${MC};color:#fff;font-weight:700;font-size:26px;display:flex;align-items:center;justify-content:center">${i + 1}</div>
     <div class="a" data-fitw="24" style="left:168px;top:${y + 4}px;width:828px;font-weight:800;font-size:34px;color:${DK};white-space:nowrap">${esc(x[0] || '')}</div>
     <div class="a" data-fitw="18" style="left:168px;top:${y + 58}px;width:828px;font-weight:500;font-size:25px;line-height:1.5;color:${DK};opacity:.7;white-space:pre">${esc(x[1] || '')}</div>`; }).join('')}
@@ -407,11 +407,14 @@ function v6Watch(r) {
   ${w.note ? `<div class="a" style="left:84px;top:1150px;width:912px;text-align:center;font-weight:700;font-size:26px;color:${DK};opacity:.55">${esc(w.note)}</div>` : ''}
   ${pg5('5/5')}`);
 }
+const COIN_LOGO = { BTC: 'bitcoin', '비트코인': 'bitcoin', ETH: 'ethereum', '이더리움': 'ethereum', XRP: 'xrp', '리플': 'xrp', SOL: 'solana', '솔라나': 'solana', DOGE: 'dogecoin', '도지코인': 'dogecoin', ADA: 'cardano', '카르다노': 'cardano', '에이다': 'cardano', LTC: 'litecoin', '라이트코인': 'litecoin', BNB: 'binance', '바이낸스코인': 'binance', TRX: 'tron', '트론': 'tron' };
+const coinLogo = (name, sym) => COIN_LOGO[String(sym || '').toUpperCase().replace(/-USD$/, '')] || COIN_LOGO[String(name || '').trim()] || '';
+const coinBadge = (slug, x, y) => `<div class="a" style="left:${x}px;top:${y}px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ffffff 0%,#eef2fa 38%,#c4d0e6 100%);box-shadow:inset -7px -9px 16px rgba(22,68,146,.22),inset 6px 6px 12px rgba(255,255,255,.95),0 12px 22px rgba(22,68,146,.20)"><div style="position:absolute;inset:13px;border-radius:50%;background:linear-gradient(145deg,#f7f9fd 0%,#dbe3f1 100%);box-shadow:inset 3px 3px 6px rgba(22,68,146,.22),inset -3px -3px 6px rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center"><img src="https://cdn.simpleicons.org/${slug}/2a5bd7" style="width:50px;height:50px;filter:drop-shadow(0 3px 3px rgba(22,68,146,.35))"></div></div>`;   // 우윳빛 서리 유리 동전 + 파란 로고 (Orbis 3D 아이콘 무드 · 2026-11-23)
 function v6Trio(r) {
   const t = r.trio || {}, rows = (t.rows || []).slice(0, 3);
   return page(`linear-gradient(180deg,${MT1},${MT2})`, `${pills5(t.tagA || '세 종목 흐름', t.tagB)}${cT5(t.title, t.hl, 200, 58)}
   ${rows.map((x, i) => { const y = 420 + i * 236, v = Number(x[2]) || 0, up = v >= 0, col = up ? MC : DK; return `<div class="a" style="left:84px;top:${y}px;width:912px;height:196px;border-radius:28px;background:#fff;border:2px solid #dde3ee;box-sizing:border-box"></div>
-    ${t.icons ? `<div class="a" style="left:112px;top:${y + 38}px;width:120px;height:120px;background:url('${esc(src(t.icons))}') ${i * 50}% 50% / 300% auto no-repeat"></div>` : `<div class="a" style="left:112px;top:${y + 38}px;width:120px;height:120px;border-radius:50%;background:${MT1}"></div>`}
+    ${coinLogo(x[0], x[4]) ? coinBadge(coinLogo(x[0], x[4]), 112, y + 38) : t.icons ? `<div class="a" style="left:112px;top:${y + 38}px;width:120px;height:120px;background:url('${esc(src(t.icons))}') ${i * 50}% 50% / 300% auto no-repeat"></div>` : `<div class="a" style="left:112px;top:${y + 38}px;width:120px;height:120px;border-radius:50%;background:${MT1}"></div>`}
     <div class="a" data-fitw="24" style="left:260px;top:${y + 36}px;width:370px;font-weight:800;font-size:36px;color:${DK};white-space:nowrap">${esc(x[0] || '')}</div>
     <div class="a" data-fitw="16" style="left:260px;top:${y + 92}px;width:370px;font-weight:500;font-size:22px;line-height:1.45;color:${DK};opacity:.65;white-space:pre">${esc(x[1] || '')}</div>
     ${spark6(x[3], 650, y + 58, 150, 80, col, 4)}
