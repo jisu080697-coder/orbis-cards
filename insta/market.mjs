@@ -27,7 +27,8 @@ body{width:1080px;height:1350px;overflow:hidden;font-family:'Pretendard Variable
 </style>
 <script>
 // 넘침 방지: data-max 높이에 들어갈 때까지 글자 크기를 줄임 (data-min 까지)
-window.addEventListener('load', () => { document.querySelectorAll('[data-max]').forEach(el => { const mx = +el.dataset.max, mn = +el.dataset.min || 24; let fs = parseFloat(getComputedStyle(el).fontSize); while (el.scrollHeight > mx && fs > mn) { fs -= 2; el.style.fontSize = fs + 'px'; } }); document.body.dataset.ready = '1'; });
+window.addEventListener('load', () => { document.querySelectorAll('[data-fitw]').forEach(el => { const mn = +el.dataset.fitw || 20; let fs = parseFloat(getComputedStyle(el).fontSize); while (el.scrollWidth > el.clientWidth + 1 && fs > mn) { fs -= 2; el.style.fontSize = fs + 'px'; } });   // data-fitw: 한 줄이 칸 너비를 넘으면 글자를 줄임 (2026-11-23)
+  document.querySelectorAll('[data-max]').forEach(el => { const mx = +el.dataset.max, mn = +el.dataset.min || 24; let fs = parseFloat(getComputedStyle(el).fontSize); while (el.scrollHeight > mx && fs > mn) { fs -= 2; el.style.fontSize = fs + 'px'; } }); document.body.dataset.ready = '1'; });
 </script>`;
 
 const head = (r, page) => `<div class="a lg" style="left:84px;top:72px;width:150px">${LOGO_C}</div>
@@ -407,25 +408,25 @@ function eduCover(r, n) {
   <div class="a lg w" style="left:84px;top:84px;width:200px">${LOGO}</div>
   <div class="a num" style="right:84px;top:100px;font-weight:600;font-size:26px;color:#fff;opacity:.55">1/${n}</div>
   <div class="a" style="left:84px;top:236px;width:912px;text-align:center;font-weight:700;font-size:32px;color:#fff;opacity:.7">${esc(r.tag || '')}</div>
-  <div class="a" data-max="270" data-min="70" style="left:84px;top:300px;width:912px;text-align:center;font-weight:800;font-size:110px;line-height:1.07;letter-spacing:-.04em;color:#fff">${br(r.title)}</div>
-  <div class="a" style="left:84px;top:580px;width:912px;text-align:center;font-weight:500;font-size:38px;color:#fff;opacity:.85">${esc(r.sub || '')}</div>
+  <div class="a" data-fitw="64" style="left:84px;top:300px;width:912px;text-align:center;font-weight:800;font-size:110px;line-height:1.07;letter-spacing:-.04em;color:#fff;white-space:pre">${esc(r.title)}</div>
+  <div class="a" data-fitw="26" style="left:84px;top:580px;width:912px;text-align:center;font-weight:500;font-size:38px;color:#fff;opacity:.85;white-space:nowrap">${esc(r.sub || '')}</div>
   ${eRisk}`);
 }
 function eduProb(r, p, n) {
   const x = r.prob || {}, col = (c, left, good) => { const [nm, v, d] = c || []; return `<div class="a" style="left:${left}px;top:480px;width:444px;height:620px;border-radius:28px;${good ? 'background:#fff' : 'background:rgba(255,255,255,.05);border:2px solid rgba(255,255,255,.16)'}"></div>
     <div class="a" style="left:${left + 44}px;top:536px;font-weight:700;font-size:38px;color:${good ? MC : '#fff'};opacity:${good ? 1 : .75}">${esc(nm)}</div>
-    <div class="a num" data-max="120" data-min="44" style="left:${left + 44}px;top:616px;width:370px;font-weight:700;font-size:${good ? 80 : 96}px;line-height:1.1;letter-spacing:-.02em;color:${good ? MC : '#fff'};opacity:${good ? 1 : .55};white-space:nowrap">${esc(v)}</div>
+    <div class="a num" data-fitw="40" style="left:${left + 44}px;top:616px;width:370px;font-weight:700;font-size:${good ? 80 : 96}px;line-height:1.1;letter-spacing:-.02em;color:${good ? MC : '#fff'};opacity:${good ? 1 : .55};white-space:nowrap">${esc(v)}</div>
     <div class="a" style="left:${left + 44}px;top:780px;width:356px;height:2px;background:${good ? MC : '#fff'};opacity:.2"></div>
-    <div class="a" style="left:${left + 44}px;top:830px;width:356px;font-weight:700;font-size:40px;line-height:1.4;color:${good ? DK : '#fff'};opacity:${good ? 1 : .7}">${br(d)}</div>`; };
+    <div class="a" data-fitw="26" style="left:${left + 44}px;top:830px;width:356px;font-weight:700;font-size:40px;line-height:1.4;color:${good ? DK : '#fff'};opacity:${good ? 1 : .7};white-space:pre">${esc(d)}</div>`; };
   return page(ENV, `${eHead(r, p, n)}${eTitle(x.title, x.hl)}${col(x.a, 84, false)}${col(x.b, 552, true)}
-  <div class="a" style="left:84px;top:1150px;width:912px;text-align:center;font-weight:800;font-size:52px;letter-spacing:-.03em;color:#fff;white-space:nowrap">${eHi(x.concl, x.conclHl)}</div>${eDots(p - 1, n)}`);
+  <div class="a" data-fitw="32" style="left:84px;top:1150px;width:912px;text-align:center;font-weight:800;font-size:52px;letter-spacing:-.03em;color:#fff;white-space:nowrap">${eHi(x.concl, x.conclHl)}</div>${eDots(p - 1, n)}`);
 }
 function eduTool(r, p, n) {
   const x = r.tool || {}, big = String(x.word || ''), fs = big.length <= 4 ? 200 : big.length <= 7 ? 140 : 100;
   return page(ENV, `${eHead(r, p, n)}
   <div class="a num" style="left:72px;top:${190 + (200 - fs) * .6}px;font-weight:700;font-size:${fs}px;letter-spacing:-.03em;line-height:1.1;color:#fff;white-space:nowrap">${esc(big)}</div>
-  <div class="a" style="left:84px;top:436px;font-weight:800;font-size:64px;letter-spacing:-.04em;color:${ELB}">${esc(x.mean || '')}</div>
-  <div class="a" data-max="170" data-min="28" style="left:84px;top:560px;width:912px;font-weight:500;font-size:36px;line-height:1.5;color:#fff;opacity:.85">${br(x.text)}</div>
+  <div class="a" data-fitw="36" style="left:84px;top:436px;width:912px;font-weight:800;font-size:64px;letter-spacing:-.04em;color:${ELB};white-space:nowrap">${esc(x.mean || '')}</div>
+  <div class="a" data-fitw="26" style="left:84px;top:560px;width:912px;font-weight:500;font-size:36px;line-height:1.5;color:#fff;opacity:.85;white-space:pre">${esc(x.text)}</div>
   <img class="a" src="${esc(eIcon(x.icon || 'hero_magnifier'))}" style="left:330px;top:770px;width:420px;height:420px;object-fit:contain">${eDots(p - 1, n)}`);
 }
 function eduChart(r, p, n) {
@@ -438,25 +439,25 @@ function eduChart(r, p, n) {
   <div class="a" style="left:110px;top:1010px;width:860px;height:2px;background:#fff;opacity:.12"></div>
   <div class="a" style="left:120px;top:1040px;width:840px;font-weight:700;font-size:30px;color:#fff;opacity:.7">${esc(x.name || '')}</div>
   <div class="a" style="left:120px;top:1090px;width:840px;font-weight:500;font-size:24px;color:#fff;opacity:.45">${esc(x.src || '')}</div>
-  <div class="a" style="left:84px;top:1196px;width:912px;text-align:center;font-weight:700;font-size:32px;color:#fff;white-space:nowrap">${esc(x.concl || '')}</div>${eDots(p - 1, n)}`);
+  <div class="a" data-fitw="24" style="left:84px;top:1196px;width:912px;text-align:center;font-weight:700;font-size:32px;color:#fff;white-space:nowrap">${esc(x.concl || '')}</div>${eDots(p - 1, n)}`);
 }
 function eduSteps(r, p, n) {
   const x = r.steps || {}, CW = 248, GAP = 84;
   return page(ENV, `${eHead(r, p, n)}${eTitle(x.title, x.hl)}
   ${(x.cards || []).slice(0, 3).map((c, i) => { const X = 84 + i * (CW + GAP); return `<div class="a" style="left:${X}px;top:480px;width:${CW}px;height:580px;border-radius:28px;background:#fff"></div>
     <img class="a" src="${esc(eIcon(c[0]))}" style="left:${X + (CW - 200) / 2}px;top:530px;width:200px;height:200px;object-fit:contain">
-    <div class="a" data-max="60" data-min="30" style="left:${X}px;top:770px;width:${CW}px;text-align:center;font-weight:800;font-size:44px;letter-spacing:-.03em;color:${MC};white-space:nowrap">${esc(c[1])}</div>
-    <div class="a" style="left:${X + 12}px;top:840px;width:${CW - 24}px;text-align:center;font-weight:500;font-size:29px;line-height:1.45;color:${DK};opacity:.75">${br(c[2])}</div>
+    <div class="a" data-fitw="28" style="left:${X}px;top:770px;width:${CW}px;text-align:center;font-weight:800;font-size:44px;letter-spacing:-.03em;color:${MC};white-space:nowrap">${esc(c[1])}</div>
+    <div class="a" data-fitw="20" style="left:${X + 12}px;top:840px;width:${CW - 24}px;text-align:center;font-weight:500;font-size:29px;line-height:1.45;color:${DK};opacity:.75;white-space:pre">${esc(c[2])}</div>
     ${i < 2 ? `<div class="a" style="left:${X + CW + GAP / 2 - 28}px;top:742px;width:56px;height:56px;border-radius:50%;background:${ELB};color:${ENV};font:700 32px Inter,sans-serif;display:flex;align-items:center;justify-content:center">→</div>` : ''}`; }).join('')}
-  <div class="a" style="left:84px;top:1110px;width:912px;text-align:center;font-weight:500;font-size:30px;color:#fff;opacity:.75">${esc(x.note || '')}</div>${eDots(p - 1, n)}`);
+  <div class="a" data-fitw="22" style="left:84px;top:1110px;width:912px;text-align:center;font-weight:500;font-size:30px;color:#fff;opacity:.75;white-space:nowrap">${esc(x.note || '')}</div>${eDots(p - 1, n)}`);
 }
 function eduApply(r, p, n) {
   const x = r.apply || {};
   return page(ENV, `${eHead(r, p, n)}${eTitle(x.title, x.hl)}
   ${(x.rows || []).slice(0, 3).map((s, i) => { const Y = 480 + i * 245; return `<div class="a" style="left:84px;top:${Y}px;width:912px;height:215px;border-radius:28px;background:#fff"></div>
     <div class="a num" style="left:120px;top:${Y + 60}px;width:96px;height:96px;border-radius:50%;background:${MC};color:#fff;font-weight:700;font-size:46px;display:flex;align-items:center;justify-content:center">${i + 1}</div>
-    <div class="a" data-max="70" data-min="34" style="left:250px;top:${Y + 46}px;width:710px;font-weight:800;font-size:52px;letter-spacing:-.03em;color:${DK};white-space:nowrap">${esc(s[0])}</div>
-    <div class="a" style="left:250px;top:${Y + 122}px;width:710px;font-weight:500;font-size:34px;color:${DK};opacity:.65;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(s[1])}</div>`; }).join('')}${eDots(p - 1, n)}`);
+    <div class="a" data-fitw="34" style="left:250px;top:${Y + 46}px;width:710px;font-weight:800;font-size:52px;letter-spacing:-.03em;color:${DK};white-space:nowrap">${esc(s[0])}</div>
+    <div class="a" data-fitw="24" style="left:250px;top:${Y + 122}px;width:710px;font-weight:500;font-size:34px;color:${DK};opacity:.65;white-space:nowrap">${esc(s[1])}</div>`; }).join('')}${eDots(p - 1, n)}`);
 }
 function eduSum(r, p, n) {
   const x = r.sum || {};
@@ -464,8 +465,8 @@ function eduSum(r, p, n) {
   <div class="a" style="left:132px;top:470px;width:4px;height:560px;border-radius:2px;background:${ELB};opacity:.45"></div>
   ${(x.rows || []).slice(0, 3).map((s, i) => { const Y = 420 + i * 270; return `<div class="a num" style="left:84px;top:${Y}px;width:100px;height:100px;border-radius:50%;background:${ELB};color:${ENV};font-weight:700;font-size:48px;display:flex;align-items:center;justify-content:center">${i + 1}</div>
     <div class="a" style="left:230px;top:${Y - 2}px;font-weight:700;font-size:32px;color:${ELB}">${esc(s[0])}</div>
-    <div class="a" data-max="80" data-min="34" style="left:230px;top:${Y + 44}px;width:780px;font-weight:800;font-size:56px;letter-spacing:-.03em;color:#fff;white-space:nowrap">${esc(s[1])}</div>`; }).join('')}
-  <div class="a" style="left:84px;top:1180px;width:912px;font-weight:700;font-size:36px;color:#fff;white-space:nowrap">${eHi(x.concl, x.conclHl)}</div>${eRisk}`);
+    <div class="a" data-fitw="34" style="left:230px;top:${Y + 44}px;width:780px;font-weight:800;font-size:56px;letter-spacing:-.03em;color:#fff;white-space:nowrap">${esc(s[1])}</div>`; }).join('')}
+  <div class="a" data-fitw="24" style="left:84px;top:1180px;width:912px;font-weight:700;font-size:36px;color:#fff;white-space:nowrap">${eHi(x.concl, x.conclHl)}</div>${eRisk}`);
 }
 function eduPages(r) {
   const L = [eduProb, eduTool].concat(r.chart && (r.chart.c || []).length >= 5 ? [eduChart] : [], [eduSteps, eduApply, eduSum]), n = L.length + 1;
