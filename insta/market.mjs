@@ -286,10 +286,11 @@ const para5 = (t, hl, top, size, color, maxH) => `<div class="a" data-max="${max
 const box5 = (t, size, bg, fg) => `<span style="display:inline-block;background:${bg};color:${fg};font-weight:800;font-size:${size}px;letter-spacing:-.03em;line-height:1.18;padding:${Math.round(size * .06)}px ${Math.round(size * .22)}px ${Math.round(size * .1)}px">${esc(t)}</span>`;
 const pg5 = (s, dark) => `<div class="a num" style="right:84px;top:1270px;font-weight:600;font-size:24px;color:${dark ? '#fff' : DK};opacity:.5">${s}</div>`;
 const lab5 = (t, bg) => `<span style="display:inline-block;border-radius:10px;padding:10px 18px;background:${bg};color:#fff;font-weight:700;font-size:24px;white-space:nowrap">${esc(t)}</span>`;
+const posCss = p => { p = p || {}; const x = Math.max(0, Math.min(100, Number(p.x == null ? 50 : p.x))), y = Math.max(0, Math.min(100, Number(p.y == null ? 50 : p.y))), z = Math.max(1, Math.min(2, Number(p.z || 1))); return `object-position:${x}% ${y}%;transform:scale(${z});transform-origin:${x}% ${y}%`; };   // 사진 위치·확대 (검수 화면에서 고름 · 2026-11-23)
 const risk5 = (top, dark) => `<div class="a" style="left:84px;top:${top}px;width:912px;font-size:20px;color:${dark ? '#fff' : DK};opacity:.5">*거래에는 손실 위험이 있습니다. 이용약관이 적용됩니다.</div>`;
 
 function v5Cover(r) {
-  return page('#050a1a', `${r.cover ? `<img class="a" src="${esc(src(r.cover))}" style="inset:0;width:1080px;height:1350px;object-fit:cover">` : ''}
+  return page('#050a1a', `${r.cover ? `<div class="a" style="inset:0;width:1080px;height:1350px;overflow:hidden"><img src="${esc(src(r.cover))}" style="width:1080px;height:1350px;object-fit:cover;${posCss(r.coverPos)}"></div>` : ''}
   <div class="a" style="left:0;top:560px;width:1080px;height:790px;background:linear-gradient(180deg,rgba(5,10,26,0) 0%,rgba(5,10,26,.7) 40%,rgba(5,10,26,.94) 100%)"></div>
   <div class="a" style="left:0;top:0;width:1080px;height:300px;background:linear-gradient(180deg,rgba(5,10,26,.7),rgba(5,10,26,0))"></div>
   <div class="a lg w" style="left:84px;top:84px;width:200px">${LOGO}</div>
@@ -387,7 +388,7 @@ function v6Key(r) {
 function v6Why(r) {
   const w = r.why || {}, R = (w.reasons || []).slice(0, 3);
   return page('#ffffff', `${pills5(w.tagA || '이유', w.tagB)}${cT5(w.title, w.hl, 200, 60, DK, 160)}
-  <div class="a" style="left:84px;top:390px;width:912px;height:250px;border-radius:28px;overflow:hidden;background:#1b2a52">${w.photo ? `<img src="${esc(src(w.photo))}" style="width:100%;height:100%;object-fit:cover">` : ''}</div>
+  <div class="a" style="left:84px;top:390px;width:912px;height:250px;border-radius:28px;overflow:hidden;background:#1b2a52">${w.photo ? `<img src="${esc(src(w.photo))}" style="width:100%;height:100%;object-fit:cover;${posCss(w.photoPos)}">` : ''}</div>
   ${R.map((x, i) => { const y = 680 + i * 178; return `${i ? `<div class="a" style="left:84px;top:${y - 22}px;width:912px;height:2px;background:${DK};opacity:.08"></div>` : ''}
     <div class="a num" style="left:84px;top:${y + 2}px;width:56px;height:56px;border-radius:50%;background:${MC};color:#fff;font-weight:700;font-size:26px;display:flex;align-items:center;justify-content:center">${i + 1}</div>
     <div class="a" data-fitw="24" style="left:168px;top:${y + 4}px;width:828px;font-weight:800;font-size:34px;color:${DK};white-space:nowrap">${esc(x[0] || '')}</div>
