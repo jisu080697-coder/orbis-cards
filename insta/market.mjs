@@ -269,7 +269,101 @@ function sEnd(r) {
   ${dots6(5)}`);
 }
 
+
+// ── v5 시장·경제 이슈 6장 (2026-11-23 사용자 확정 · 피그마 '확정 디자인' 페이지 · 플러그인 ①-4 v5 와 같은 좌표) ──
+// 색은 Orbis 메인 컬러 #164492 와 옅은 색만 · 표지: 사진 꽉 + 로고 + 분류 칩 + 첫 줄 + 형광펜 박스 줄 · 2 주가(그래프+인용) · 3 이유(사진 두 장+화살표)
+// 4 용어(흰 카드 3개 + vs/+ 연결 · 결론 박스) · 5 업종(목록 카드) · 6 마무리(어두운 사진 + 박스 제목 + 일정 · 한국 시간 기준)
+// r.k = { tagA, tagB, title, hl[], points, up, ext, close, text, textHl[], quote, quoteHl[] }
+// r.why = { tagA, tagB, title, hl[], photo, photo2, labels[2], text, textHl[], points[3] }
+// r.concept = { tagA, tagB, title, cards:[[icon, name, desc]] ×3, joins:['vs','+'], concl1, concl2 }
+// r.peers = { tagA, tagB, title, hl[], rows:[[이름, 등락, 비교?, 분야, 주인공?]], cmp }   r.end = { watch:[[나라, 시각, 이름]], photo }
+const MC = '#164492', MT1 = '#e4eaf4', MT2 = '#f6f8fc', INK = '#14161c', MSUB = '#9fb3d6';
+const ICON = k => 'insta/assets/icons/' + (/^[a-z_]+$/.test(String(k || '')) ? k : 'chartup') + '.png';
+const pills5 = (a, b, dark) => `<div class="a" style="left:0;width:1080px;top:110px;display:flex;gap:10px;justify-content:center"><span style="border-radius:999px;padding:10px 22px;font-weight:700;font-size:26px;background:${dark ? '#fff' : MC};color:${dark ? MC : '#fff'}">${esc(a)}</span>${b ? `<span style="border-radius:999px;padding:8px 20px;font-weight:700;font-size:26px;background:${dark ? MC : '#fff'};color:${dark ? '#fff' : DK};border:2px solid ${dark ? '#fff' : '#dde3ee'}">${esc(b)}</span>` : ''}</div>`;
+const cT5 = (t, hl, top, size, color, maxH) => `<div class="a" data-max="${maxH || 170}" data-min="40" style="left:84px;top:${top}px;width:912px;text-align:center;font-weight:800;font-size:${size}px;line-height:1.28;letter-spacing:-.03em;color:${color || DK}">${hiM(t, hl, MC)}</div>`;
+const para5 = (t, hl, top, size, color, maxH) => `<div class="a" data-max="${maxH || 150}" data-min="22" style="left:84px;top:${top}px;width:912px;text-align:center;font-weight:500;font-size:${size}px;line-height:1.52;color:${color || DK}">${hiM(t, hl, color === '#fff' ? '#fff' : MC).replace(/<span style="color:([^"]+)">/g, '<span style="color:$1;font-weight:800">')}</div>`;
+const box5 = (t, size, bg, fg) => `<span style="display:inline-block;background:${bg};color:${fg};font-weight:800;font-size:${size}px;letter-spacing:-.03em;line-height:1.18;padding:${Math.round(size * .06)}px ${Math.round(size * .22)}px ${Math.round(size * .1)}px">${esc(t)}</span>`;
+const pg5 = (s, dark) => `<div class="a num" style="right:84px;top:1270px;font-weight:600;font-size:24px;color:${dark ? '#fff' : DK};opacity:.5">${s}</div>`;
+const lab5 = (t, bg) => `<span style="display:inline-block;border-radius:10px;padding:10px 18px;background:${bg};color:#fff;font-weight:700;font-size:24px;white-space:nowrap">${esc(t)}</span>`;
+const risk5 = (top, dark) => `<div class="a" style="left:84px;top:${top}px;width:912px;font-size:20px;color:${dark ? '#fff' : DK};opacity:.5">CFD는 레버리지 상품으로 원금 손실 위험이 있습니다. 투자 권유가 아닙니다.</div>`;
+
+function v5Cover(r) {
+  return page('#050a1a', `${r.cover ? `<img class="a" src="${esc(src(r.cover))}" style="inset:0;width:1080px;height:1350px;object-fit:cover">` : ''}
+  <div class="a" style="left:0;top:560px;width:1080px;height:790px;background:linear-gradient(180deg,rgba(5,10,26,0) 0%,rgba(5,10,26,.7) 40%,rgba(5,10,26,.94) 100%)"></div>
+  <div class="a" style="left:0;top:0;width:1080px;height:300px;background:linear-gradient(180deg,rgba(5,10,26,.7),rgba(5,10,26,0))"></div>
+  <div class="a lg w" style="left:84px;top:84px;width:200px">${LOGO}</div>
+  <div class="a" style="left:84px;top:790px"><span class="chip" style="background:${MC}">${esc(r.tag)} · ${esc(r.date)}</span></div>
+  <div class="a" data-max="116" data-min="60" style="left:84px;top:880px;width:912px;font-weight:800;font-size:92px;line-height:1.18;letter-spacing:-.045em;color:#fff;white-space:nowrap">${esc(r.title1 || '')}</div>
+  <div class="a" style="left:66px;top:1000px">${box5(r.title2 || '', 96, MC, '#fff')}</div>
+  <div class="a" style="left:84px;top:1160px;width:912px;font-size:34px;font-weight:500;color:#fff;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(r.sub || '')}</div>
+  ${risk5(1250, true)}`);
+}
+function v5Key(r) {
+  const k = r.k || {}, P = k.points || [], W = 760, H = 300, X = 160, Y = 510;
+  const mn = P.length ? Math.min(...P) : 0, mx = P.length ? Math.max(...P) : 1, px = i => X + i * W / Math.max(P.length - 1, 1), py = v => Y + (mx - v) / ((mx - mn) || 1) * H;
+  const ei = k.up === false ? P.indexOf(mx) : P.indexOf(mn);
+  return page(`linear-gradient(180deg,${MT1},${MT2})`, `${pills5(k.tagA || '주가', k.tagB)}${cT5(k.title, k.hl, 200, 62)}
+  <div class="a" style="left:84px;top:400px;width:912px;height:520px;border-radius:36px;background:#fff"></div>
+  ${[0, 1, 2].map(g => `<div class="a" style="left:${X}px;top:${Y + g * H / 2}px;width:${W}px;height:1px;background:${DK};opacity:.08"></div>`).join('')}
+  ${P.length > 1 ? `<svg class="a" style="left:0;top:0" width="1080" height="1350"><polyline points="${P.map((v, i) => px(i).toFixed(1) + ',' + py(v).toFixed(1)).join(' ')}" fill="none" stroke="${MC}" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${px(ei)}" cy="${py(P[ei])}" r="10" fill="${DK}"/><circle cx="${px(P.length - 1)}" cy="${py(P[P.length - 1])}" r="10" fill="${MC}"/></svg>
+    ${k.ext ? `<div class="a" style="left:${Math.min(Math.max(px(ei) - 20, 100), 740)}px;top:${k.up === false ? py(P[ei]) - 70 : py(P[ei]) + 26}px">${lab5(k.ext, DK)}</div>` : ''}
+    ${k.close ? `<div class="a" style="right:${1080 - (X + W + 16)}px;top:${k.up === false ? py(P[P.length - 1]) + 26 : py(P[P.length - 1]) - 76}px">${lab5(k.close, MC)}</div>` : ''}` : ''}
+  ${para5(k.text || '', k.textHl, 960, 32, DK, 110)}
+  ${k.quote ? `<div class="a" data-max="64" data-min="28" style="left:84px;top:1110px;width:912px;text-align:center;font-weight:800;font-size:44px;color:${DK};white-space:nowrap">“ ${hiM(k.quote, k.quoteHl, MC)} ”</div>` : ''}
+  ${pg5('2/6')}`);
+}
+function v5Why(r) {
+  const w = r.why || {}, L = w.labels || [];
+  const ph = (p, x) => `<div class="a" style="left:${x}px;top:400px;width:410px;height:330px;border-radius:24px;overflow:hidden;background:#1b2a52">${p ? `<img src="${esc(src(p))}" style="width:100%;height:100%;object-fit:cover">` : ''}</div>`;
+  return page('#ffffff', `${pills5(w.tagA || '이유', w.tagB)}${cT5(w.title, w.hl, 200, 56, DK, 150)}
+  ${ph(w.photo, 84)}${ph(w.photo2 || w.photo, 586)}
+  <div class="a num" style="left:504px;top:529px;width:72px;height:72px;border-radius:50%;background:${MC};color:#fff;font-weight:700;font-size:40px;display:flex;align-items:center;justify-content:center">→</div>
+  ${L[0] ? `<div class="a" style="left:104px;top:680px">${lab5(L[0], INK)}</div>` : ''}${L[1] ? `<div class="a" style="left:606px;top:680px">${lab5(L[1], MC)}</div>` : ''}
+  ${para5(w.text || '', w.textHl, 780, 32, DK, 160)}
+  <div class="a" data-max="150" data-min="20" style="left:84px;top:1000px;width:912px;text-align:center;font-weight:500;font-size:28px;line-height:1.6;color:${DK};opacity:.75">${(w.points || []).slice(0, 3).map(p => '- ' + esc(p)).join('<br>')}</div>
+  ${pg5('3/6')}`);
+}
+function v5Concept(r) {
+  const c = r.concept || {}, cards = (c.cards || []).slice(0, 3), J = c.joins || ['vs', '+'], CW = 248, GAP = 84;
+  return page(MC, `${pills5(c.tagA || '알아 둘 말', c.tagB, true)}
+  <div class="a" data-max="170" data-min="40" style="left:84px;top:200px;width:912px;text-align:center;font-weight:800;font-size:64px;line-height:1.25;letter-spacing:-.03em;color:#fff">${esc(c.title || '').replace(/\n/g, '<br>')}</div>
+  ${cards.map((d, i) => { const x = 84 + i * (CW + GAP); return `<div class="a" style="left:${x}px;top:430px;width:${CW}px;height:420px;border-radius:28px;background:#fff"></div>
+    <img class="a" src="${esc(src(ICON(d[0])))}" style="left:${x + (CW - 150) / 2}px;top:478px;width:150px;height:150px;object-fit:contain">
+    <div class="a" data-max="50" data-min="24" style="left:${x}px;top:668px;width:${CW}px;text-align:center;font-weight:800;font-size:36px;color:${MC};white-space:nowrap">${esc(d[1] || '')}</div>
+    <div class="a" data-max="80" data-min="18" style="left:${x + 16}px;top:724px;width:${CW - 32}px;text-align:center;font-weight:500;font-size:25px;line-height:1.4;color:${DK};opacity:.7">${esc(d[2] || '').replace(/\n/g, '<br>')}</div>
+    ${i < cards.length - 1 ? `<div class="a num" style="left:${x + CW + GAP / 2 - 26}px;top:614px;width:52px;height:52px;border-radius:50%;background:#fff;border:3px solid ${MC};color:${MC};font-weight:700;font-size:${J[i] === 'vs' ? 20 : 30}px;display:flex;align-items:center;justify-content:center">${esc(J[i] || '+')}</div>` : ''}`; }).join('')}
+  ${c.concl1 ? `<div class="a" style="left:0;width:1080px;top:950px;text-align:center;font-weight:700;font-size:36px;color:#fff">${esc(c.concl1)}</div>` : ''}
+  ${c.concl2 ? `<div class="a" style="left:0;width:1080px;top:1010px;text-align:center">${box5(c.concl2, 52, '#fff', MC)}</div>` : ''}
+  ${pg5('4/6', true)}`);
+}
+function v5Peers(r) {
+  const p = r.peers || {}, rows = (p.rows || []).filter(x => !x[2]).slice(0, 5);
+  return page(`linear-gradient(180deg,${MT2},${MT1})`, `${pills5(p.tagA || '같은 업종', p.tagB)}${cT5(p.title, p.hl, 200, 56, DK, 150)}
+  ${rows.map(([n, v, , sec, me], i) => { const y = 400 + i * 148; return `<div class="a" style="left:84px;top:${y}px;width:912px;height:128px;border-radius:24px;background:#fff;${me ? `border:4px solid ${MC}` : ''}"></div>
+    <div class="a num" style="left:116px;top:${y + 34}px;width:60px;height:60px;border-radius:50%;background:${me ? MC : MT1};color:${me ? '#fff' : DK};font-weight:700;font-size:28px;display:flex;align-items:center;justify-content:center">${i + 1}</div>
+    <div class="a" style="left:204px;top:${y + 26}px;width:540px;font-weight:800;font-size:34px;color:${DK};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(n)}</div>
+    <div class="a" style="left:204px;top:${y + 76}px;width:540px;font-weight:500;font-size:24px;color:${DK};opacity:.55;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(sec || '')}</div>
+    <div class="a num" style="right:${1080 - 960}px;top:${y + 36}px;font-weight:700;font-size:46px;color:${MC}">${(v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1)}%</div>`; }).join('')}
+  ${p.cmp ? `<div class="a" style="left:84px;top:1150px;width:912px;text-align:center;font-weight:700;font-size:28px;color:${DK};opacity:.6">${esc(p.cmp)}</div>` : ''}
+  ${pg5('5/6')}`);
+}
+function v5End(r) {
+  const e = r.end || {}, W = (e.watch || []).slice(0, 3), bg = e.photo || (r.why || {}).photo || r.cover;
+  return page('#07090f', `${bg ? `<img class="a" src="${esc(src(bg))}" style="inset:0;width:1080px;height:1350px;object-fit:cover">` : ''}<div class="a" style="inset:0;background:rgba(7,9,15,.72)"></div>
+  <div class="a" style="left:0;width:1080px;top:170px;text-align:center">${box5('다음 주요 일정', 64, '#fff', '#0c1a3a')}</div>
+  <div class="a" style="left:0;width:1080px;top:290px;text-align:center;font-weight:700;font-size:38px;color:#fff">한국 시간 기준</div>
+  ${W.length ? W.map((w, i) => { const y = 420 + i * 120, f = FLAG[String(w[0] || '').toUpperCase()]; return `<div class="a" style="left:84px;top:${y}px;width:912px;height:100px;border-radius:20px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.25)"></div>
+    ${f ? `<img class="a" src="https://flagcdn.com/${f[0]}.svg" style="left:116px;top:${y + 30}px;width:60px;height:40px;object-fit:cover;border-radius:6px">` : `<div class="a num" style="left:116px;top:${y + 32}px;font-weight:700;font-size:24px;color:#fff">${esc(w[0])}</div>`}
+    <div class="a num" style="left:200px;top:${y + 32}px;font-weight:700;font-size:30px;color:${MSUB}">${esc(w[1])}</div>
+    <div class="a" style="left:420px;top:${y + 30}px;width:560px;font-weight:700;font-size:32px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(w[2])}</div>`; }).join('')
+    : `<div class="a" style="left:0;width:1080px;top:470px;text-align:center;font-weight:700;font-size:34px;color:#fff;opacity:.8">다음 거래일 주요 발표 없음</div>`}
+  <div class="a" style="left:84px;top:900px;width:912px;text-align:center;font-weight:500;font-size:32px;line-height:1.55;color:#fff">오르비스 시큐리티즈는 매일 미국 장 마감 뒤<br>주요 종목과 일정을 정리해 올려요.</div>
+  ${risk5(1230, true)}${pg5('6/6', true)}`);
+}
+
 export const marketPages = r => {
+  if (r.layout === 'v5') return [v5Cover(r), v5Key(r), v5Why(r), v5Concept(r), v5Peers(r), v5End(r)];   // 시장·경제 이슈 v5 6장 (2026-11-23 사용자 확정)
   if (r.layout === 'story') return [cover(r), sKey(r), sWhy(r), sWord(r), sPeers(r), sEnd(r)];   // 설명형 6장 (2026-11-20 확정)
   const L = r.layout === 'macro' ? [cover(r), indices(r), tiles(r), summary(r), watch(r)]
     : r.layout === 'data' ? [cover(r), indicator(r), bars(r), summary(r), watch(r)]
