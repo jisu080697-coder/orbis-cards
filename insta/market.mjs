@@ -383,7 +383,97 @@ function calPage(r) {
   <div class="a" style="left:84px;top:1258px;width:912px;text-align:center;font-size:20px;color:${DK};opacity:.45">CFD는 레버리지 상품으로 원금 손실 위험이 있습니다. 투자 권유가 아닙니다.</div>`);
 }
 
+
+// ── 트레이딩 교육 7장 (2026-11-23 사용자 확정 · 피그마 '확정 디자인' 트레이딩 교육 v3 · 남색 바탕 하나 · 강조는 연파랑 글자만 · 표지 강조 없음) ──
+// r = { layout:'edu', series, tag, title, sub, cover, prob:{title,hl,a:[이름,값,설명],b:[…],concl,conclHl}, tool:{word,mean,text,icon},
+//       chart:{title,hl,name,c:[[o,h,l,c]],concl} (없으면 6장), steps:{title,hl,cards:[[icon,이름,설명]],note}, apply:{title,hl,rows:[[굵게,풀이]]}, sum:{rows:[[이름,핵심]],concl,conclHl} }
+const ENV = '#0a1838', ELB = '#9fb3d6';
+const eHi = (t, w) => hi(t, w, ELB);
+const eHead = (r, p, n) => `<div class="a lg w" style="left:84px;top:72px;width:150px">${LOGO}</div>
+  <div class="a" style="left:260px;top:88px;font-weight:700;font-size:24px;color:#fff;opacity:.45">${esc(r.series || '')}</div>
+  <div class="a num" style="right:84px;top:86px;font-weight:600;font-size:26px;color:#fff;opacity:.55">${p}/${n}</div>
+  <div class="a" style="left:84px;top:150px;width:912px;height:2px;background:#fff;opacity:.14"></div>`;
+const eDots = (cur, n) => `<div class="a" style="left:84px;top:1272px;display:flex;gap:10px">${Array.from({ length: n }, (_, i) => `<i style="display:block;height:12px;width:${i === cur ? 40 : 12}px;border-radius:6px;background:${i === cur ? ELB : '#fff'};opacity:${i === cur ? 1 : .2}"></i>`).join('')}</div>`;
+const eTitle = (t, w, y) => `<div class="a" data-max="200" data-min="56" style="left:84px;top:${y || 230}px;width:912px;font-weight:800;font-size:76px;line-height:1.2;letter-spacing:-.04em;color:#fff">${eHi(t, w)}</div>`;
+const eRisk = `<div class="a" style="left:84px;top:1250px;width:912px;font-size:24px;color:#fff;opacity:.45">CFD는 레버리지 상품으로 원금 손실 위험이 있습니다. 투자 권유가 아닙니다.</div>`;
+const eIcon = k => src('insta/assets/icons/' + (/^[a-z_]+$/.test(String(k || '')) ? k : 'chartup') + '.png');
+const br = t => esc(t).replace(/\n/g, '<br>');
+
+function eduCover(r, n) {
+  return page('#050a1a', `<img class="a" src="${esc(src(r.cover || 'insta/assets/edu_chess.jpg'))}" style="left:0;top:240px;width:1080px;height:1350px;object-fit:cover">
+  <div class="a" style="left:0;top:240px;width:1080px;height:260px;background:linear-gradient(180deg,#070d20,rgba(7,13,32,0))"></div>
+  <div class="a" style="left:0;top:0;width:1080px;height:720px;background:linear-gradient(180deg,rgba(3,5,11,.9) 0%,rgba(3,5,11,.55) 60%,rgba(3,5,11,0) 100%)"></div>
+  <div class="a" style="left:0;top:1120px;width:1080px;height:230px;background:linear-gradient(180deg,rgba(3,5,11,0),rgba(3,5,11,.85) 45%,#03050b)"></div>
+  <div class="a lg w" style="left:84px;top:84px;width:200px">${LOGO}</div>
+  <div class="a num" style="right:84px;top:100px;font-weight:600;font-size:26px;color:#fff;opacity:.55">1/${n}</div>
+  <div class="a" style="left:84px;top:236px;width:912px;text-align:center;font-weight:700;font-size:32px;color:#fff;opacity:.7">${esc(r.tag || '')}</div>
+  <div class="a" data-max="270" data-min="70" style="left:84px;top:300px;width:912px;text-align:center;font-weight:800;font-size:110px;line-height:1.07;letter-spacing:-.04em;color:#fff">${br(r.title)}</div>
+  <div class="a" style="left:84px;top:580px;width:912px;text-align:center;font-weight:500;font-size:38px;color:#fff;opacity:.85">${esc(r.sub || '')}</div>
+  ${eRisk}`);
+}
+function eduProb(r, p, n) {
+  const x = r.prob || {}, col = (c, left, good) => { const [nm, v, d] = c || []; return `<div class="a" style="left:${left}px;top:480px;width:444px;height:620px;border-radius:28px;${good ? 'background:#fff' : 'background:rgba(255,255,255,.05);border:2px solid rgba(255,255,255,.16)'}"></div>
+    <div class="a" style="left:${left + 44}px;top:536px;font-weight:700;font-size:38px;color:${good ? MC : '#fff'};opacity:${good ? 1 : .75}">${esc(nm)}</div>
+    <div class="a num" data-max="120" data-min="44" style="left:${left + 44}px;top:616px;width:370px;font-weight:700;font-size:${good ? 80 : 96}px;line-height:1.1;letter-spacing:-.02em;color:${good ? MC : '#fff'};opacity:${good ? 1 : .55};white-space:nowrap">${esc(v)}</div>
+    <div class="a" style="left:${left + 44}px;top:780px;width:356px;height:2px;background:${good ? MC : '#fff'};opacity:.2"></div>
+    <div class="a" style="left:${left + 44}px;top:830px;width:356px;font-weight:700;font-size:40px;line-height:1.4;color:${good ? DK : '#fff'};opacity:${good ? 1 : .7}">${br(d)}</div>`; };
+  return page(ENV, `${eHead(r, p, n)}${eTitle(x.title, x.hl)}${col(x.a, 84, false)}${col(x.b, 552, true)}
+  <div class="a" style="left:84px;top:1150px;width:912px;text-align:center;font-weight:800;font-size:52px;letter-spacing:-.03em;color:#fff;white-space:nowrap">${eHi(x.concl, x.conclHl)}</div>${eDots(p - 1, n)}`);
+}
+function eduTool(r, p, n) {
+  const x = r.tool || {}, big = String(x.word || ''), fs = big.length <= 4 ? 200 : big.length <= 7 ? 140 : 100;
+  return page(ENV, `${eHead(r, p, n)}
+  <div class="a num" style="left:72px;top:${190 + (200 - fs) * .6}px;font-weight:700;font-size:${fs}px;letter-spacing:-.03em;line-height:1.1;color:#fff;white-space:nowrap">${esc(big)}</div>
+  <div class="a" style="left:84px;top:436px;font-weight:800;font-size:64px;letter-spacing:-.04em;color:${ELB}">${esc(x.mean || '')}</div>
+  <div class="a" data-max="170" data-min="28" style="left:84px;top:560px;width:912px;font-weight:500;font-size:36px;line-height:1.5;color:#fff;opacity:.85">${br(x.text)}</div>
+  <img class="a" src="${esc(eIcon(x.icon || 'hero_magnifier'))}" style="left:330px;top:770px;width:420px;height:420px;object-fit:contain">${eDots(p - 1, n)}`);
+}
+function eduChart(r, p, n) {
+  const x = r.chart || {}, C = (x.c || []).slice(-14), hs = C.map(c => c[1]), ls = C.map(c => c[2]), mx = Math.max(...hs), mn = Math.min(...ls), T = 540, B = 960, y = v => T + (mx - v) / ((mx - mn) || 1) * (B - T);
+  const cw = Math.min(40, 820 / Math.max(C.length, 1) * .55), step = 820 / Math.max(C.length, 1);
+  return page(ENV, `${eHead(r, p, n)}${eTitle(x.title, x.hl)}
+  <div class="a" style="left:84px;top:470px;width:912px;height:700px;border-radius:20px;background:rgba(255,255,255,.05);border:2px solid rgba(255,255,255,.16)"></div>
+  ${C.map((c, i) => { const up = c[3] >= c[0], col = up ? ELB : '#fff', op = up ? 1 : .35, cx = 130 + i * step + step / 2; return `<div class="a" style="left:${cx - 2}px;top:${y(c[1])}px;width:4px;height:${Math.max(2, y(c[2]) - y(c[1]))}px;border-radius:2px;background:${col};opacity:${op}"></div>
+    <div class="a" style="left:${cx - cw / 2}px;top:${Math.min(y(c[0]), y(c[3]))}px;width:${cw}px;height:${Math.max(6, Math.abs(y(c[0]) - y(c[3])))}px;border-radius:4px;background:${col};opacity:${op}"></div>`; }).join('')}
+  <div class="a" style="left:110px;top:1010px;width:860px;height:2px;background:#fff;opacity:.12"></div>
+  <div class="a" style="left:120px;top:1040px;width:840px;font-weight:700;font-size:30px;color:#fff;opacity:.7">${esc(x.name || '')}</div>
+  <div class="a" style="left:120px;top:1090px;width:840px;font-weight:500;font-size:24px;color:#fff;opacity:.45">${esc(x.src || '')}</div>
+  <div class="a" style="left:84px;top:1196px;width:912px;text-align:center;font-weight:700;font-size:32px;color:#fff;white-space:nowrap">${esc(x.concl || '')}</div>${eDots(p - 1, n)}`);
+}
+function eduSteps(r, p, n) {
+  const x = r.steps || {}, CW = 248, GAP = 84;
+  return page(ENV, `${eHead(r, p, n)}${eTitle(x.title, x.hl)}
+  ${(x.cards || []).slice(0, 3).map((c, i) => { const X = 84 + i * (CW + GAP); return `<div class="a" style="left:${X}px;top:480px;width:${CW}px;height:580px;border-radius:28px;background:#fff"></div>
+    <img class="a" src="${esc(eIcon(c[0]))}" style="left:${X + (CW - 200) / 2}px;top:530px;width:200px;height:200px;object-fit:contain">
+    <div class="a" data-max="60" data-min="30" style="left:${X}px;top:770px;width:${CW}px;text-align:center;font-weight:800;font-size:44px;letter-spacing:-.03em;color:${MC};white-space:nowrap">${esc(c[1])}</div>
+    <div class="a" style="left:${X + 12}px;top:840px;width:${CW - 24}px;text-align:center;font-weight:500;font-size:29px;line-height:1.45;color:${DK};opacity:.75">${br(c[2])}</div>
+    ${i < 2 ? `<div class="a" style="left:${X + CW + GAP / 2 - 28}px;top:742px;width:56px;height:56px;border-radius:50%;background:${ELB};color:${ENV};font:700 32px Inter,sans-serif;display:flex;align-items:center;justify-content:center">→</div>` : ''}`; }).join('')}
+  <div class="a" style="left:84px;top:1110px;width:912px;text-align:center;font-weight:500;font-size:30px;color:#fff;opacity:.75">${esc(x.note || '')}</div>${eDots(p - 1, n)}`);
+}
+function eduApply(r, p, n) {
+  const x = r.apply || {};
+  return page(ENV, `${eHead(r, p, n)}${eTitle(x.title, x.hl)}
+  ${(x.rows || []).slice(0, 3).map((s, i) => { const Y = 480 + i * 245; return `<div class="a" style="left:84px;top:${Y}px;width:912px;height:215px;border-radius:28px;background:#fff"></div>
+    <div class="a num" style="left:120px;top:${Y + 60}px;width:96px;height:96px;border-radius:50%;background:${MC};color:#fff;font-weight:700;font-size:46px;display:flex;align-items:center;justify-content:center">${i + 1}</div>
+    <div class="a" data-max="70" data-min="34" style="left:250px;top:${Y + 46}px;width:710px;font-weight:800;font-size:52px;letter-spacing:-.03em;color:${DK};white-space:nowrap">${esc(s[0])}</div>
+    <div class="a" style="left:250px;top:${Y + 122}px;width:710px;font-weight:500;font-size:34px;color:${DK};opacity:.65;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(s[1])}</div>`; }).join('')}${eDots(p - 1, n)}`);
+}
+function eduSum(r, p, n) {
+  const x = r.sum || {};
+  return page(ENV, `${eHead(r, p, n)}${eTitle(x.title || '오늘 정리', x.hl || '정리')}
+  <div class="a" style="left:132px;top:470px;width:4px;height:560px;border-radius:2px;background:${ELB};opacity:.45"></div>
+  ${(x.rows || []).slice(0, 3).map((s, i) => { const Y = 420 + i * 270; return `<div class="a num" style="left:84px;top:${Y}px;width:100px;height:100px;border-radius:50%;background:${ELB};color:${ENV};font-weight:700;font-size:48px;display:flex;align-items:center;justify-content:center">${i + 1}</div>
+    <div class="a" style="left:230px;top:${Y - 2}px;font-weight:700;font-size:32px;color:${ELB}">${esc(s[0])}</div>
+    <div class="a" data-max="80" data-min="34" style="left:230px;top:${Y + 44}px;width:780px;font-weight:800;font-size:56px;letter-spacing:-.03em;color:#fff;white-space:nowrap">${esc(s[1])}</div>`; }).join('')}
+  <div class="a" style="left:84px;top:1180px;width:912px;font-weight:700;font-size:36px;color:#fff;white-space:nowrap">${eHi(x.concl, x.conclHl)}</div>${eRisk}`);
+}
+function eduPages(r) {
+  const L = [eduProb, eduTool].concat(r.chart && (r.chart.c || []).length >= 5 ? [eduChart] : [], [eduSteps, eduApply, eduSum]), n = L.length + 1;
+  return [eduCover(r, n)].concat(L.map((f, i) => f(r, i + 2, n)));
+}
+
 export const marketPages = r => {
+  if (r.layout === 'edu') return eduPages(r);   // 트레이딩 교육 6~7장 (2026-11-23 확정)
   if (r.layout === 'cal') return [calPage(r)];   // 경제 캘린더 한 장 (2026-11-23 확정)
   if (r.layout === 'v5') return [v5Cover(r), v5Key(r), v5Why(r), v5Concept(r), v5Peers(r), v5End(r)];   // 시장·경제 이슈 v5 6장 (2026-11-23 사용자 확정)
   if (r.layout === 'story') return [cover(r), sKey(r), sWhy(r), sWord(r), sPeers(r), sEnd(r)];   // 설명형 6장 (2026-11-20 확정)
