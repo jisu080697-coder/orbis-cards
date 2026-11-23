@@ -374,7 +374,7 @@ function calPage(r) {
   <div class="a" style="left:68px;top:400px">${box5(r.title2 || '', 80, MC, '#fff')}</div>
   <div class="a" style="left:84px;top:560px;width:912px;height:640px;border-radius:36px;background:#fff;border:2px solid #dde3ee"></div>
   ${rows.map((e, i) => { const y = 580 + i * 120, key = !!e[5], hol = !!e[6], f = FLAG[String(e[2] || '').toUpperCase()];
-    return `${key ? `<div class="a" style="left:100px;top:${y + 4}px;width:880px;height:112px;border-radius:20px;background:${MT1}"></div>` : i ? `<div class="a" style="left:124px;top:${y - 2}px;width:832px;height:2px;background:${DK};opacity:.08"></div>` : ''}
+    return `${key ? `<div class="a" style="left:100px;top:${y + 4}px;width:880px;height:112px;border-radius:20px;background:${MT1}"></div>` : i && !(rows[i - 1] || [])[5] ? `<div class="a" style="left:124px;top:${y - 2}px;width:832px;height:2px;background:${DK};opacity:.08"></div>` : ''}
     <div class="a" style="left:124px;top:${y + 32}px"><span style="display:inline-block;border-radius:999px;padding:9px 22px;font-weight:700;font-size:26px;background:${hol ? MT1 : MC};color:${hol ? MC : '#fff'};white-space:nowrap">${esc(e[0])} ${esc(e[1])}</span></div>
     ${f ? `<img class="a" src="https://flagcdn.com/${f[0]}.svg" style="left:270px;top:${y + 46}px;width:42px;height:28px;object-fit:cover;border-radius:4px;border:1px solid #dde3ee">` : ''}
     <div class="a" style="left:330px;top:${y + 38}px;width:470px;font-weight:${key ? 800 : 700};font-size:34px;color:${key ? MC : DK};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(e[4])}</div>
