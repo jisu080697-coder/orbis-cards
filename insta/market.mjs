@@ -364,6 +364,49 @@ function v5End(r) {
 }
 
 
+// ── v6 시장·경제 이슈 5장 (2026-11-23 사용자 확정 · 피그마 ①-4 v6 와 같은 좌표) · 1 표지(v5) → 2 가격 → 3 이유 → 4 세 종목 흐름 → 5 같은 업종(v5) · 6장 일정은 뺌 ──
+// r.why = { tagA, tagB, title, hl[], photo, reasons:[[제목(명사형), 두 줄 풀이]] ×3 }
+// r.trio = { tagA, tagB, title, hl[], rows:[[이름, 한 줄 풀이(두 줄), 등락, 작은 그래프 점들]] ×3, icons: '아이콘 3개 한 장 경로' }
+const spark6 = (P, x, y, w, h, col, sw) => { if (!P || P.length < 2) return ''; const mn = Math.min(...P), mx = Math.max(...P);
+  return `<svg class="a" style="left:${x}px;top:${y}px;overflow:visible" width="${w}" height="${h}"><polyline points="${P.map((v, i) => (i * w / (P.length - 1)).toFixed(1) + ',' + ((mx - v) / ((mx - mn) || 1) * h).toFixed(1)).join(' ')}" fill="none" stroke="${col}" stroke-width="${sw || 4}" stroke-linejoin="round" stroke-linecap="round"/></svg>`; };
+function v6Key(r) {
+  const k = r.k || {}, P = k.points || [], W = 760, H = 250, X = 160, Y = 500;
+  const mn = P.length ? Math.min(...P) : 0, mx = P.length ? Math.max(...P) : 1, px = i => X + i * W / Math.max(P.length - 1, 1), py = v => Y + (mx - v) / ((mx - mn) || 1) * H;
+  const ei = k.up === false ? P.indexOf(mx) : P.indexOf(mn);
+  return page(`linear-gradient(180deg,${MT1},${MT2})`, `${pills5(k.tagA || '가격', k.tagB)}${cT5(k.title, k.hl, 200, 60)}
+  <div class="a" style="left:84px;top:400px;width:912px;height:460px;border-radius:36px;background:#fff"></div>
+  ${[0, 1, 2].map(g => `<div class="a" style="left:${X}px;top:${Y + g * H / 2}px;width:${W}px;height:1px;background:${DK};opacity:.08"></div>`).join('')}
+  ${P.length > 1 ? `<svg class="a" style="left:0;top:0" width="1080" height="1350"><polyline points="${P.map((v, i) => px(i).toFixed(1) + ',' + py(v).toFixed(1)).join(' ')}" fill="none" stroke="${MC}" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${px(ei)}" cy="${py(P[ei])}" r="10" fill="${DK}"/><circle cx="${px(P.length - 1)}" cy="${py(P[P.length - 1])}" r="10" fill="${MC}"/></svg>
+    ${k.ext ? `<div class="a" style="left:${Math.min(Math.max(px(ei) - 120, 100), 640)}px;top:${k.up === false ? py(P[ei]) - 70 : py(P[ei]) + 22}px">${lab5(k.ext, DK)}</div>` : ''}
+    ${k.close ? `<div class="a" style="right:${1080 - (X + W + 16)}px;top:${k.up === false ? py(P[P.length - 1]) + 26 : py(P[P.length - 1]) - 76}px">${lab5(k.close, MC)}</div>` : ''}` : ''}
+  ${para5(k.text || '', k.textHl, 900, 30, DK, 200)}
+  ${k.quote ? `<div class="a" data-max="64" data-min="28" style="left:84px;top:1135px;width:912px;text-align:center;font-weight:800;font-size:40px;color:${DK};white-space:nowrap">“ ${hiM(k.quote, k.quoteHl, MC)} ”</div>` : ''}
+  ${pg5('2/5')}`);
+}
+function v6Why(r) {
+  const w = r.why || {}, R = (w.reasons || []).slice(0, 3);
+  return page('#ffffff', `${pills5(w.tagA || '이유', w.tagB)}${cT5(w.title, w.hl, 200, 60, DK, 160)}
+  <div class="a" style="left:84px;top:390px;width:912px;height:250px;border-radius:28px;overflow:hidden;background:#1b2a52">${w.photo ? `<img src="${esc(src(w.photo))}" style="width:100%;height:100%;object-fit:cover">` : ''}</div>
+  ${R.map((x, i) => { const y = 680 + i * 178; return `${i ? `<div class="a" style="left:84px;top:${y - 22}px;width:912px;height:2px;background:${DK};opacity:.08"></div>` : ''}
+    <div class="a num" style="left:84px;top:${y + 2}px;width:56px;height:56px;border-radius:50%;background:${MC};color:#fff;font-weight:700;font-size:26px;display:flex;align-items:center;justify-content:center">${i + 1}</div>
+    <div class="a" data-fitw="24" style="left:168px;top:${y + 4}px;width:828px;font-weight:800;font-size:34px;color:${DK};white-space:nowrap">${esc(x[0] || '')}</div>
+    <div class="a" data-fitw="18" style="left:168px;top:${y + 58}px;width:828px;font-weight:500;font-size:25px;line-height:1.5;color:${DK};opacity:.7;white-space:pre">${esc(x[1] || '')}</div>`; }).join('')}
+  ${pg5('3/5')}`);
+}
+function v6Trio(r) {
+  const t = r.trio || {}, rows = (t.rows || []).slice(0, 3);
+  return page(`linear-gradient(180deg,${MT1},${MT2})`, `${pills5(t.tagA || '세 종목 흐름', t.tagB)}${cT5(t.title, t.hl, 200, 58)}
+  ${rows.map((x, i) => { const y = 420 + i * 236, v = Number(x[2]) || 0, up = v >= 0, col = up ? MC : DK; return `<div class="a" style="left:84px;top:${y}px;width:912px;height:196px;border-radius:28px;background:#fff;border:2px solid #dde3ee;box-sizing:border-box"></div>
+    ${t.icons ? `<div class="a" style="left:112px;top:${y + 38}px;width:120px;height:120px;background:url('${esc(src(t.icons))}') ${i * 50}% 50% / 300% auto no-repeat"></div>` : `<div class="a" style="left:112px;top:${y + 38}px;width:120px;height:120px;border-radius:50%;background:${MT1}"></div>`}
+    <div class="a" data-fitw="24" style="left:260px;top:${y + 36}px;width:370px;font-weight:800;font-size:36px;color:${DK};white-space:nowrap">${esc(x[0] || '')}</div>
+    <div class="a" data-fitw="16" style="left:260px;top:${y + 92}px;width:370px;font-weight:500;font-size:22px;line-height:1.45;color:${DK};opacity:.65;white-space:pre">${esc(x[1] || '')}</div>
+    ${spark6(x[3], 650, y + 58, 150, 80, col, 4)}
+    <div class="a num" style="right:${1080 - 966}px;top:${y + 72}px;font-weight:700;font-size:44px;color:${col}">${(v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1)}%</div>`; }).join('')}
+  ${pg5('4/5')}`);
+}
+
+
 // ── 경제 캘린더 한 장 (2026-11-23 사용자 확정 · 피그마 '확정 디자인' · 캘린더 밝은형) ──
 // r = { layout:'cal', label:'11월 넷째 주 · 11.23 ~ 11.27', title1:'이번 주 주요', title2:'경제 일정 5', rows:[[요일, 날짜, 나라, 시각, 이름, 핵심?, 휴장?]], note }
 function calPage(r) {
@@ -507,6 +550,7 @@ export const marketPages = r => {
   if (r.layout === 'news') return [newsCover(r), newsBody(r)];   // 회사·서비스 소식 2장 (2026-11-23 확정)
   if (r.layout === 'edu') return eduPages(r);   // 트레이딩 교육 6~7장 (2026-11-23 확정)
   if (r.layout === 'cal') return [calPage(r)];   // 경제 캘린더 한 장 (2026-11-23 확정)
+  if (r.layout === 'v5' && r.trio) return [v5Cover(r), v6Key(r), v6Why(r), v6Trio(r), v5Peers(r).replace('>5/6<', '>5/5<')];   // v6 5장 (2026-11-23 확정 · 일정 장 뺌)
   if (r.layout === 'v5') return [v5Cover(r), v5Key(r), v5Why(r), v5Concept(r), v5Peers(r), v5End(r)];   // 시장·경제 이슈 v5 6장 (2026-11-23 사용자 확정)
   if (r.layout === 'story') return [cover(r), sKey(r), sWhy(r), sWord(r), sPeers(r), sEnd(r)];   // 설명형 6장 (2026-11-20 확정)
   const L = r.layout === 'macro' ? [cover(r), indices(r), tiles(r), summary(r), watch(r)]
