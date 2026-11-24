@@ -426,7 +426,6 @@ function v7CoverC(r) {
   return page('#050a1a', `${coverPhoto(r, 0, 0, 1080, 1350)}
   <div class="a" style="left:0;top:440px;width:1080px;height:910px;background:linear-gradient(180deg,rgba(5,6,10,0) 0%,rgba(5,6,10,.8) 42%,rgba(5,6,10,.97) 100%)"></div>
   <div class="a" style="left:0;top:0;width:1080px;height:300px;background:linear-gradient(180deg,rgba(5,10,26,.7),rgba(5,10,26,0))"></div>
-  <div class="a" style="left:40px;top:40px;width:1000px;height:1270px;border:2px solid rgba(255,255,255,.3);box-sizing:border-box"></div>
   <div class="a lg w" style="left:84px;top:84px;width:200px">${LOGO}</div>
   <div class="a" style="left:0;top:772px;width:1080px;text-align:center;font-weight:700;font-size:26px;letter-spacing:.06em;color:#fff;opacity:.75">${esc(r.tag)}  ·  ${esc(r.date)}</div>
   <div class="a" data-fitw="44" style="left:84px;top:830px;width:912px;text-align:center;font-weight:500;font-size:62px;letter-spacing:-.03em;color:#fff;opacity:.92;white-space:nowrap">${esc(r.title1 || '')}</div>
