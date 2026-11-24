@@ -396,6 +396,64 @@ function v6Why(r) {
   ${pg5('3/5')}`);
 }
 // 5 이번 주 볼 것 (v6 · 2026-11-23 확정) · r.watch5 = { tagA, tagB, title, hl[], rows:[[날짜(요일), 나라, 이름, 왜 보나]] ×3, note }
+// ── v7 표지 3종 + 마지막 장 Orbis 소개 (피그마 '[시안] v7 · 표지 A/B/C' · '[새 시안] v18' 확정 2026-11-24) ──
+// 표지는 r.cover7 = 'a' | 'b' | 'c' (스튜디오가 날마다 돌려 씀) · 분류 칩(알약) 없음 · 강조: A 형광펜 박스 · B 밑줄 띠 · C 그라데이션 글자
+const coverPhoto = (r, x, y, w, h, rad) => r.cover ? `<div class="a" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;overflow:hidden;${rad ? `border-radius:${rad}px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.15)` : ''}"><img src="${esc(src(r.cover))}" style="width:${w}px;height:${h}px;object-fit:cover;${posCss(r.coverPos)}"></div>` : '';
+const LGRAD = '#0b1428', LDARK = '#05060a', SOFT = '#8fb0ea';
+function v7CoverA(r) {
+  return page('#050a1a', `${coverPhoto(r, 0, 0, 1080, 1350)}
+  <div class="a" style="left:0;top:560px;width:1080px;height:790px;background:linear-gradient(180deg,rgba(5,10,26,0) 0%,rgba(5,10,26,.7) 40%,rgba(5,10,26,.94) 100%)"></div>
+  <div class="a" style="left:0;top:0;width:1080px;height:300px;background:linear-gradient(180deg,rgba(5,10,26,.7),rgba(5,10,26,0))"></div>
+  <div class="a lg w" style="left:84px;top:84px;width:200px">${LOGO}</div>
+  <div class="a" style="left:84px;top:822px;width:48px;height:4px;border-radius:2px;background:#fff;opacity:.9"></div>
+  <div class="a" style="left:148px;top:802px;font-weight:700;font-size:30px;color:#fff;opacity:.85;white-space:nowrap">${esc(r.tag)}  ·  ${esc(r.date)}</div>
+  <div class="a" data-fitw="60" style="left:84px;top:880px;width:912px;font-weight:800;font-size:92px;line-height:1.18;letter-spacing:-.045em;color:#fff;white-space:nowrap">${esc(r.title1 || '')}</div>
+  <div class="a" style="left:66px;top:1000px">${box5(r.title2 || '', 86, MC, '#fff')}</div>
+  <div class="a" style="left:84px;top:1150px;width:912px;font-size:32px;font-weight:500;color:#fff;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(r.sub || '')}</div>
+  ${risk5(1250, true)}`);
+}
+function v7CoverB(r) {
+  return page(`linear-gradient(160deg,${LGRAD},${LDARK})`, `<div class="a lg w" style="left:84px;top:84px;width:200px">${LOGO}</div>
+  <div class="a" style="left:84px;top:230px;font-weight:700;font-size:30px;color:#fff;opacity:.65;white-space:nowrap">${esc(r.tag)}  |  ${esc(r.date)}</div>
+  <div class="a" data-fitw="56" style="left:84px;top:290px;width:912px;font-weight:800;font-size:84px;line-height:1.18;letter-spacing:-.04em;color:#fff;white-space:nowrap">${esc(r.title1 || '')}</div>
+  <div class="a" data-fitw="56" style="left:84px;top:395px;width:912px;font-weight:800;font-size:84px;line-height:1.18;letter-spacing:-.04em;color:#fff;white-space:nowrap"><span style="background:linear-gradient(180deg,transparent 64%,${MC} 64%,${MC} 92%,transparent 92%);padding:0 8px;margin-left:-8px">${esc(r.title2 || '')}</span></div>
+  ${coverPhoto(r, 84, 560, 912, 560, 32)}
+  <div class="a" style="left:84px;top:1166px;width:6px;height:40px;border-radius:3px;background:${MSUB}"></div>
+  <div class="a" style="left:112px;top:1166px;width:884px;font-size:30px;font-weight:500;color:#fff;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(r.sub || '')}</div>
+  ${risk5(1250, true)}`);
+}
+function v7CoverC(r) {
+  return page('#050a1a', `${coverPhoto(r, 0, 0, 1080, 1350)}
+  <div class="a" style="left:0;top:440px;width:1080px;height:910px;background:linear-gradient(180deg,rgba(5,6,10,0) 0%,rgba(5,6,10,.8) 42%,rgba(5,6,10,.97) 100%)"></div>
+  <div class="a" style="left:0;top:0;width:1080px;height:300px;background:linear-gradient(180deg,rgba(5,10,26,.7),rgba(5,10,26,0))"></div>
+  <div class="a" style="left:40px;top:40px;width:1000px;height:1270px;border:2px solid rgba(255,255,255,.3);box-sizing:border-box"></div>
+  <div class="a lg w" style="left:84px;top:84px;width:200px">${LOGO}</div>
+  <div class="a" style="left:0;top:772px;width:1080px;text-align:center;font-weight:700;font-size:26px;letter-spacing:.06em;color:#fff;opacity:.75">${esc(r.tag)}  ·  ${esc(r.date)}</div>
+  <div class="a" data-fitw="44" style="left:84px;top:830px;width:912px;text-align:center;font-weight:500;font-size:62px;letter-spacing:-.03em;color:#fff;opacity:.92;white-space:nowrap">${esc(r.title1 || '')}</div>
+  <div class="a" data-fitw="60" style="left:60px;top:916px;width:960px;text-align:center;font-weight:800;font-size:100px;line-height:1.18;letter-spacing:-.04em;white-space:nowrap"><span style="background:linear-gradient(90deg,#fff 0%,${SOFT} 100%);-webkit-background-clip:text;background-clip:text;color:transparent">${esc(r.title2 || '')}</span></div>
+  <div class="a" style="left:500px;top:1070px;width:80px;height:5px;border-radius:3px;background:${SOFT}"></div>
+  <div class="a" style="left:84px;top:1104px;width:912px;text-align:center;font-size:30px;font-weight:500;color:#fff;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(r.sub || '')}</div>
+  <div class="a" style="left:84px;top:1240px;width:912px;text-align:center;font-size:20px;color:#fff;opacity:.45">*거래에는 손실 위험이 있습니다. 이용약관이 적용됩니다.</div>`);
+}
+const v7Cover = r => ({ b: v7CoverB, c: v7CoverC })[String(r.cover7 || '').toLowerCase()] ? ({ b: v7CoverB, c: v7CoverC })[String(r.cover7).toLowerCase()](r) : v7CoverA(r);
+// 마지막 장 Orbis 소개 (매일 같음 · 내용은 회사 사실 파일 기준 · 사용자 확정 문구 그대로)
+const INTRO_NUM = [['80+', '거래 가능 상품'], ['MT4 · MT5', '거래 프로그램'], ['0.0', '스프레드부터'], ['24시간', '한국어 지원']];
+const INTRO_ROWS = [['거래 자산', '외환부터 금 · 지수 · 암호화폐까지 한 계좌로'], ['소액 거래', '적은 금액으로도 가볍게 시작'], ['수수료', '거래 수수료 없는 계좌로 부담 없이'], ['입출금', '원화도 코인도 간편하게']];
+function v7Intro(pn) {
+  return page(`linear-gradient(160deg,${LGRAD},${LDARK})`, `<div class="a lg w" style="left:370px;top:130px;width:340px">${LOGO}</div>
+  <div class="a" style="left:84px;top:340px;width:912px;text-align:center;font-weight:800;font-size:46px;letter-spacing:-.02em;color:#fff">다양한 해외 자산을 하나의 플랫폼에서</div>
+  <div class="a" style="left:84px;top:470px;width:912px;height:2px;background:#fff;opacity:.15"></div><div class="a" style="left:84px;top:690px;width:912px;height:2px;background:#fff;opacity:.15"></div>
+  ${INTRO_NUM.map((c, k) => { const x = 84 + k * 228, ko = /[가-힣]/.test(c[0]); return `${k ? `<div class="a" style="left:${x}px;top:506px;width:2px;height:150px;background:#fff;opacity:.15"></div>` : ''}
+    <div class="a ${ko ? '' : 'num'}" style="left:${x + 4}px;top:${c[0].length > 6 ? 538 : 530}px;width:220px;text-align:center;font-weight:${ko ? 800 : 700};font-size:${c[0].length > 6 ? 34 : 46}px;letter-spacing:-.02em;color:${MSUB}">${esc(c[0])}</div>
+    <div class="a" style="left:${x + 4}px;top:612px;width:220px;text-align:center;font-weight:500;font-size:22px;color:#fff;opacity:.7">${esc(c[1])}</div>`; }).join('')}
+  <div class="a" style="left:124px;top:748px;font-weight:700;font-size:26px;color:#fff;opacity:.6">Orbis Securities를 선택하는 이유</div>
+  ${INTRO_ROWS.map((c, k) => { const y = 800 + k * 92; return `<div class="a" style="left:84px;top:${y}px;width:912px;height:76px;border-radius:18px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.1);box-sizing:border-box"></div>
+    <div class="a" style="left:124px;top:${y + 22}px;font-weight:700;font-size:24px;color:${MSUB}">${esc(c[0])}</div>
+    <div class="a" style="left:304px;top:${y + 20}px;width:670px;font-weight:500;font-size:26px;color:#fff;opacity:.9;white-space:nowrap">${esc(c[1])}</div>`; }).join('')}
+  <div class="a" style="left:84px;top:1180px;width:912px;text-align:center;font-weight:700;font-size:26px;color:#fff;opacity:.8">카카오톡 상담 · 자세한 내용은 프로필 링크에서</div>
+  <div class="a" style="left:84px;top:1250px;width:912px;text-align:center;font-size:20px;color:#fff;opacity:.45">*거래에는 손실 위험이 있습니다. 이용약관이 적용됩니다.</div>
+  ${pg5(pn || '5/5', true)}`);
+}
 function v6Watch(r) {
   const w = r.watch5 || {}, rows = (w.rows || []).slice(0, 3);
   return page(`linear-gradient(180deg,${MT2},${MT1})`, `${pills5(w.tagA || '다음에 볼 것', w.tagB)}${cT5(w.title, w.hl, 200, 60)}
@@ -566,6 +624,7 @@ export const marketPages = r => {
   if (r.layout === 'news') return [newsCover(r), newsBody(r)];   // 회사·서비스 소식 2장 (2026-11-23 확정)
   if (r.layout === 'edu') return eduPages(r);   // 트레이딩 교육 6~7장 (2026-11-23 확정)
   if (r.layout === 'cal') return [calPage(r)];   // 경제 캘린더 한 장 (2026-11-23 확정)
+  if (r.layout === 'v5' && r.trio && r.intro) return [r.cover7 ? v7Cover(r) : v5Cover(r), v6Key(r), v6Why(r), v6Trio(r), v7Intro('5/5')];   // v7 (2026-11-24): 표지 3종 돌려쓰기 · 마지막 장 Orbis 소개
   if (r.layout === 'v5' && r.trio) return [v5Cover(r), v6Key(r), v6Why(r), v6Trio(r), (r.watch5 && (r.watch5.rows || []).length ? v6Watch(r) : v5Peers(r).replace('>5/6<', '>5/5<'))];   // v6 5장 (2026-11-23 확정 · 일정 장 뺌)
   if (r.layout === 'v5') return [v5Cover(r), v5Key(r), v5Why(r), v5Concept(r), v5Peers(r), v5End(r)];   // 시장·경제 이슈 v5 6장 (2026-11-23 사용자 확정)
   if (r.layout === 'story') return [cover(r), sKey(r), sWhy(r), sWord(r), sPeers(r), sEnd(r)];   // 설명형 6장 (2026-11-20 확정)
