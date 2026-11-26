@@ -6,7 +6,8 @@ import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { onbPages } from './onb.mjs';
-import { magPages } from './mag.mjs';   // 시장 노트 잡지형 (2026-11-26 · ORBIS MARKET NOTE)   // 온보딩 카드 (2026-11-26 · 그림은 장면 이미지 자산, 글자는 HTML)
+import { magPages } from './mag.mjs';
+import { LINT } from './lint.mjs';   // 레이아웃 자동 점검 (2026-11-26)   // 시장 노트 잡지형 (2026-11-26 · ORBIS MARKET NOTE)   // 온보딩 카드 (2026-11-26 · 그림은 장면 이미지 자산, 글자는 HTML)
 
 const here = dirname(fileURLToPath(import.meta.url));
 const FONT = 'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css';
@@ -646,11 +647,14 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1
   const r = JSON.parse(readFileSync(process.argv[2], 'utf8')), out = process.argv[3] || join(here, '..', 'out', '_insta_market'); mkdirSync(out, { recursive: true });
   const browser = await chromium.launch(process.env.PW_EXEC ? { executablePath: process.env.PW_EXEC } : { channel: process.env.PW_CHANNEL || 'msedge' });
   const pg = await browser.newPage({ viewport: { width: 1080, height: 1350 }, deviceScaleFactor: 1 });
+  const lint = [];   // 레이아웃 자동 점검 결과 (insta/lint.mjs · 2026-11-26) → outDir/check.json · 스튜디오가 '레이아웃:' 확인 항목으로 띄움
   for (const [i, html] of marketPages(r).entries()) {
     const tmp = join(out, '_p.html'); writeFileSync(tmp, html); await pg.goto(pathToFileURL(tmp).href, { waitUntil: 'networkidle' });   // 파일로 열어야 로컬 그림(file://)이 보임
     await pg.evaluate(() => document.fonts.ready); await pg.waitForFunction(() => document.body.dataset.ready === '1', null, { timeout: 15000 }).catch(() => { });
     await pg.screenshot({ path: join(out, `p${i + 1}.jpg`), type: 'jpeg', quality: 92 });
+    try { (await pg.evaluate(LINT)).forEach(m => lint.push(`${i + 1}장 ${m}`)); } catch (e) { lint.push(`${i + 1}장 점검 실패: ${String(e.message || e).slice(0, 60)}`); }
   }
+  writeFileSync(join(out, 'check.json'), JSON.stringify({ issues: lint }, null, 1)); if (lint.length) console.log('레이아웃 점검 ' + lint.length + '건\n' + lint.join('\n'));
   try { rmSync(join(out, '_p.html')); } catch (e) { }
   await browser.close(); console.log('ok', out);
 }
