@@ -5,6 +5,7 @@
 import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { onbPages } from './onb.mjs';   // 온보딩 카드 (2026-11-26 · 그림은 장면 이미지 자산, 글자는 HTML)
 
 const here = dirname(fileURLToPath(import.meta.url));
 const FONT = 'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css';
@@ -622,7 +623,8 @@ function newsBody(r) {
 export const marketPages = r => {
   if (r.layout === 'news') return [newsCover(r), newsBody(r)];   // 회사·서비스 소식 2장 (2026-11-23 확정)
   if (r.layout === 'edu') return eduPages(r);   // 트레이딩 교육 6~7장 (2026-11-23 확정)
-  if (r.layout === 'cal') return [calPage(r)];   // 경제 캘린더 한 장 (2026-11-23 확정)
+  if (r.layout === 'cal') return [calPage(r)];
+  if (r.layout === 'onb') return onbPages(r);   // 온보딩 (insta/onb.mjs · 장 수는 req.pages)   // 경제 캘린더 한 장 (2026-11-23 확정)
   // 2026-11-26 사용자: 5장 분석·전망 → 분석·전망 줄이 있으면 5장에 넣고 Orbis 소개는 6장으로 (예전엔 소개만 있고 5장 내용이 빠졌음) · 2~4장 쪽수도 /6
   if (r.layout === 'v5' && r.trio && r.intro && r.watch5 && (r.watch5.rows || []).length) return [r.cover7 ? v7Cover(r) : v5Cover(r), v6Key(r), v6Why(r), v6Trio(r), v6Watch(r, '5/6'), v7Intro('6/6')].map(h => h.replace(/>([1-4])\/5</, '>$1/6<'));
   if (r.layout === 'v5' && r.trio && r.intro) return [r.cover7 ? v7Cover(r) : v5Cover(r), v6Key(r), v6Why(r), v6Trio(r), v7Intro('5/5')];   // v7 (2026-11-24): 표지 3종 돌려쓰기 · 마지막 장 Orbis 소개

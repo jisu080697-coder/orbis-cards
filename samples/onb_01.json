@@ -1,0 +1,161 @@
+{
+  "layout": "onb",
+  "ep": "01",
+  "pages": [
+    {
+      "type": "cover",
+      "scene": "insta/assets/onb/g1_cover.jpg",
+      "label": "About Orbis",
+      "title": "글로벌 금융시장,\n하나의 플랫폼으로",
+      "sub": "오르비스 시큐리티즈와 함께하는\n새로운 거래 환경"
+    },
+    {
+      "type": "info",
+      "scene": "insta/assets/onb/c2_vault.jpg",
+      "label": "Regulation & Security",
+      "title": "신뢰의 기반이 되는\n규제와 보안",
+      "rows": [
+        [
+          "남아프리카공화국",
+          "FSCA · FSP 54619"
+        ],
+        [
+          "호주",
+          "AFSL 라이선스"
+        ],
+        [
+          "고객 자금",
+          "회사 운영 자금과 분리 보관"
+        ],
+        [
+          "운영 법인",
+          "Orbis Securities (Pty) Ltd"
+        ]
+      ],
+      "shift": "translateX(120px)"
+    },
+    {
+      "type": "number",
+      "scene": "insta/assets/onb/a3_slabs.jpg",
+      "num": "80+",
+      "title": "글로벌 거래 상품",
+      "items": [
+        [
+          "외환",
+          "Currencies"
+        ],
+        [
+          "금 · 은 · 원유",
+          "Commodities"
+        ],
+        [
+          "주가지수",
+          "Indices"
+        ],
+        [
+          "암호화폐",
+          "Crypto"
+        ]
+      ],
+      "sub": "하나의 계좌로 만나는\n다양한 글로벌 금융시장",
+      "label": "Global Markets"
+    },
+    {
+      "type": "summary",
+      "scene": "insta/assets/onb/k_two.jpg",
+      "label": "Trading Conditions",
+      "title": "거래의 시작부터\n편리한 거래 환경까지",
+      "items": [
+        [
+          "부담을 낮춘 거래 조건",
+          "최소 입금 $100 · 최소 거래 0.01랏"
+        ],
+        [
+          "다양한 입출금 방식",
+          "원화 계좌이체 · 암호화폐 · 카드"
+        ],
+        [
+          "글로벌 거래 플랫폼",
+          "MT4 · MT5, PC 및 모바일 지원"
+        ]
+      ],
+      "shade": "top",
+      "shift": "translate(40px,30px)"
+    },
+    {
+      "type": "accounts",
+      "scene": "insta/assets/onb/d5_acc.jpg",
+      "label": "Account Types",
+      "title": "나의 거래 스타일에 맞는\n4가지 계좌 유형",
+      "cards": [
+        {
+          "tier": "STANDARD",
+          "name": "Standard",
+          "num": "1.0",
+          "unit": "pips부터",
+          "feats": [
+            "거래 수수료 없음",
+            "최소 입금 $100",
+            "기본 거래에 적합한 계좌"
+          ]
+        },
+        {
+          "tier": "BENEFITS",
+          "name": "Standard+",
+          "num": "1.8",
+          "unit": "pips부터",
+          "feats": [
+            "거래 수수료 없음",
+            "최소 입금 $100",
+            "추가 거래 혜택 제공"
+          ]
+        },
+        {
+          "tier": "ADVANCED",
+          "name": "Pro",
+          "num": "0.0",
+          "unit": "pips부터",
+          "feats": [
+            "1랏당 수수료 $7",
+            "최소 입금 $100",
+            "낮은 스프레드 중심의 계좌"
+          ]
+        },
+        {
+          "tier": "PREMIUM",
+          "name": "Prime",
+          "num": "0.0",
+          "unit": "pips부터",
+          "feats": [
+            "1랏당 수수료 $4",
+            "최소 입금 $20,000",
+            "대규모 거래에 특화된 계좌"
+          ]
+        }
+      ],
+      "note": "모든 계좌 MT4 · MT5 지원 | 최소 거래 0.01랏 | 수수료는 1랏당 왕복 기준"
+    },
+    {
+      "type": "info",
+      "scene": "insta/assets/onb/b6_sup_s.jpg",
+      "label": "Client Support",
+      "title": "거래의 모든 순간,\n함께하는 고객 지원",
+      "rows": [
+        [
+          "고객 지원",
+          "연중무휴 24시간"
+        ],
+        [
+          "지원 언어",
+          "다국어 상담 지원"
+        ],
+        [
+          "한국 고객",
+          "전용 카카오톡 상담 채널"
+        ]
+      ],
+      "next": "다음 가이드 · 계좌 개설 방법"
+    }
+  ],
+  "risk": "*모든 거래에는 손실 위험이 있으며, 관련 이용약관이 적용됩니다."
+}
