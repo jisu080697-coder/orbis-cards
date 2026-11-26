@@ -12,7 +12,6 @@ const INTER = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&d
 const LOGO = readFileSync(join(here, '..', 'templates', 'orbis-logo-white.svg'), 'utf8').replace(/<\?xml[^>]*>/, '');
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const br = s => esc(s).replace(/\n/g, '<br>');
-const br2 = s => { const L = esc(s).split('\n'); return L.length > 1 ? L.slice(0, -1).join('<br>') + '<br><span class="t2">' + L[L.length - 1] + '</span>' : L[0]; };   // 가이드북 다크: 제목 마지막 줄 #8EA9DC
 const src = p => !p ? '' : /^(https?|file|data):/.test(p) ? p : pathToFileURL(resolve(here, '..', p)).href;
 const RISK = '*거래에는 손실 위험이 있습니다. 이용약관이 적용됩니다.';
 
@@ -26,7 +25,7 @@ body{width:1080px;height:1350px;overflow:hidden;background:#05070b;color:#F5F6F8
 .lg{left:80px;top:80px;width:190px}.lg svg{width:100%;height:auto;display:block}.lg svg *{fill:#fff!important}
 .pno{right:80px;top:92px;font:500 24px Inter,sans-serif;letter-spacing:.06em;color:rgba(245,246,248,.55)}
 .lab{font:500 26px Inter,'Pretendard Variable',sans-serif;color:rgba(245,246,248,.72);letter-spacing:.01em}
-.ttl{font-weight:500;letter-spacing:-.03em;line-height:1.16;color:#F5F6F8}.ttl .t2{color:#8EA9DC}
+.ttl{font-weight:500;letter-spacing:-.03em;line-height:1.16;color:#F5F6F8}
 .sub{font-size:30px;line-height:1.55;color:rgba(245,246,248,.62)}
 .rule{height:2px;width:56px;background:#2B64A6;margin-top:30px}
 .rows{width:560px}.rows div{display:grid;grid-template-columns:220px 1fr;padding:20px 0;border-bottom:1px solid rgba(245,246,248,.14);font-size:27px}.rows span{color:rgba(245,246,248,.55)}
@@ -72,11 +71,11 @@ const T = {
   // p.pos='bottom' → 제목을 왼쪽 아래로 · p.chips=[[큰 글자, 작은 글자]] → 왼쪽 위에 떠 있는 유리 카드 (가격 숫자 넣지 않기)
   cover: p => `${(p.chips || []).slice(0, 3).map((c, k) => `<div class="a chip" style="left:${p.pos === 'bottom' ? 240 + k * 110 : 200 + k * 110}px;top:${p.pos === 'bottom' ? 250 + k * 140 : 760 + k * 140}px"><i class="en">${esc(c[2] || c[0].slice(0, 3))}</i><div><b class="en">${esc(c[0])}</b><span>${esc(c[1] || '')}</span></div></div>`).join('')}
   <div class="a" style="left:80px;${p.pos === 'bottom' ? 'bottom:150px' : 'top:250px'};width:${p.pos === 'bottom' ? 600 : 920}px">${p.label ? `<div class="lab">${esc(p.label)}</div>` : ''}
-    <div class="ttl" style="font-size:${p.pos === 'bottom' || p.chips ? 70 : 84}px;margin-top:22px">${(p.accent ? br2 : br)(p.title)}</div><div class="rule"></div>
+    <div class="ttl" style="font-size:${p.pos === 'bottom' || p.chips ? 70 : 84}px;margin-top:22px">${br(p.title)}</div><div class="rule"></div>
     ${p.sub ? `<div class="sub" style="margin-top:30px">${br(p.sub)}</div>` : ''}</div>`,
   // 2 정보 표: 라벨 · 제목 · 얇은 정보 줄
   info: p => `<div class="a" style="left:80px;top:250px">${p.label ? `<div class="lab">${esc(p.label)}</div>` : ''}
-    <div class="ttl" style="font-size:76px;margin-top:22px">${(p.accent ? br2 : br)(p.title)}</div>
+    <div class="ttl" style="font-size:76px;margin-top:22px">${br(p.title)}</div>
     <div class="rows" style="margin-top:56px">${(p.rows || []).map(x => `<div><span>${esc(x[0])}</span><b style="font-weight:500">${esc(x[1])}</b></div>`).join('')}</div>
     ${p.next ? `<div class="nx">${esc(p.next)}<i></i></div>` : ''}</div>`,
   // 3 큰 숫자: 은빛 숫자 · 제목 · 목록 (장면은 오른쪽)
@@ -87,7 +86,7 @@ const T = {
   // tags = 장면 속 판 위에 얹는 이름표 [{ t:'Currencies', k:'외환', x, y, tf:'rotate(-14deg) skewX(10deg)' }]
   // 4 단계: 체크 목록 (장면 = 오른쪽 휴대폰)
   steps: p => `<div class="a" style="left:80px;top:250px">${p.label ? `<div class="lab">${esc(p.label)}</div>` : ''}
-    <div class="ttl" style="font-size:76px;margin-top:22px">${(p.accent ? br2 : br)(p.title)}</div>
+    <div class="ttl" style="font-size:76px;margin-top:22px">${br(p.title)}</div>
     <div class="steps" style="margin-top:56px">${(p.items || []).map(x => `<div><span class="ck">${CHECK}</span>${esc(x)}</div>`).join('')}</div></div>`,
   // 5 비교: 큰 영문 두 단어 · 두 칸 비교 (장면 = 아래쪽)
   compare: p => `<div class="a" style="left:80px;top:250px">${p.label ? `<div class="lab">${esc(p.label)}</div>` : ''}
@@ -96,13 +95,13 @@ const T = {
     <div class="cols" style="margin-top:64px">${(p.cols || []).map(c => `<div><h4>${esc(c.name)}</h4>${(c.items || []).map(x => `<p><i class="dash"></i>${esc(x)}</p>`).join('')}</div>`).join('')}</div></div>`,
   // 7 표: 계좌 4종처럼 이름 + 값 3칸 (head = 칸 이름 4개 · rows = [이름, 값, 값, 값] · note = 아래 작은 공통 조건)
   table: p => `<div class="a" style="left:80px;top:250px;width:920px">${p.label ? `<div class="lab">${esc(p.label)}</div>` : ''}
-    <div class="ttl" style="font-size:76px;margin-top:22px">${(p.accent ? br2 : br)(p.title)}</div>
+    <div class="ttl" style="font-size:76px;margin-top:22px">${br(p.title)}</div>
     <div class="tb" style="margin-top:56px">${p.head ? `<div class="th">${p.head.map(h => `<span>${esc(h)}</span>`).join('')}</div>` : ''}
     ${(p.rows || []).map(x => `<div class="tr"><b class="en">${esc(x[0])}</b>${x.slice(1, 4).map(v => `<span>${esc(v)}</span>`).join('')}</div>`).join('')}</div>
     ${p.note ? `<div class="sub" style="font-size:23px;margin-top:28px">${br(p.note)}</div>` : ''}</div>`,
   // 8 계좌 카드: 2×2 카드 (cards = [{ tier, name, num, unit, feats:[2~3] }] · note = 아래 공통 조건)
   accounts: p => `<div class="a" style="left:80px;top:222px;width:920px">${p.label ? `<div class="lab">${esc(p.label)}</div>` : ''}
-    <div class="ttl" style="font-size:64px;margin-top:16px">${(p.accent ? br2 : br)(p.title)}</div></div>
+    <div class="ttl" style="font-size:64px;margin-top:16px">${br(p.title)}</div></div>
     <div class="a acs${p.title && p.title.includes(String.fromCharCode(10)) ? ' tight' : ''}" style="left:80px;top:${p.title && p.title.includes(String.fromCharCode(10)) ? 470 : 420}px">${(p.cards || []).slice(0, 4).map(c => `<div class="ac">
       <i class="en">${esc(c.tier || '')}</i><b class="en">${esc(c.name)}</b>
       <div class="num en">${esc(c.num || '')}<small>${esc(c.unit || '')}</small></div>
@@ -110,7 +109,7 @@ const T = {
     ${p.note ? `<div class="a sub" style="left:80px;bottom:110px;font-size:21px">${esc(p.note)}</div>` : ''}`,
   // 6 요약: 큰 번호 세 줄
   summary: p => `<div class="a" style="left:80px;top:250px">${p.label ? `<div class="lab">${esc(p.label)}</div>` : ''}
-    <div class="ttl" style="font-size:76px;margin-top:22px">${(p.accent ? br2 : br)(p.title)}</div>
+    <div class="ttl" style="font-size:76px;margin-top:22px">${br(p.title)}</div>
     <div class="sum" style="margin-top:50px;width:660px">${(p.items || []).map((x, k) => `<div><em>${String(k + 1).padStart(2, '0')}</em><div><b>${esc(x[0])}</b><span>${esc(x[1] || '')}</span></div></div>`).join('')}</div></div>`,
 };
 const SHADE = { number: 'left', steps: 'left', info: 'left', summary: 'left' };
