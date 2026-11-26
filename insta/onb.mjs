@@ -53,7 +53,7 @@ body{width:1080px;height:1350px;overflow:hidden;background:#05070b;color:#F5F6F8
 .chip b{display:block;font-size:28px;font-weight:600;letter-spacing:-.01em}.chip span{display:block;font-size:22px;color:rgba(245,246,248,.6);margin-top:4px}
 .tag{display:flex;align-items:baseline;gap:16px;transform-origin:0 50%;text-shadow:0 2px 12px rgba(0,0,0,.6)}.tag b{font-size:36px;font-weight:500;letter-spacing:.01em;color:#E4E9F1}.tag span{font-size:24px;color:rgba(238,242,248,.62)}
 .acs.tight .ac{height:328px;padding:28px 34px}.acs.tight .ac .num{font-size:58px;margin:12px 0 10px}
-.dash{display:block;width:22px;height:2px;background:#5b7fb0;flex:none}
+.dash{display:block;width:22px;height:2px;background:#2B64A6;flex:none}
 .risk{left:80px;bottom:58px;font-size:20px;color:rgba(245,246,248,.42)}
 </style>`;
 const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
