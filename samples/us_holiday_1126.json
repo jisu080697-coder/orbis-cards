@@ -1,0 +1,98 @@
+{
+  "layout": "onb",
+  "ep": "1126",
+  "risk": "*모든 거래에는 손실 위험이 있으며, 관련 이용약관이 적용됩니다.",
+  "pages": [
+    {
+      "type": "cover",
+      "scene": "insta/assets/onb/r_desk.jpg",
+      "label": "Market Note",
+      "title": "미국 증시,\n추수감사절 휴장",
+      "sub": "11월 26일 휴장, 27일은 단축 거래로\n평소와 다른 시장 환경이 이어집니다"
+    },
+    {
+      "type": "info",
+      "scene": "insta/assets/onb/d5_acc.jpg",
+      "label": "Holiday Schedule",
+      "title": "숫자로 보는\n미국 증시 일정",
+      "rows": [
+        [
+          "11월 26일(목)",
+          "뉴욕증권거래소 · 나스닥 휴장"
+        ],
+        [
+          "11월 27일(금)",
+          "한국시간 23:30 개장"
+        ],
+        [
+          "11월 28일(토)",
+          "한국시간 03:00 조기 폐장"
+        ],
+        [
+          "정규장 운영",
+          "6시간 30분 → 3시간 30분"
+        ]
+      ]
+    },
+    {
+      "type": "number",
+      "scene": "insta/assets/onb/a3_slabs.jpg",
+      "label": "Holiday Sales Outlook",
+      "num": "4.2%",
+      "title": "연말 소매판매 전망",
+      "sub": "미국소매협회(NRF) · 11~12월 전년 대비\n물가 상승분이 포함된 수치입니다",
+      "items": [
+        [
+          "전망 규모",
+          "약 1조 130억 달러"
+        ],
+        [
+          "2025년 실적",
+          "전년 대비 3.1%"
+        ]
+      ]
+    },
+    {
+      "type": "summary",
+      "scene": "insta/assets/onb/k_two.jpg",
+      "label": "Check Points",
+      "title": "연휴 전후로\n살펴볼 것들",
+      "shade": "top",
+      "shift": "translate(40px,30px)",
+      "items": [
+        [
+          "주문 유효기간",
+          "휴장 전 예약 · 지정가 주문 확인"
+        ],
+        [
+          "상품별 거래시간",
+          "단축 거래일 일정 확인"
+        ],
+        [
+          "연휴 이후 흐름",
+          "거래량 회복 · 블랙프라이데이 소비 실적"
+        ]
+      ]
+    },
+    {
+      "type": "info",
+      "scene": "insta/assets/onb/b6_sup_s.jpg",
+      "label": "Today's Insight",
+      "title": "다시 열리는 시장의\n거래 조건",
+      "rows": [
+        [
+          "거래량",
+          "참여자가 줄어 감소할 수 있음"
+        ],
+        [
+          "호가 차이",
+          "평소보다 넓어질 수 있음"
+        ],
+        [
+          "유동성",
+          "가격 등락과 함께 볼 지표"
+        ]
+      ]
+    }
+  ]
+}
