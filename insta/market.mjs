@@ -453,7 +453,7 @@ function v7Intro(pn) {
   <div class="a" style="left:84px;top:1250px;width:912px;text-align:center;font-size:20px;color:#fff;opacity:.45">*거래에는 손실 위험이 있습니다. 이용약관이 적용됩니다.</div>
   ${pg5(pn || '5/5', true)}`);
 }
-function v6Watch(r) {
+function v6Watch(r, pn) {
   const w = r.watch5 || {}, rows = (w.rows || []).slice(0, 3);
   return page(`linear-gradient(180deg,${MT2},${MT1})`, `${pills5(w.tagA || '다음에 볼 것', w.tagB)}${cT5(w.title, w.hl, 200, 60)}
   ${rows.map((x, i) => { const y = 410 + i * 236, f = FLAG[String(x[1] || '').toUpperCase()]; return `<div class="a" style="left:84px;top:${y}px;width:912px;height:206px;border-radius:28px;background:#fff;border:2px solid #dde3ee;box-sizing:border-box"></div>
@@ -462,7 +462,7 @@ function v6Watch(r) {
     <div class="a" data-fitw="24" style="left:380px;top:${y + 42}px;width:576px;font-weight:800;font-size:36px;color:${DK};white-space:nowrap">${esc(x[2] || '')}</div>
     <div class="a" data-fitw="18" style="left:124px;top:${y + 120}px;width:832px;font-weight:500;font-size:26px;line-height:1.45;color:${DK};opacity:.7;white-space:nowrap">${esc(x[3] || '')}</div>`; }).join('')}
   ${w.note ? `<div class="a" style="left:84px;top:1150px;width:912px;text-align:center;font-weight:700;font-size:26px;color:${DK};opacity:.55">${esc(w.note)}</div>` : ''}
-  ${pg5('5/5')}`);
+  ${pg5(pn || '5/5')}`);
 }
 const COIN_LOGO = { BTC: 'bitcoin', '비트코인': 'bitcoin', ETH: 'ethereum', '이더리움': 'ethereum', XRP: 'xrp', '리플': 'xrp', SOL: 'solana', '솔라나': 'solana', DOGE: 'dogecoin', '도지코인': 'dogecoin', ADA: 'cardano', '카르다노': 'cardano', '에이다': 'cardano', LTC: 'litecoin', '라이트코인': 'litecoin' };   // 로고 파일: insta/assets/coins (Simple Icons · CC0 · 2026-11-23)
 const coinLogo = (name, sym) => COIN_LOGO[String(sym || '').toUpperCase().replace(/-USD$/, '')] || COIN_LOGO[String(name || '').trim()] || '';
@@ -623,6 +623,8 @@ export const marketPages = r => {
   if (r.layout === 'news') return [newsCover(r), newsBody(r)];   // 회사·서비스 소식 2장 (2026-11-23 확정)
   if (r.layout === 'edu') return eduPages(r);   // 트레이딩 교육 6~7장 (2026-11-23 확정)
   if (r.layout === 'cal') return [calPage(r)];   // 경제 캘린더 한 장 (2026-11-23 확정)
+  // 2026-11-26 사용자: 5장 분석·전망 → 분석·전망 줄이 있으면 5장에 넣고 Orbis 소개는 6장으로 (예전엔 소개만 있고 5장 내용이 빠졌음) · 2~4장 쪽수도 /6
+  if (r.layout === 'v5' && r.trio && r.intro && r.watch5 && (r.watch5.rows || []).length) return [r.cover7 ? v7Cover(r) : v5Cover(r), v6Key(r), v6Why(r), v6Trio(r), v6Watch(r, '5/6'), v7Intro('6/6')].map(h => h.replace(/>([1-4])\/5</, '>$1/6<'));
   if (r.layout === 'v5' && r.trio && r.intro) return [r.cover7 ? v7Cover(r) : v5Cover(r), v6Key(r), v6Why(r), v6Trio(r), v7Intro('5/5')];   // v7 (2026-11-24): 표지 3종 돌려쓰기 · 마지막 장 Orbis 소개
   if (r.layout === 'v5' && r.trio) return [v5Cover(r), v6Key(r), v6Why(r), v6Trio(r), (r.watch5 && (r.watch5.rows || []).length ? v6Watch(r) : v5Peers(r).replace('>5/6<', '>5/5<'))];   // v6 5장 (2026-11-23 확정 · 일정 장 뺌)
   if (r.layout === 'v5') return [v5Cover(r), v5Key(r), v5Why(r), v5Concept(r), v5Peers(r), v5End(r)];   // 시장·경제 이슈 v5 6장 (2026-11-23 사용자 확정)
