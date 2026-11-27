@@ -27,20 +27,21 @@ export const LINT = () => {
   }
   const seen = new Set(), add = m => { if (!seen.has(m)) { seen.add(m); out.push(m); } };
   nodes.forEach(o => {
-    // 1) 화면 가장자리
-    if (o.chars.some(c => c.l < M - 1 || c.r > W - M + 1 || c.t < 20 || c.b > H - 20)) add(`화면 가장자리 넘침: "${cut(o.text)}"`);
+    // 1) 화면 가장자리 (일부러 화면 밖으로 넘기는 큰 숫자 data-bleed 는 제외)
+    if (!o.el.closest('[data-bleed]') && o.chars.some(c => c.l < M - 1 || c.r > W - M + 1 || c.t < 20 || c.b > H - 20)) add(`화면 가장자리 넘침: "${cut(o.text)}"`);
     // 2) 높이가 정해진 칸 밖으로
     for (let e = o.el; e && e !== document.body; e = e.parentElement) {
+      if (o.el.closest('[data-bleed]')) break;   // 일부러 잘리게 둔 큰 숫자·세로 글자는 칸 넘침에서 제외
       if (!e.style || !e.style.height || /%$/.test(e.style.height)) continue;
       const R = e.getBoundingClientRect(); if (R.height < 40) break;
       if (o.chars.some(c => c.b > R.bottom + 2 || c.r > R.right + 2 || c.l < R.left - 2)) add(`칸 밖으로 넘침: "${cut(o.text)}"`);
       break;
     }
     // 4) 한 글자 줄
-    if (o.lines.length >= 2 && o.lines.some(L => L.cs.length === 1 && /[가-힣A-Za-z0-9]/.test(L.cs[0].c))) add(`한 글자만 다음 줄로 떨어짐: "${cut(o.text)}"`);
+    if (!o.el.closest('[data-bleed]') && o.lines.length >= 2 && o.lines.some(L => L.cs.length === 1 && /[가-힣A-Za-z0-9]/.test(L.cs[0].c))) add(`한 글자만 다음 줄로 떨어짐: "${cut(o.text)}"`);
   });
   // 3) 서로 다른 글 덩어리 겹침 (2px 여유)
-  const boxes = []; nodes.forEach((o, k) => o.lines.forEach(L => boxes.push({ k, l: L.l + 4, r: L.r - 4, t: L.t + (L.b - L.t) * .12, b: L.b - (L.b - L.t) * .12, text: o.text })   /* 글자 상자는 줄 간격보다 커서 위아래 12%는 빼고 봄 (여러 줄 제목 오탐 방지) */));
+  const boxes = []; nodes.forEach((o, k) => !o.el.closest('[data-bleed]') && o.lines.forEach(L => boxes.push({ k, l: L.l + 4, r: L.r - 4, t: L.t + (L.b - L.t) * .12, b: L.b - (L.b - L.t) * .12, text: o.text })   /* 글자 상자는 줄 간격보다 커서 위아래 12%는 빼고 봄 (여러 줄 제목 오탐 방지) */));
   for (let i = 0; i < boxes.length; i++) for (let j = i + 1; j < boxes.length; j++) {
     const a = boxes[i], b = boxes[j]; if (a.k === b.k) continue;
     if (a.l < b.r && b.l < a.r && a.t < b.b && b.t < a.b) add(`글자 겹침: "${cut(a.text)}" ↔ "${cut(b.text)}"`);

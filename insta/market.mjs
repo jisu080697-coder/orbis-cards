@@ -7,6 +7,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { onbPages } from './onb.mjs';
 import { magPages } from './mag.mjs';
+import { kitPages } from './kit.mjs';   // 카드 키트 · 위클리 캘린더 (2026-11-27)
 import { LINT } from './lint.mjs';   // 레이아웃 자동 점검 (2026-11-26)   // 시장 노트 잡지형 (2026-11-26 · ORBIS MARKET NOTE)   // 온보딩 카드 (2026-11-26 · 그림은 장면 이미지 자산, 글자는 HTML)
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -626,6 +627,7 @@ export const marketPages = r => {
   if (r.layout === 'news') return [newsCover(r), newsBody(r)];   // 회사·서비스 소식 2장 (2026-11-23 확정)
   if (r.layout === 'edu') return eduPages(r);   // 트레이딩 교육 6~7장 (2026-11-23 확정)
   if (r.layout === 'cal') return [calPage(r)];
+  if (r.layout === 'kit') return kitPages(r);   // 카드 키트 (insta/kit.mjs · 장마다 t로 틀 지정 · 위클리 캘린더 2026-11-27)
   if (r.layout === 'mag') return magPages(r);   // 시장 노트 잡지형 (insta/mag.mjs · 장 수는 req.pages)
   if (r.layout === 'onb') return onbPages(r);   // 온보딩 (insta/onb.mjs · 장 수는 req.pages)   // 경제 캘린더 한 장 (2026-11-23 확정)
   // 2026-11-26 사용자: 5장 분석·전망 → 분석·전망 줄이 있으면 5장에 넣고 Orbis 소개는 6장으로 (예전엔 소개만 있고 5장 내용이 빠졌음) · 2~4장 쪽수도 /6

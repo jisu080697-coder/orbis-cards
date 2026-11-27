@@ -98,7 +98,7 @@ const T = {
   // 4 관전 포인트 (예전 구성): 위 사진 · 계정 줄 · 소제목 · 제목 · 연청 강조 줄 · 문단 (세 항목은 짧은 줄로) · 아래 가운데 로고
   essay: (r, i, p) => shell(r, i, p, `${head(r, `<b>${esc(r.topic || '')}</b>`)}
     <div class="a" style="left:80px;right:80px;top:${p.top || 560}px">
-      <div style="display:flex;align-items:center;gap:20px;font-size:24px;opacity:.8"><span>@orbis.securities</span><i style="flex:1;height:1.5px;background:rgba(255,255,255,.45)"></i></div>
+      <div style="display:flex;align-items:center;gap:20px;font-size:24px;opacity:.8"><span>@orbis_securities</span><i style="flex:1;height:1.5px;background:rgba(255,255,255,.45)"></i></div>
       ${p.kicker ? `<div class="kick" style="margin-top:34px">${esc(p.kicker)}</div>` : ''}
       <div class="big" style="font-size:64px;margin-top:${p.kicker ? 14 : 36}px">${hl(p.title)}</div>
       ${p.quote ? `<div style="font-size:32px;font-weight:600;color:${SKY};margin-top:30px;line-height:1.55">${hl(p.quote)}</div>` : ''}
@@ -256,7 +256,7 @@ const T = {
       ${p.sub ? `<div style="font-size:30px;opacity:.85;margin-top:30px;line-height:1.6">${hl(p.sub)}</div>` : ''}</div>
     <div class="a" style="left:0;right:0;top:${p.cardTop || 720}px;display:flex;justify-content:center"><div class="glass" style="width:840px;display:flex;align-items:center;gap:32px;padding:26px;border-radius:999px">
       <div style="width:112px;height:112px;border-radius:50%;background:#fff;display:grid;place-items:center;flex:none"><div style="width:80px">${LOGO.replace('<svg', `<svg style="width:80px;height:auto"`).replace(/<style>[\s\S]*?<\/style>/, `<style>*{fill:${MC}!important}</style>`)}</div></div>
-      <div style="flex:1"><div style="font-size:36px;font-weight:700;letter-spacing:-.01em">@orbis.securities</div><div style="font-size:25px;opacity:.8;margin-top:8px">오르비스 시큐리티즈</div></div>
+      <div style="flex:1"><div style="font-size:36px;font-weight:700;letter-spacing:-.01em">@orbis_securities</div><div style="font-size:25px;opacity:.8;margin-top:8px">오르비스 시큐리티즈</div></div>
       <div style="width:84px;height:84px;margin-right:14px;border-radius:50%;border:1.5px solid rgba(255,255,255,.35);display:grid;place-items:center;flex:none"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path style="fill:none!important" d="M9 5l7 7-7 7"/></svg></div></div></div>
     ${p.cta ? `<div class="a" style="left:80px;right:80px;top:${(p.cardTop || 720) + 210}px;text-align:center;font-size:29px;opacity:.85">${hl(p.cta)}</div>` : ''}
     <div class="a risk" style="left:0;right:0;text-align:center;bottom:150px">${RISK}</div>
